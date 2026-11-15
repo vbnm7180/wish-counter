@@ -44,6 +44,7 @@ Wish Counter — portable-приложение для Windows, которое с
   cargo test --workspace
   cargo clippy --workspace --all-targets   # 0 предупреждений
   npm run check                            # 0 ошибок
+  npm test                                 # тесты интерфейса (Vitest)
   npm run app:build                        # portable .exe собирается
   ```
 - Версии npm `@tauri-apps/*` закреплены на `~2.11` и должны совпадать с крейтом `tauri` по major.minor.
@@ -52,6 +53,8 @@ Wish Counter — portable-приложение для Windows, которое с
 ## Напоминания для владельца
 
 - 📌 На **этапе 6** попросить владельца прислать файл экспорта из Paimon.moe, чтобы сверить формат.
+- 📌 Отложено, но **обязательно**: шанс нужного 4★ (50%/75%) — см. «Отложено» в docs/roadmap.md.
+- Правила гаранта Genshin и решения владельца по ним — в docs/genshin-rules.md. Перед изменением расчёта сверяться с ним.
 - Установщик VS Build Tools просил перезагрузку (2026-11-14). Сборка работает и без неё.
 
 ## Журнал работы
@@ -95,4 +98,28 @@ games/genshin (`lib.tests.rs`). Промежуточный вариант `foo.r
 
 **Проверено:** 23 Rust-теста, clippy 0 предупреждений, svelte-check 0 ошибок, portable .exe собирается.
 
-**Следующий шаг:** этап 2 — домен молитв и расчёт гаранта Genshin.
+### 2026-11-15 — Этап 2: домен молитв и расчёт гаранта
+**Решения владельца:** счётчик 4★ не сбрасывается при 5★; шанс нужного 4★ отложен (досчитать позже);
+баннер новичка считается отдельно; показывать шанс персонажа с баннера и правило «3 проигрыша → гарант» (Capturing Radiance);
+примогемы — по игре в целом и по каждому баннеру.
+
+**Сделано:**
+1. Правила сверены по гайдам для версии 7.x и записаны в docs/genshin-rules.md.
+2. `domain::wish`: `Wish`, `WishId` (строка — 19 цифр не помещаются в JS number), `ItemId`, `BannerCode`, `ItemKind`,
+   `Rarity` (в JSON — число), `WishTime` (проверка формата `ГГГГ-ММ-ДД чч:мм:сс`).
+3. `domain::pity`: `PoolDefinition`/`PityRules`/`FiftyFiftyRule`/`CapturingRadianceRule`, `Probability` (сотые доли %),
+   трейт `FeaturedLookup` + `NoFeaturedData`, `PityTracker` (счётчики, номера молитв по гаранту, 50/50, серия проигрышей,
+   шанс следующего 5★ с баннера), `calculate_pool_statistics`, `annotate_wishes` (для таблицы на этапе 5).
+4. `GameModule` дополнен методами `pools()` и `featured_lookup()`. `game-genshin`: коды 100/200/301/302/400/500, 5 пулов.
+5. `application`: порт `WishRepository`, `StatisticsService` (+ `GameStatistics`, `PoolSummary`).
+   `infrastructure`: `InMemoryWishRepository` — временное пустое хранилище до SQLite.
+6. `app-desktop`: команда `get_game_statistics`, `AppState.game_catalog` теперь `Arc`.
+7. Интерфейс: `GameSummary` (всего молитв и примогемов), новый `BannerCard` (молитвы, примогемы, до гаранта 5★/4★ со
+   счётчиком), `FeaturedStatusView` (50/50, шанс, серия, правило Capturing Radiance); `i18n.t(key, params)`, `i18n.poolName`;
+   `demo-data.ts` для `npm run dev` в браузере.
+8. Vitest 5 подключён (`npm test`): тесты `format`, `interpolate`, `stats/featured`.
+
+**Проверено:** 62 Rust-теста, 11 тестов интерфейса; clippy 0 предупреждений; svelte-check 0 ошибок; portable .exe собирается.
+В окне приложения статистика пустая (история ещё не хранится), визуально проверялась только сборка.
+
+**Следующий шаг:** этап 3 — хранилище SQLite (заменить `InMemoryWishRepository` в `bootstrap.rs`).

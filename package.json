@@ -11,7 +11,9 @@
     "tauri": "tauri",
     "app:dev": "tauri dev",
     "app:build": "tauri build --no-bundle",
-    "app:build:installer": "tauri build"
+    "app:build:installer": "tauri build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@tauri-apps/api": "~2.11"
@@ -23,6 +25,7 @@
     "svelte": "^5.57.3",
     "svelte-check": "^4.7.8",
     "typescript": "^6.0.3",
-    "vite": "^8.3.8"
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
   }
 }

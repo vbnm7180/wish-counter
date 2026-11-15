@@ -9,3 +9,8 @@ use super::*;
 fn module_reports_genshin_id() {
     assert_eq!(GenshinModule.info().id.as_str(), GENSHIN_GAME_ID);
 }
+
+#[test]
+fn module_exposes_five_pools() {
+    assert_eq!(GenshinModule.pools().len(), 5);
+}

@@ -28,6 +28,8 @@
 | `npm run app:build` | Portable-сборка → `target/release/wish-counter.exe` |
 | `npm run app:build:installer` | Сборка установщиков NSIS/MSI (задел на будущее) |
 | `npm run check` | Проверка типов TypeScript/Svelte |
+| `npm test` | Unit-тесты интерфейса (Vitest) |
+| `npm run test:watch` | Тесты интерфейса с перезапуском при изменениях |
 | `cargo test --workspace` | Все тесты Rust |
 | `cargo clippy --workspace --all-targets` | Анализатор кода Rust |
 | `cargo fmt --all` | Автоформатирование Rust-кода |
@@ -52,10 +54,11 @@
 3. Добавить вариант в `enum Language` (`crates/domain/src/settings.rs`) с `#[serde(rename = "<код>")]`.
 
 ### …игру
-1. Создать крейт `crates/games/<игра>` по образцу `genshin`, реализовать трейт `GameModule`.
+1. Создать крейт `crates/games/<игра>` по образцу `genshin`, реализовать трейт `GameModule`:
+   `info()`, `pools()` (коды баннеров и правила гаранта, см. `genshin/src/pools/pools.rs`), `featured_lookup()`.
 2. Добавить крейт в `members` и `[workspace.dependencies]` корневого `Cargo.toml`.
 3. Зарегистрировать модуль в `build_state` (`crates/app-desktop/src/bootstrap.rs`).
-4. Добавить строку `'games.<id>.name'` в словари.
+4. Добавить строки `'games.<id>.name'` и `'<id>.banner.<pool_id>'` для каждого пула в словари.
 
 ## Стиль кода
 

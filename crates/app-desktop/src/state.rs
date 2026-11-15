@@ -1,14 +1,19 @@
 //! Общее состояние приложения, доступное всем командам Tauri.
 
-use application::services::{GameCatalog, SettingsService};
+use std::sync::Arc;
+
+use application::services::{GameCatalog, SettingsService, StatisticsService};
 
 /// Сервисы, которые нужны командам интерфейса.
 ///
 /// Tauri хранит этот объект (`Builder::manage`) и передаёт ссылку на него
 /// в каждую команду через параметр `tauri::State<AppState>`.
 pub struct AppState {
-    /// Каталог поддерживаемых игр.
-    pub game_catalog: GameCatalog,
+    /// Каталог поддерживаемых игр. В `Arc`, потому что им пользуется
+    /// и [`StatisticsService`].
+    pub game_catalog: Arc<GameCatalog>,
     /// Сервис пользовательских настроек.
     pub settings_service: SettingsService,
+    /// Сервис статистики молитв.
+    pub statistics_service: StatisticsService,
 }

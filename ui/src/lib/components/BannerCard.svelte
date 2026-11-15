@@ -1,29 +1,28 @@
 <!--
-  Карточка баннера: название, всего молитв, сколько до гарантов,
-  кнопка «Посмотреть». Пока данные — заглушки (null → «—»).
+  Карточка баннера: всего молитв, потраченные примогемы, сколько осталось
+  до гарантов 5★ и 4★, статус 50/50 и кнопка «Посмотреть» (таблица — этап 5).
 -->
 <script lang="ts">
+  import type { PityCounter, PoolSummary } from '../api/types';
+  import { formatNumber } from '../format/format';
   import { i18n } from '../i18n/index.svelte';
+  import FeaturedStatusView from './FeaturedStatusView.svelte';
 
   /** Свойства компонента. */
   interface Props {
     /** Название баннера (уже переведённое). */
     title: string;
-    /** Всего молитв на баннере или null, если данных нет. */
-    totalPulls: number | null;
-    /** Молитв до гаранта 5★ или null. */
-    pullsUntilFiveStar: number | null;
-    /** Молитв до гаранта 4★ или null. */
-    pullsUntilFourStar: number | null;
+    /** Статистика пула из ядра. */
+    pool: PoolSummary;
     /** Вызывается по кнопке «Посмотреть». Если не задан — кнопка неактивна. */
     onView?: () => void;
   }
 
-  let { title, totalPulls, pullsUntilFiveStar, pullsUntilFourStar, onView }: Props = $props();
+  let { title, pool, onView }: Props = $props();
 
-  /** Форматирует число или показывает прочерк, если значения нет. */
-  function display(value: number | null): string {
-    return value === null ? '—' : String(value);
+  /** Подпись «счётчик 34 / 90» под числом «до гаранта». */
+  function progress(counter: PityCounter): string {
+    return i18n.t('game.pity_progress', { current: counter.current, hard: counter.hard_pity });
   }
 </script>
 
@@ -31,12 +30,28 @@
   <h3>{title}</h3>
   <dl>
     <dt>{i18n.t('game.total_pulls')}</dt>
-    <dd>{display(totalPulls)}</dd>
-    <dt>{i18n.t('game.pity_5')}</dt>
-    <dd class="rarity-5">{display(pullsUntilFiveStar)}</dd>
-    <dt>{i18n.t('game.pity_4')}</dt>
-    <dd class="rarity-4">{display(pullsUntilFourStar)}</dd>
+    <dd>{formatNumber(pool.total_wishes, i18n.language)}</dd>
+
+    <dt>{i18n.t('game.primogems')}</dt>
+    <dd class="primogems">{formatNumber(pool.primogems_spent, i18n.language)}</dd>
+
+    <dt>
+      {i18n.t('game.pity_5')}
+      <span class="hint">{progress(pool.five_star)}</span>
+    </dt>
+    <dd class="rarity-5">{pool.five_star.remaining}</dd>
+
+    <dt>
+      {i18n.t('game.pity_4')}
+      <span class="hint">{progress(pool.four_star)}</span>
+    </dt>
+    <dd class="rarity-4">{pool.four_star.remaining}</dd>
   </dl>
+
+  {#if pool.featured}
+    <FeaturedStatusView status={pool.featured} />
+  {/if}
+
   <button class="view" disabled={!onView} onclick={onView}>{i18n.t('game.view')}</button>
 </article>
 
@@ -61,11 +76,19 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: var(--space-2) var(--space-4);
+    align-items: center;
     margin: 0;
   }
 
   dt {
+    display: flex;
+    flex-direction: column;
     color: var(--color-text-muted);
+  }
+
+  .hint {
+    font-size: 11px;
+    opacity: 0.8;
   }
 
   dd {
@@ -74,15 +97,22 @@
     text-align: right;
   }
 
+  .primogems {
+    color: var(--color-accent);
+  }
+
   .rarity-5 {
     color: var(--color-rarity-5);
+    font-size: 18px;
   }
 
   .rarity-4 {
     color: var(--color-rarity-4);
+    font-size: 18px;
   }
 
   .view {
+    margin-top: auto;
     padding: var(--space-2) var(--space-3);
     background: var(--color-accent);
     color: var(--color-accent-contrast);

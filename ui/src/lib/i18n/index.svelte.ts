@@ -7,6 +7,7 @@
 import type { LanguageCode } from '../api/types';
 import { en } from './locales/en';
 import { ru, type TranslationKey } from './locales/ru';
+import { interpolate, type TranslationParams } from './interpolate';
 
 export type { TranslationKey };
 
@@ -28,14 +29,23 @@ export const LANGUAGES: { code: LanguageCode; labelKey: TranslationKey }[] = [
 class I18n {
   language = $state<LanguageCode>('ru');
 
-  /** Возвращает строку на текущем языке (или сам ключ, если строки нет). */
-  t = (key: TranslationKey): string => DICTIONARIES[this.language][key] ?? key;
+  /**
+   * Возвращает строку на текущем языке (или сам ключ, если строки нет).
+   * Параметры подставляются вместо {имя}: t('game.pity_progress', { current: 5, hard: 90 }).
+   */
+  t = (key: TranslationKey, params?: TranslationParams): string =>
+    interpolate(DICTIONARIES[this.language][key] ?? key, params);
 
   /** Переводит название игры по её идентификатору (ключ games.<id>.name). */
-  gameName = (gameId: string): string => {
-    const key = `games.${gameId}.name` as TranslationKey;
-    return DICTIONARIES[this.language][key] ?? gameId;
-  };
+  gameName = (gameId: string): string => this.lookup(`games.${gameId}.name`, gameId);
+
+  /** Переводит название пула баннеров (ключ <игра>.banner.<пул>). */
+  poolName = (gameId: string, poolId: string): string => this.lookup(`${gameId}.banner.${poolId}`, poolId);
+
+  /** Ищет строку по ключу, собранному во время выполнения; если её нет — возвращает запасной текст. */
+  private lookup(key: string, fallback: string): string {
+    return DICTIONARIES[this.language][key as TranslationKey] ?? fallback;
+  }
 
   /** Меняет язык и обновляет атрибут lang у <html> (для доступности). */
   setLanguage(language: LanguageCode): void {

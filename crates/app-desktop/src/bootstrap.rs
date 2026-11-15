@@ -6,11 +6,12 @@
 
 use std::sync::Arc;
 
-use application::services::{GameCatalog, SettingsService};
+use application::services::{GameCatalog, SettingsService, StatisticsService};
 use game_genshin::GenshinModule;
 use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
 use infrastructure::settings::JsonSettingsRepository;
+use infrastructure::wishes::InMemoryWishRepository;
 
 use crate::commands;
 use crate::error::StartupError;
@@ -38,6 +39,7 @@ pub fn run() -> Result<(), StartupError> {
         .manage(state)
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
+            commands::games::get_game_statistics,
             commands::settings::get_settings,
             commands::settings::update_settings,
         ])
@@ -50,9 +52,12 @@ pub fn run() -> Result<(), StartupError> {
 /// Создаёт сервисы приложения и связывает их с реализациями.
 fn build_state(paths: &AppPaths) -> AppState {
     let settings_repository = Arc::new(JsonSettingsRepository::new(&paths.settings_file));
-    let game_catalog = GameCatalog::new().with_module(Arc::new(GenshinModule));
+    // ВРЕМЕННО: пустая история в памяти. На этапе 3 — хранилище SQLite.
+    let wish_repository = Arc::new(InMemoryWishRepository::new());
+    let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
 
     AppState {
+        statistics_service: StatisticsService::new(Arc::clone(&game_catalog), wish_repository),
         game_catalog,
         settings_service: SettingsService::new(settings_repository),
     }

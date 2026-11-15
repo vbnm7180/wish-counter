@@ -35,10 +35,10 @@
 
 | Крейт | Папка | Ответственность |
 |---|---|---|
-| `domain` | `crates/domain` | Сущности: `GameId`, `GameInfo`, `GameModule`, `AppSettings`, `ThemeId`, `Language` |
-| `application` | `crates/application` | Порты (`SettingsRepository`) и сервисы (`GameCatalog`, `SettingsService`) |
-| `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, `init_logging` |
-| `game-genshin` | `crates/games/genshin` | `GenshinModule`: реализация `GameModule` для Genshin Impact |
+| `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`; правила гаранта (`PoolDefinition`, `PityRules`) и расчёт (`PityTracker`) |
+| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`) |
+| `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, `InMemoryWishRepository` (до SQLite), `init_logging` |
+| `game-genshin` | `crates/games/genshin` | `GenshinModule`; коды баннеров и правила пулов (`pools.rs`) |
 | `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
 
 ### Как SOLID проявляется в коде
@@ -69,19 +69,30 @@ wish-counter/
 │   │   ├── game/
 │   │   │   ├── game.rs         # GameId, GameInfo, трейт GameModule
 │   │   │   └── game.tests.rs   # тесты game.rs (так устроены все модули с тестами)
-│   │   └── settings/
-│   │       ├── settings.rs     # AppSettings, ThemeId (с проверкой), Language
-│   │       └── settings.tests.rs
+│   │   ├── settings/
+│   │   │   ├── settings.rs     # AppSettings, ThemeId (с проверкой), Language
+│   │   │   └── settings.tests.rs
+│   │   ├── wish/
+│   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
+│   │   │   └── wish.tests.rs
+│   │   └── pity/
+│   │       ├── mod.rs          # описание модуля гаранта
+│   │       ├── rules.rs        # PoolId, Probability, PityRules, FiftyFiftyRule, CapturingRadianceRule, PoolDefinition
+│   │       ├── featured.rs     # трейт FeaturedLookup («с баннера ли 5★»), заглушка NoFeaturedData
+│   │       ├── statistics.rs   # PityCounter, FeaturedStatus, ChanceSource, WishAnnotation, PoolStatistics
+│   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
-│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, RepositoryError)
-│   │   └── services/       # game_catalog/, settings_service/: GameCatalog, SettingsService + тесты
+│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, RepositoryError)
+│   │   └── services/       # game_catalog/, settings_service/, statistics_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
-│   │   └── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
+│   │   ├── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
+│   │   └── wishes/         # in_memory_wish_repository/: InMemoryWishRepository (до этапа 3) + тесты
 │   ├── games/genshin/src/
 │   │   ├── lib.rs          # GenshinModule
-│   │   └── lib.tests.rs    # тесты
+│   │   ├── lib.tests.rs    # тесты
+│   │   └── pools/          # pools.rs: коды баннеров (banner_codes), пулы и правила + pools.tests.rs
 │   └── app-desktop/
 │       ├── tauri.conf.json # окно, CSP, сборка, установщик
 │       ├── capabilities/   # права интерфейса (минимальные)
@@ -91,7 +102,7 @@ wish-counter/
 │           ├── bootstrap.rs# composition root: создание и связывание объектов
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
-│           └── commands/   # команды Tauri: games.rs, settings.rs
+│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics), settings.rs
 ├── ui/
 │   ├── index.html
 │   └── src/
@@ -99,11 +110,13 @@ wish-counter/
 │       ├── App.svelte      # каркас: меню + текущая страница
 │       ├── pages/          # HomePage, GamePage, SettingsPage
 │       └── lib/
-│           ├── api/        # backend.ts (вызовы ядра), types.ts (типы данных ядра)
-│           ├── i18n/       # локализация: index.svelte.ts, locales/ru.ts, en.ts
+│           ├── api/        # backend.ts (вызовы ядра), types.ts (типы ядра), demo-data.ts (данные для браузера)
+│           ├── i18n/       # локализация: index.svelte.ts, interpolate.ts ({параметры}), locales/ru.ts, en.ts
+│           ├── format/     # format.ts: числа и проценты по языку + format.test.ts
+│           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
-│           └── components/ # Sidebar, BannerCard
+│           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView
 └── docs/                   # документация
 ```
 
@@ -118,6 +131,15 @@ data/
 ```
 
 С этапа 3 там же появятся база SQLite, а с этапа 4 — кэш справочников и картинок.
+
+## Поток данных: статистика молитв
+
+1. `GamePage.svelte` → `backend.getGameStatistics('genshin')` → `invoke('get_game_statistics', { gameId })`
+2. `commands::games::get_game_statistics` → `StatisticsService::game_statistics`
+3. Сервис берёт модуль игры из `GameCatalog`, молитвы — из `WishRepository` (в хронологическом порядке)
+4. Для каждого пула (`GameModule::pools`) молитвы фильтруются по кодам баннеров и передаются в
+   `calculate_pool_statistics`. `PityTracker` проходит по ним и считает счётчики и статус 50/50
+5. Сервис добавляет примогемы (`PoolDefinition::primogems_for`) и итоги по игре → JSON → карточки `BannerCard`
 
 ## Поток данных на примере смены темы
 

@@ -1,5 +1,5 @@
 // Типы данных, которыми интерфейс обменивается с Rust.
-// Должны совпадать со структурами из crates/domain (serde).
+// Должны совпадать со структурами из crates/domain и crates/application (serde).
 
 /** Код языка интерфейса (domain::settings::Language). */
 export type LanguageCode = 'ru' | 'en';
@@ -21,4 +21,53 @@ export interface GameInfo {
 export interface CommandError {
   code: string;
   message: string;
+}
+
+/** Счётчик гаранта одной редкости (domain::pity::statistics::PityCounter). */
+export interface PityCounter {
+  /** Молитв после последнего предмета этой редкости. */
+  current: number;
+  /** Жёсткий гарант (90, 80 или 10). */
+  hard_pity: number;
+  /** Сколько молитв осталось до гаранта (≥ 1). */
+  remaining: number;
+}
+
+/** Причина шанса получить предмет с баннера (domain ChanceSource). */
+export type ChanceSource = 'guaranteed' | 'capturing_radiance' | 'base';
+
+/** Статус 50/50 (domain FeaturedStatus). */
+export type FeaturedStatus =
+  | { state: 'unknown' }
+  | {
+      state: 'known';
+      /** Прошлое 50/50 проиграно — следующий 5★ гарантированно с баннера. */
+      guaranteed: boolean;
+      /** Сколько 50/50 проиграно подряд. */
+      losing_streak: number;
+      /** Сколько ещё проигрышей до гарантии Capturing Radiance (null — механики нет). */
+      losses_until_radiance: number | null;
+      /** Шанс, что следующий 5★ с баннера, в сотых долях процента (5500 = 55%). */
+      next_featured_chance: number;
+      chance_source: ChanceSource;
+    };
+
+/** Статистика пула баннеров (application PoolSummary + domain PoolStatistics). */
+export interface PoolSummary {
+  /** Идентификатор пула: character, weapon, chronicled, standard, beginner. */
+  pool_id: string;
+  primogems_spent: number;
+  total_wishes: number;
+  five_star: PityCounter;
+  four_star: PityCounter;
+  /** null — правило 50/50 к пулу не применяется. */
+  featured: FeaturedStatus | null;
+}
+
+/** Статистика игры (application GameStatistics). */
+export interface GameStatistics {
+  game_id: string;
+  total_wishes: number;
+  primogems_spent: number;
+  pools: PoolSummary[];
 }

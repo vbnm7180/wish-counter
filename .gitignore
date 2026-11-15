@@ -1,7 +1,7 @@
 # Сборка Rust
 /target/
 # Зависимости и сборка интерфейса
-/node_modules/
+node_modules/
 /dist/
 # Файлы, которые Tauri генерирует при сборке
 /crates/app-desktop/gen/

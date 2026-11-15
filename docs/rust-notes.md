@@ -34,6 +34,20 @@
 - `Serialize/Deserialize` (serde) — преобразование в JSON и обратно.
   `#[serde(transparent)]`, `#[serde(try_from = "String")]`, `#[serde(default)]` — см. `domain/src/settings.rs`.
 
+## Приёмы из расчёта гаранта (этап 2)
+- **Время жизни** `'a` в `PityTracker<'a>` (`domain/src/pity/tracker/tracker.rs`) — трекер хранит ссылки
+  на правила и не может жить дольше них. Компилятор проверяет это сам.
+- `std::mem::take(&mut x)` возвращает значение и записывает на его место значение по умолчанию (для чисел 0).
+  Так «забрать счётчик и обнулить» записывается одной операцией.
+- `const fn` можно вызывать при компиляции: `const CHARACTER: BannerCode = BannerCode::new(301);`.
+  `assert!` внутри `const fn` превращает ошибку в константе в ошибку компиляции (`Probability::from_basis_points`).
+- `impl IntoIterator<Item = &'w Wish>` в аргументе принимает и срез, и итератор с фильтром, без копирования молитв
+  (`calculate_pool_statistics`).
+- `Option` + `?`: `self.rules.fifty_fifty.as_ref()?;` — если правила нет, функция сразу возвращает `None`.
+- `match (a, b) { (true, true) => ..., (false, _) => ... }` — сопоставление сразу по двум значениям (`FiftyFiftyState::apply`).
+- **serde:** `#[serde(tag = "state")]` добавляет поле-метку варианта enum; `#[serde(flatten)]` раскрывает вложенную
+  структуру в родительскую; `#[serde(into = "u8", try_from = "u8")]` — `Rarity` в JSON выглядит как число.
+
 ## Тесты
 - Тесты подключаются из отдельного файла: `#[cfg(test)] #[path = "game.tests.rs"] mod tests;` в конце `game/game.rs`.
   Атрибут `#[cfg(test)]` означает, что модуль компилируется только при `cargo test`, поэтому в `.exe` тесты не попадают.

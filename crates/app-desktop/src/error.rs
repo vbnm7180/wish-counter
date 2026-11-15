@@ -1,6 +1,7 @@
 //! Ошибки уровня приложения: запуска и выполнения команд.
 
 use application::ports::RepositoryError;
+use application::services::StatisticsError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
 use serde::Serialize;
@@ -45,6 +46,22 @@ impl From<RepositoryError> for CommandError {
         Self {
             code,
             message: error.to_string(),
+        }
+    }
+}
+
+impl From<StatisticsError> for CommandError {
+    /// Преобразует ошибку расчёта статистики в ошибку команды.
+    fn from(error: StatisticsError) -> Self {
+        match error {
+            StatisticsError::Repository(repository_error) => repository_error.into(),
+            StatisticsError::UnknownGame(_) => {
+                tracing::warn!(%error, "запрошена неизвестная игра");
+                Self {
+                    code: "unknown_game",
+                    message: error.to_string(),
+                }
+            }
         }
     }
 }

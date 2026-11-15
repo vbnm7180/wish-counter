@@ -1,12 +1,24 @@
 //! # Модуль игры Genshin Impact
 //!
-//! Описывает Genshin Impact для приложения. Сейчас модуль только
-//! сообщает идентификатор игры. На следующих этапах сюда добавятся:
-//! - типы баннеров (персонажи, оружие, стандартный, хроники, новичковый);
-//! - правила гаранта (90/80 молитв, мягкий гарант, 50/50, Capturing Radiance);
-//! - разбор истории молитв из игры и из файлов Paimon.moe / UIGF.
+//! Описывает Genshin Impact для приложения:
+//! - идентификатор игры;
+//! - баннеры и правила гаранта ([`pools`]): 90/80 молитв, 4★ каждые 10,
+//!   50/50 и Capturing Radiance на баннере персонажа.
+//!
+//! На следующих этапах сюда добавятся данные о баннерах (для 50/50)
+//! и разбор истории молитв из игры и из файлов Paimon.moe / UIGF.
+
+use std::sync::Arc;
 
 use domain::game::{GameId, GameInfo, GameModule};
+use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
+use domain::pity::rules::PoolDefinition;
+
+// Код модуля лежит в папке модуля вместе с тестами: pools/pools.rs
+#[path = "pools/pools.rs"]
+pub mod pools;
+
+pub use pools::{banner_codes, pool_ids};
 
 /// Идентификатор Genshin Impact внутри приложения.
 pub const GENSHIN_GAME_ID: &str = "genshin";
@@ -28,6 +40,16 @@ impl GameModule for GenshinModule {
             id: GameId::new(GENSHIN_GAME_ID),
             display_order: GENSHIN_DISPLAY_ORDER,
         }
+    }
+
+    /// Возвращает пулы баннеров Genshin Impact.
+    fn pools(&self) -> Vec<PoolDefinition> {
+        pools::genshin_pools()
+    }
+
+    /// Пока данных о баннерах нет (этап 4), статус 50/50 будет «неизвестен».
+    fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
+        Arc::new(NoFeaturedData)
     }
 }
 
