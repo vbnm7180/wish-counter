@@ -5,6 +5,7 @@
 
 use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
 use domain::pity::rules::PoolDefinition;
+use domain::reference::ReferenceSnapshot;
 
 use super::*;
 
@@ -28,6 +29,15 @@ impl GameModule for FakeGame {
 
     fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
         Arc::new(NoFeaturedData)
+    }
+
+    fn embedded_reference(&self) -> ReferenceSnapshot {
+        ReferenceSnapshot {
+            source_revision: "test".into(),
+            generated_at: "2026-01-01 00:00:00".into(),
+            items: Vec::new(),
+            banners: Vec::new(),
+        }
     }
 }
 

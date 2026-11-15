@@ -1,0 +1,8984 @@
+{
+  "source_revision": "4b873a6decad0384665084c69e9927a9fa266555",
+  "generated_at": "2026-11-15 17:42:36",
+  "items": [
+    {
+      "id": "aino",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Aino",
+        "ru": "Айно"
+      }
+    },
+    {
+      "id": "albedo",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Albedo",
+        "ru": "Альбедо"
+      }
+    },
+    {
+      "id": "alhaitham",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Alhaitham",
+        "ru": "Аль-Хайтам"
+      }
+    },
+    {
+      "id": "aloy",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Aloy",
+        "ru": "Элой"
+      }
+    },
+    {
+      "id": "alyosha",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Alyosha",
+        "ru": "Алёша"
+      }
+    },
+    {
+      "id": "amber",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Amber",
+        "ru": "Эмбер"
+      }
+    },
+    {
+      "id": "arataki_itto",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Arataki Itto",
+        "ru": "Итто"
+      }
+    },
+    {
+      "id": "arlecchino",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Arlecchino",
+        "ru": "Арлекино"
+      }
+    },
+    {
+      "id": "baizhu",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Baizhu",
+        "ru": "Бай Чжу"
+      }
+    },
+    {
+      "id": "barbara",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Barbara",
+        "ru": "Барбара"
+      }
+    },
+    {
+      "id": "beidou",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Beidou",
+        "ru": "Бэй Доу"
+      }
+    },
+    {
+      "id": "bennett",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Bennett",
+        "ru": "Беннет"
+      }
+    },
+    {
+      "id": "candace",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Candace",
+        "ru": "Кандакия"
+      }
+    },
+    {
+      "id": "charlotte",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Charlotte",
+        "ru": "Шарлотта"
+      }
+    },
+    {
+      "id": "chasca",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Chasca",
+        "ru": "Часка"
+      }
+    },
+    {
+      "id": "chevreuse",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Chevreuse",
+        "ru": "Шеврёз"
+      }
+    },
+    {
+      "id": "chiori",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Chiori",
+        "ru": "Тиори"
+      }
+    },
+    {
+      "id": "chongyun",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Chongyun",
+        "ru": "Чун Юнь"
+      }
+    },
+    {
+      "id": "citlali",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Citlali",
+        "ru": "Ситлали"
+      }
+    },
+    {
+      "id": "clorinde",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Clorinde",
+        "ru": "Клоринда"
+      }
+    },
+    {
+      "id": "collei",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Collei",
+        "ru": "Коллеи"
+      }
+    },
+    {
+      "id": "columbina",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Columbina",
+        "ru": "Коломбина"
+      }
+    },
+    {
+      "id": "cyno",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Cyno",
+        "ru": "Сайно"
+      }
+    },
+    {
+      "id": "dahlia",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Dahlia",
+        "ru": "Далия"
+      }
+    },
+    {
+      "id": "dehya",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Dehya",
+        "ru": "Дэхья"
+      }
+    },
+    {
+      "id": "diluc",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Diluc",
+        "ru": "Дилюк"
+      }
+    },
+    {
+      "id": "diona",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Diona",
+        "ru": "Диона"
+      }
+    },
+    {
+      "id": "dori",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Dori",
+        "ru": "Дори"
+      }
+    },
+    {
+      "id": "durin",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Durin",
+        "ru": "Дурин"
+      }
+    },
+    {
+      "id": "emilie",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Emilie",
+        "ru": "Эмилия"
+      }
+    },
+    {
+      "id": "escoffier",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Escoffier",
+        "ru": "Эскофье"
+      }
+    },
+    {
+      "id": "eula",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Eula",
+        "ru": "Эола"
+      }
+    },
+    {
+      "id": "faruzan",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Faruzan",
+        "ru": "Фарузан"
+      }
+    },
+    {
+      "id": "fischl",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Fischl",
+        "ru": "Фишль"
+      }
+    },
+    {
+      "id": "flins",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Flins",
+        "ru": "Флинс"
+      }
+    },
+    {
+      "id": "freminet",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Freminet",
+        "ru": "Фремине"
+      }
+    },
+    {
+      "id": "furina",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Furina",
+        "ru": "Фурина"
+      }
+    },
+    {
+      "id": "gaming",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Gaming",
+        "ru": "Ка Мин"
+      }
+    },
+    {
+      "id": "ganyu",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Ganyu",
+        "ru": "Гань Юй"
+      }
+    },
+    {
+      "id": "gorou",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Gorou",
+        "ru": "Горо"
+      }
+    },
+    {
+      "id": "hu_tao",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Hu Tao",
+        "ru": "Ху Тао"
+      }
+    },
+    {
+      "id": "iansan",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Iansan",
+        "ru": "Иансан"
+      }
+    },
+    {
+      "id": "ifa",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Ifa",
+        "ru": "Ифа"
+      }
+    },
+    {
+      "id": "illuga",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Illuga",
+        "ru": "Иллуги"
+      }
+    },
+    {
+      "id": "ineffa",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Ineffa",
+        "ru": "Инеффа"
+      }
+    },
+    {
+      "id": "jahoda",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Jahoda",
+        "ru": "Ягода"
+      }
+    },
+    {
+      "id": "jean",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Jean",
+        "ru": "Джинн"
+      }
+    },
+    {
+      "id": "kachina",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kachina",
+        "ru": "Качина"
+      }
+    },
+    {
+      "id": "kaedehara_kazuha",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Kaedehara Kazuha",
+        "ru": "Кадзуха"
+      }
+    },
+    {
+      "id": "kaeya",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kaeya",
+        "ru": "Кэйа"
+      }
+    },
+    {
+      "id": "kamisato_ayaka",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Kamisato Ayaka",
+        "ru": "Аяка"
+      }
+    },
+    {
+      "id": "kamisato_ayato",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Kamisato Ayato",
+        "ru": "Аято"
+      }
+    },
+    {
+      "id": "kaveh",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kaveh",
+        "ru": "Кавех"
+      }
+    },
+    {
+      "id": "keqing",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Keqing",
+        "ru": "Кэ Цин"
+      }
+    },
+    {
+      "id": "kinich",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Kinich",
+        "ru": "Кинич"
+      }
+    },
+    {
+      "id": "kirara",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kirara",
+        "ru": "Кирара"
+      }
+    },
+    {
+      "id": "klee",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Klee",
+        "ru": "Кли"
+      }
+    },
+    {
+      "id": "kujou_sara",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kujou Sara",
+        "ru": "Сара"
+      }
+    },
+    {
+      "id": "kuki_shinobu",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Kuki Shinobu",
+        "ru": "Синобу"
+      }
+    },
+    {
+      "id": "lan_yan",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Lan Yan",
+        "ru": "Лань Янь"
+      }
+    },
+    {
+      "id": "lauma",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Lauma",
+        "ru": "Лаума"
+      }
+    },
+    {
+      "id": "layla",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Layla",
+        "ru": "Лайла"
+      }
+    },
+    {
+      "id": "linnea",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Linnea",
+        "ru": "Линнея"
+      }
+    },
+    {
+      "id": "lisa",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Lisa",
+        "ru": "Лиза"
+      }
+    },
+    {
+      "id": "lohen",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Lohen",
+        "ru": "Лоэн"
+      }
+    },
+    {
+      "id": "lynette",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Lynette",
+        "ru": "Линетт"
+      }
+    },
+    {
+      "id": "lyney",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Lyney",
+        "ru": "Лини"
+      }
+    },
+    {
+      "id": "mavuika",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Mavuika",
+        "ru": "Мавуика"
+      }
+    },
+    {
+      "id": "mika",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Mika",
+        "ru": "Мика"
+      }
+    },
+    {
+      "id": "mitya",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Mitya",
+        "ru": "Митя"
+      }
+    },
+    {
+      "id": "mona",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Mona",
+        "ru": "Мона"
+      }
+    },
+    {
+      "id": "mualani",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Mualani",
+        "ru": "Муалани"
+      }
+    },
+    {
+      "id": "nahida",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Nahida",
+        "ru": "Нахида"
+      }
+    },
+    {
+      "id": "navia",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Navia",
+        "ru": "Навия"
+      }
+    },
+    {
+      "id": "nefer",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Nefer",
+        "ru": "Нефер"
+      }
+    },
+    {
+      "id": "neuvillette",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Neuvillette",
+        "ru": "Нёвиллет"
+      }
+    },
+    {
+      "id": "nicole",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Nicole",
+        "ru": "Николь"
+      }
+    },
+    {
+      "id": "nilou",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Nilou",
+        "ru": "Нилу"
+      }
+    },
+    {
+      "id": "ningguang",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Ningguang",
+        "ru": "Нин Гуан"
+      }
+    },
+    {
+      "id": "noelle",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Noelle",
+        "ru": "Ноэлль"
+      }
+    },
+    {
+      "id": "odette",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Odette",
+        "ru": "Одетта"
+      }
+    },
+    {
+      "id": "ororon",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Ororon",
+        "ru": "Оророн"
+      }
+    },
+    {
+      "id": "prune",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Prune",
+        "ru": "Прюн"
+      }
+    },
+    {
+      "id": "qiqi",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Qiqi",
+        "ru": "Ци Ци"
+      }
+    },
+    {
+      "id": "raiden_shogun",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Raiden Shogun",
+        "ru": "Райдэн"
+      }
+    },
+    {
+      "id": "razor",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Razor",
+        "ru": "Рэйзор"
+      }
+    },
+    {
+      "id": "rosaria",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Rosaria",
+        "ru": "Розария"
+      }
+    },
+    {
+      "id": "sandrone",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Sandrone",
+        "ru": "Сандроне"
+      }
+    },
+    {
+      "id": "sangonomiya_kokomi",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Sangonomiya Kokomi",
+        "ru": "Кокоми"
+      }
+    },
+    {
+      "id": "sayu",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Sayu",
+        "ru": "Саю"
+      }
+    },
+    {
+      "id": "sethos",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Sethos",
+        "ru": "Сетос"
+      }
+    },
+    {
+      "id": "shenhe",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Shenhe",
+        "ru": "Шэнь Хэ"
+      }
+    },
+    {
+      "id": "shikanoin_heizou",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Shikanoin Heizou",
+        "ru": "Хэйдзо"
+      }
+    },
+    {
+      "id": "sigewinne",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Sigewinne",
+        "ru": "Сиджвин"
+      }
+    },
+    {
+      "id": "skirk",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Skirk",
+        "ru": "Скирк"
+      }
+    },
+    {
+      "id": "sucrose",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Sucrose",
+        "ru": "Сахароза"
+      }
+    },
+    {
+      "id": "tartaglia",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Tartaglia",
+        "ru": "Тарталья"
+      }
+    },
+    {
+      "id": "thoma",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Thoma",
+        "ru": "Тома"
+      }
+    },
+    {
+      "id": "tighnari",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Tighnari",
+        "ru": "Тигнари"
+      }
+    },
+    {
+      "id": "traveler_anemo",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Anemo)",
+        "ru": "Путешественник (Анемо)"
+      }
+    },
+    {
+      "id": "traveler_geo",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Geo)",
+        "ru": "Путешественник (Гео)"
+      }
+    },
+    {
+      "id": "traveler_electro",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Electro)",
+        "ru": "Путешественник (Электро)"
+      }
+    },
+    {
+      "id": "traveler_dendro",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Dendro)",
+        "ru": "Путешественник (Дендро)"
+      }
+    },
+    {
+      "id": "traveler_hydro",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Hydro)",
+        "ru": "Traveler (Hydro)"
+      }
+    },
+    {
+      "id": "traveler_pyro",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Traveler (Pyro)",
+        "ru": "Traveler (Pyro)"
+      }
+    },
+    {
+      "id": "valeriy",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Valeriy",
+        "ru": "Валерий"
+      }
+    },
+    {
+      "id": "varesa",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Varesa",
+        "ru": "Вареса"
+      }
+    },
+    {
+      "id": "varka",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Varka",
+        "ru": "Варка"
+      }
+    },
+    {
+      "id": "venti",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Venti",
+        "ru": "Венти"
+      }
+    },
+    {
+      "id": "vesna",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Vesna",
+        "ru": "Весна"
+      }
+    },
+    {
+      "id": "vodyanitsa",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Vodyanitsa",
+        "ru": "Водяница"
+      }
+    },
+    {
+      "id": "wanderer",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Wanderer",
+        "ru": "Странник"
+      }
+    },
+    {
+      "id": "wriothesley",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Wriothesley",
+        "ru": "Ризли"
+      }
+    },
+    {
+      "id": "xiangling",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Xiangling",
+        "ru": "Сян Лин"
+      }
+    },
+    {
+      "id": "xianyun",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Xianyun",
+        "ru": "Сянь Юнь"
+      }
+    },
+    {
+      "id": "xiao",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Xiao",
+        "ru": "Сяо"
+      }
+    },
+    {
+      "id": "xilonen",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Xilonen",
+        "ru": "Шилонен"
+      }
+    },
+    {
+      "id": "xingqiu",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Xingqiu",
+        "ru": "Син Цю"
+      }
+    },
+    {
+      "id": "xinyan",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Xinyan",
+        "ru": "Синь Янь"
+      }
+    },
+    {
+      "id": "yae_miko",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Yae Miko",
+        "ru": "Яэ Мико"
+      }
+    },
+    {
+      "id": "yanfei",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Yanfei",
+        "ru": "Янь Фэй"
+      }
+    },
+    {
+      "id": "yaoyao",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Yaoyao",
+        "ru": "Яо Яо"
+      }
+    },
+    {
+      "id": "yelan",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Yelan",
+        "ru": "Е Лань"
+      }
+    },
+    {
+      "id": "yoimiya",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Yoimiya",
+        "ru": "Ёимия"
+      }
+    },
+    {
+      "id": "yumemizuki_mizuki",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Yumemizuki Mizuki",
+        "ru": "Мидзуки"
+      }
+    },
+    {
+      "id": "yun_jin",
+      "kind": "character",
+      "rarity": 4,
+      "name": {
+        "en": "Yun Jin",
+        "ru": "Юнь Цзинь"
+      }
+    },
+    {
+      "id": "zhongli",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Zhongli",
+        "ru": "Чжун Ли"
+      }
+    },
+    {
+      "id": "zibai",
+      "kind": "character",
+      "rarity": 5,
+      "name": {
+        "en": "Zibai",
+        "ru": "Цзы Бай"
+      }
+    },
+    {
+      "id": "wolfs_gravestone",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Wolf's Gravestone",
+        "ru": "Волчья погибель"
+      }
+    },
+    {
+      "id": "aquila_favonia",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Aquila Favonia",
+        "ru": "Меч Сокола"
+      }
+    },
+    {
+      "id": "lost_prayer_to_the_sacred_winds",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Lost Prayer to the Sacred Winds",
+        "ru": "Молитва святым ветрам"
+      }
+    },
+    {
+      "id": "skyward_harp",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Skyward Harp",
+        "ru": "Небесное крыло"
+      }
+    },
+    {
+      "id": "skyward_pride",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Skyward Pride",
+        "ru": "Небесное величие"
+      }
+    },
+    {
+      "id": "skyward_spine",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Skyward Spine",
+        "ru": "Небесная ось"
+      }
+    },
+    {
+      "id": "memory_of_dust",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Memory of Dust",
+        "ru": "Память о пыли"
+      }
+    },
+    {
+      "id": "the_unforged",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "The Unforged",
+        "ru": "Некованый"
+      }
+    },
+    {
+      "id": "vortex_vanquisher",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Vortex Vanquisher",
+        "ru": "Покоритель вихря"
+      }
+    },
+    {
+      "id": "primordial_jade_winged-spear",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Primordial Jade Winged-Spear",
+        "ru": "Нефритовый коршун"
+      }
+    },
+    {
+      "id": "summit_shaper",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Summit Shaper",
+        "ru": "Кромсатель пиков"
+      }
+    },
+    {
+      "id": "skyward_blade",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Skyward Blade",
+        "ru": "Небесный меч"
+      }
+    },
+    {
+      "id": "amos_bow",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Amos' Bow",
+        "ru": "Лук Амос"
+      }
+    },
+    {
+      "id": "skyward_atlas",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Skyward Atlas",
+        "ru": "Небесный атлас"
+      }
+    },
+    {
+      "id": "the_flute",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Flute",
+        "ru": "Меч-флейта"
+      }
+    },
+    {
+      "id": "sacrificial_sword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificial Sword",
+        "ru": "Церемониальный меч"
+      }
+    },
+    {
+      "id": "royal_longsword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Royal Longsword",
+        "ru": "Меч аристократов"
+      }
+    },
+    {
+      "id": "eye_of_perception",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Eye of Perception",
+        "ru": "Око сознания"
+      }
+    },
+    {
+      "id": "iron_sting",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Iron Sting",
+        "ru": "Стальное жало"
+      }
+    },
+    {
+      "id": "prototype_rancour",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prototype Rancour",
+        "ru": "Прототип: Злоба"
+      }
+    },
+    {
+      "id": "lions_roar",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Lion's Roar",
+        "ru": "Драконий рык"
+      }
+    },
+    {
+      "id": "serpent_spine",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Serpent Spine",
+        "ru": "Меч драконьей кости"
+      }
+    },
+    {
+      "id": "prototype_crescent",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prototype Crescent",
+        "ru": "Прототип: Полумесяц"
+      }
+    },
+    {
+      "id": "blackcliff_longsword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackcliff Longsword",
+        "ru": "Черногорский длинный меч"
+      }
+    },
+    {
+      "id": "dragons_bane",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Dragon's Bane",
+        "ru": "Гроза драконов"
+      }
+    },
+    {
+      "id": "blackcliff_pole",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackcliff Pole",
+        "ru": "Черногорская пика"
+      }
+    },
+    {
+      "id": "the_black_sword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Black Sword",
+        "ru": "Чёрный меч"
+      }
+    },
+    {
+      "id": "crescent_pike",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Crescent Pike",
+        "ru": "Пика полумесяца"
+      }
+    },
+    {
+      "id": "the_viridescent_hunt",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Viridescent Hunt",
+        "ru": "Зелёный лук"
+      }
+    },
+    {
+      "id": "favonius_lance",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Favonius Lance",
+        "ru": "Копьё Фавония"
+      }
+    },
+    {
+      "id": "snow-tombed_starsilver",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Snow-Tombed Starsilver",
+        "ru": "Заснеженное звёздное серебро"
+      }
+    },
+    {
+      "id": "festering_desire",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Festering Desire",
+        "ru": "Осквернённое желание"
+      }
+    },
+    {
+      "id": "frostbearer",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Frostbearer",
+        "ru": "Плод вечной мерзлоты"
+      }
+    },
+    {
+      "id": "royal_spear",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Royal Spear",
+        "ru": "Королевское копьё"
+      }
+    },
+    {
+      "id": "sacrificial_greatsword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificial Greatsword",
+        "ru": "Церемониальный двуручный меч"
+      }
+    },
+    {
+      "id": "sword_of_descension",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sword of Descension",
+        "ru": "Меч нисхождения"
+      }
+    },
+    {
+      "id": "the_alley_flash",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Alley Flash",
+        "ru": "Вспышка во тьме"
+      }
+    },
+    {
+      "id": "deathmatch",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Deathmatch",
+        "ru": "Смертельный бой"
+      }
+    },
+    {
+      "id": "favonius_sword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Favonius Sword",
+        "ru": "Меч Фавония"
+      }
+    },
+    {
+      "id": "alley_hunter",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Alley Hunter",
+        "ru": "Охотник во тьме"
+      }
+    },
+    {
+      "id": "lithic_spear",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Lithic Spear",
+        "ru": "Каменное копьё"
+      }
+    },
+    {
+      "id": "wine_and_song",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Wine and Song",
+        "ru": "Вино и песни"
+      }
+    },
+    {
+      "id": "blackcliff_warbow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackcliff Warbow",
+        "ru": "Черногорский боевой лук"
+      }
+    },
+    {
+      "id": "blackcliff_slasher",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackcliff Slasher",
+        "ru": "Черногорская бритва"
+      }
+    },
+    {
+      "id": "lithic_blade",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Lithic Blade",
+        "ru": "Каменный меч"
+      }
+    },
+    {
+      "id": "prototype_starglitter",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prototype Starglitter",
+        "ru": "Прототип: Звёздный блеск"
+      }
+    },
+    {
+      "id": "whiteblind",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Whiteblind",
+        "ru": "Белая тень"
+      }
+    },
+    {
+      "id": "the_widsith",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Widsith",
+        "ru": "Песнь странника"
+      }
+    },
+    {
+      "id": "compound_bow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Compound Bow",
+        "ru": "Составной лук"
+      }
+    },
+    {
+      "id": "favonius_warbow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Favonius Warbow",
+        "ru": "Боевой лук Фавония"
+      }
+    },
+    {
+      "id": "royal_bow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Royal Bow",
+        "ru": "Королевский лук"
+      }
+    },
+    {
+      "id": "rust",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Rust",
+        "ru": "Ржавый лук"
+      }
+    },
+    {
+      "id": "the_stringless",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Stringless",
+        "ru": "Бесструнный"
+      }
+    },
+    {
+      "id": "sacrificial_bow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificial Bow",
+        "ru": "Церемониальный лук"
+      }
+    },
+    {
+      "id": "blackcliff_agate",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackcliff Agate",
+        "ru": "Черногорский агат"
+      }
+    },
+    {
+      "id": "favonius_codex",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Favonius Codex",
+        "ru": "Кодекс Фавония"
+      }
+    },
+    {
+      "id": "mappa_mare",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Mappa Mare",
+        "ru": "Морской атлас"
+      }
+    },
+    {
+      "id": "prototype_amber",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prototype Amber",
+        "ru": "Прототип: Янтарь"
+      }
+    },
+    {
+      "id": "royal_grimoire",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Royal Grimoire",
+        "ru": "Королевский гримуар"
+      }
+    },
+    {
+      "id": "sacrificial_fragments",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificial Fragments",
+        "ru": "Церемониальные мемуары"
+      }
+    },
+    {
+      "id": "solar_pearl",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Solar Pearl",
+        "ru": "Солнечная жемчужина"
+      }
+    },
+    {
+      "id": "dragonspine_spear",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Dragonspine Spear",
+        "ru": "Копьё Драконьего хребта"
+      }
+    },
+    {
+      "id": "favonius_greatsword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Favonius Greatsword",
+        "ru": "Двуручный меч Фавония"
+      }
+    },
+    {
+      "id": "the_bell",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Bell",
+        "ru": "Меч-колокол"
+      }
+    },
+    {
+      "id": "royal_greatsword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Royal Greatsword",
+        "ru": "Королевский двуручный меч"
+      }
+    },
+    {
+      "id": "rainslasher",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Rainslasher",
+        "ru": "Дождерез"
+      }
+    },
+    {
+      "id": "prototype_archaic",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prototype Archaic",
+        "ru": "Прототип: Архаичный"
+      }
+    },
+    {
+      "id": "ferrous_shadow",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Ferrous Shadow",
+        "ru": "Металлическая тень"
+      }
+    },
+    {
+      "id": "debate_club",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Debate Club",
+        "ru": "Дубина переговоров"
+      }
+    },
+    {
+      "id": "dark_iron_sword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Dark Iron Sword",
+        "ru": "Тёмный железный меч"
+      }
+    },
+    {
+      "id": "cool_steel",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Cool Steel",
+        "ru": "Холодное лезвие"
+      }
+    },
+    {
+      "id": "otherworldly_story",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Otherworldly Story",
+        "ru": "Потусторонняя история"
+      }
+    },
+    {
+      "id": "halberd",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Halberd",
+        "ru": "Алебарда Миллелита"
+      }
+    },
+    {
+      "id": "slingshot",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Slingshot",
+        "ru": "Рогатка"
+      }
+    },
+    {
+      "id": "sharpshooters_oath",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Sharpshooter's Oath",
+        "ru": "Клятва стрелка"
+      }
+    },
+    {
+      "id": "raven_bow",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Raven Bow",
+        "ru": "Лук ворона"
+      }
+    },
+    {
+      "id": "black_tassel",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Black Tassel",
+        "ru": "Чёрная кисть"
+      }
+    },
+    {
+      "id": "skyrider_greatsword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Skyrider Greatsword",
+        "ru": "Большой меч небесного всадника"
+      }
+    },
+    {
+      "id": "harbinger_of_dawn",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Harbinger of Dawn",
+        "ru": "Предвестник зари"
+      }
+    },
+    {
+      "id": "recurve_bow",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Recurve Bow",
+        "ru": "Изогнутый лук"
+      }
+    },
+    {
+      "id": "bloodtainted_greatsword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Bloodtainted Greatsword",
+        "ru": "Меч драконьей крови"
+      }
+    },
+    {
+      "id": "white_iron_greatsword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "White Iron Greatsword",
+        "ru": "Меч из белого железа"
+      }
+    },
+    {
+      "id": "white_tassel",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "White Tassel",
+        "ru": "Белая кисть"
+      }
+    },
+    {
+      "id": "skyrider_sword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Skyrider Sword",
+        "ru": "Меч небесного всадника"
+      }
+    },
+    {
+      "id": "messenger",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Messenger",
+        "ru": "Посыльный"
+      }
+    },
+    {
+      "id": "emerald_orb",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Emerald Orb",
+        "ru": "Изумрудный шар"
+      }
+    },
+    {
+      "id": "travelers_handy_sword",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Traveler's Handy Sword",
+        "ru": "Меч путешественника"
+      }
+    },
+    {
+      "id": "twin_nephrite",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Twin Nephrite",
+        "ru": "Парный нефрит"
+      }
+    },
+    {
+      "id": "fillet_blade",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Fillet Blade",
+        "ru": "Филейный нож"
+      }
+    },
+    {
+      "id": "thrilling_tales_of_dragon_slayers",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Thrilling Tales of Dragon Slayers",
+        "ru": "Эпос о драконоборцах"
+      }
+    },
+    {
+      "id": "magic_guide",
+      "kind": "weapon",
+      "rarity": 3,
+      "name": {
+        "en": "Magic Guide",
+        "ru": "Руководство по магии"
+      }
+    },
+    {
+      "id": "primordial_jade_cutter",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Primordial Jade Cutter",
+        "ru": "Драгоценный омут"
+      }
+    },
+    {
+      "id": "staff_of_homa",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Staff of Homa",
+        "ru": "Посох Хомы"
+      }
+    },
+    {
+      "id": "elegy_for_the_end",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Elegy for the End",
+        "ru": "Элегия погибели"
+      }
+    },
+    {
+      "id": "windblume_ode",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Windblume Ode",
+        "ru": "Ода анемонии"
+      }
+    },
+    {
+      "id": "song_of_broken_pines",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Song of Broken Pines",
+        "ru": "Песнь разбитых сосен"
+      }
+    },
+    {
+      "id": "mitternachts_waltz",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Mitternachts Waltz",
+        "ru": "Вальс Нирваны Ночи"
+      }
+    },
+    {
+      "id": "dodoco_tales",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Dodoco Tales",
+        "ru": "Истории Додоко"
+      }
+    },
+    {
+      "id": "freedom-sworn",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Freedom-Sworn",
+        "ru": "Клятва свободы"
+      }
+    },
+    {
+      "id": "mistsplitter_reforged",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Mistsplitter Reforged",
+        "ru": "Рассекающий туман"
+      }
+    },
+    {
+      "id": "thundering_pulse",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Thundering Pulse",
+        "ru": "Громовой пульс"
+      }
+    },
+    {
+      "id": "amenoma_kageuchi",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Amenoma Kageuchi",
+        "ru": "Амэнома Кагэути"
+      }
+    },
+    {
+      "id": "hakushin_ring",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Hakushin Ring",
+        "ru": "Кольцо Хакусин"
+      }
+    },
+    {
+      "id": "hamayumi",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Hamayumi",
+        "ru": "Хамаюми"
+      }
+    },
+    {
+      "id": "katsuragikiri_nagamasa",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Katsuragikiri Nagamasa",
+        "ru": "Кацурагикири Нагамаса"
+      }
+    },
+    {
+      "id": "kitain_cross_spear",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Kitain Cross Spear",
+        "ru": "Крест-копьё Китаин"
+      }
+    },
+    {
+      "id": "engulfing_lightning",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Engulfing Lightning",
+        "ru": "Сияющая жатва"
+      }
+    },
+    {
+      "id": "the_catch",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "\"The Catch\"",
+        "ru": "«Улов»"
+      }
+    },
+    {
+      "id": "predator",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Predator",
+        "ru": "Хищник"
+      }
+    },
+    {
+      "id": "everlasting_moonglow",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Everlasting Moonglow",
+        "ru": "Вечное лунное сияние"
+      }
+    },
+    {
+      "id": "luxurious_sea-lord",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Luxurious Sea-Lord",
+        "ru": "Благодатный владыка вод"
+      }
+    },
+    {
+      "id": "polar_star",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Polar Star",
+        "ru": "Полярная звезда"
+      }
+    },
+    {
+      "id": "akuoumaru",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Akuoumaru",
+        "ru": "Акуомару"
+      }
+    },
+    {
+      "id": "wavebreakers_fin",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Wavebreaker's Fin",
+        "ru": "Режущий волны плавник"
+      }
+    },
+    {
+      "id": "mouuns_moon",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Mouun's Moon",
+        "ru": "Луна Моун"
+      }
+    },
+    {
+      "id": "cinnabar_spindle",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Cinnabar Spindle",
+        "ru": "Киноварное веретено"
+      }
+    },
+    {
+      "id": "redhorn_stonethresher",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Redhorn Stonethresher",
+        "ru": "Краснорогий камнеруб"
+      }
+    },
+    {
+      "id": "calamity_queller",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Calamity Queller",
+        "ru": "Усмиритель бед"
+      }
+    },
+    {
+      "id": "kaguras_verity",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Kagura's Verity",
+        "ru": "Истина кагура"
+      }
+    },
+    {
+      "id": "oathsworn_eye",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Oathsworn Eye",
+        "ru": "Око клятвы"
+      }
+    },
+    {
+      "id": "haran_geppaku_futsu",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Haran Geppaku Futsu",
+        "ru": "Харан гэппаку фуцу"
+      }
+    },
+    {
+      "id": "aqua_simulacra",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Aqua Simulacra",
+        "ru": "Аква симулякрум"
+      }
+    },
+    {
+      "id": "fading_twilight",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Fading Twilight",
+        "ru": "Гаснущие сумерки"
+      }
+    },
+    {
+      "id": "kagotsurube_isshin",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Kagotsurube Isshin",
+        "ru": "Кагоцурубэ Иссин"
+      }
+    },
+    {
+      "id": "hunters_path",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Hunter's Path",
+        "ru": "Охотничья тропа"
+      }
+    },
+    {
+      "id": "end_of_the_line",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "End of the Line",
+        "ru": "Иссушитель"
+      }
+    },
+    {
+      "id": "forest_regalia",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Forest Regalia",
+        "ru": "Регалия леса"
+      }
+    },
+    {
+      "id": "fruit_of_fulfillment",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Fruit of Fulfillment",
+        "ru": "Плод восполнения"
+      }
+    },
+    {
+      "id": "kings_squire",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "King's Squire",
+        "ru": "Приближённый короля"
+      }
+    },
+    {
+      "id": "moonpiercer",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Moonpiercer",
+        "ru": "Пронзающий луну"
+      }
+    },
+    {
+      "id": "sapwood_blade",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sapwood Blade",
+        "ru": "Деревянный клинок"
+      }
+    },
+    {
+      "id": "staff_of_the_scarlet_sands",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Staff of the Scarlet Sands",
+        "ru": "Посох алых песков"
+      }
+    },
+    {
+      "id": "key_of_khaj-nisut",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Key of Khaj-Nisut",
+        "ru": "Ключ Хадж-нисут"
+      }
+    },
+    {
+      "id": "makhaira_aquamarine",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Makhaira Aquamarine",
+        "ru": "Аквамарин Махайры"
+      }
+    },
+    {
+      "id": "xiphos_moonlight",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Xiphos' Moonlight",
+        "ru": "Лунное сияние ксифоса"
+      }
+    },
+    {
+      "id": "wandering_evenstar",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Wandering Evenstar",
+        "ru": "Скитающаяся звезда"
+      }
+    },
+    {
+      "id": "missive_windspear",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Missive Windspear",
+        "ru": "Копьё послания ветров"
+      }
+    },
+    {
+      "id": "a_thousand_floating_dreams",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "A Thousand Floating Dreams",
+        "ru": "Сновидения тысячи ночей"
+      }
+    },
+    {
+      "id": "tulaytullahs_remembrance",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Tulaytullah's Remembrance",
+        "ru": "Воспоминания Тулайтуллы"
+      }
+    },
+    {
+      "id": "toukabou_shigure",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Toukabou Shigure",
+        "ru": "Токабо сигурэ"
+      }
+    },
+    {
+      "id": "light_of_foliar_incision",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Light of Foliar Incision",
+        "ru": "Свет лиственного разреза"
+      }
+    },
+    {
+      "id": "beacon_of_the_reed_sea",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Beacon of the Reed Sea",
+        "ru": "Маяк тростникового моря"
+      }
+    },
+    {
+      "id": "mailed_flower",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Mailed Flower",
+        "ru": "Цветок в латах"
+      }
+    },
+    {
+      "id": "jadefalls_splendor",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Jadefall's Splendor",
+        "ru": "Великолепие лазурного свода"
+      }
+    },
+    {
+      "id": "ibis_piercer",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Ibis Piercer",
+        "ru": "Клюв ибиса"
+      }
+    },
+    {
+      "id": "the_first_great_magic",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "The First Great Magic",
+        "ru": "Первый великий фокус"
+      }
+    },
+    {
+      "id": "ballad_of_the_fjords",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Ballad of the Fjords",
+        "ru": "Баллада фьордов"
+      }
+    },
+    {
+      "id": "finale_of_the_deep",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Finale of the Deep",
+        "ru": "Грандиозный финал глубин"
+      }
+    },
+    {
+      "id": "fleuve_cendre_ferryman",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Fleuve Cendre Ferryman",
+        "ru": "Перевозчик Флёв Сандр"
+      }
+    },
+    {
+      "id": "flowing_purity",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Flowing Purity",
+        "ru": "Сверкание чистых вод"
+      }
+    },
+    {
+      "id": "rightful_reward",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Rightful Reward",
+        "ru": "Справедливая награда"
+      }
+    },
+    {
+      "id": "scion_of_the_blazing_sun",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Scion of the Blazing Sun",
+        "ru": "Наследник слепящего солнца"
+      }
+    },
+    {
+      "id": "song_of_stillness",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Song of Stillness",
+        "ru": "Мелодия покоя"
+      }
+    },
+    {
+      "id": "talking_stick",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Talking Stick",
+        "ru": "Говорящая палица"
+      }
+    },
+    {
+      "id": "tidal_shadow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Tidal Shadow",
+        "ru": "Тень волны"
+      }
+    },
+    {
+      "id": "wolf-fang",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Wolf-Fang",
+        "ru": "Волчий клык"
+      }
+    },
+    {
+      "id": "sacrificial_jade",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificial Jade",
+        "ru": "Жертвенный нефрит"
+      }
+    },
+    {
+      "id": "tome_of_the_eternal_flow",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Tome of the Eternal Flow",
+        "ru": "Обряд вечного течения"
+      }
+    },
+    {
+      "id": "the_dockhands_assistant",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "The Dockhand's Assistant",
+        "ru": "Верфь"
+      }
+    },
+    {
+      "id": "portable_power_saw",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Portable Power Saw",
+        "ru": "Переносная мотопила"
+      }
+    },
+    {
+      "id": "ballad_of_the_boundless_blue",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Ballad of the Boundless Blue",
+        "ru": "Песнь необъятной лазури"
+      }
+    },
+    {
+      "id": "cashflow_supervision",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Cashflow Supervision",
+        "ru": "Казначейский надзор"
+      }
+    },
+    {
+      "id": "prospectors_drill",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prospector's Drill",
+        "ru": "Бур рудоискателя"
+      }
+    },
+    {
+      "id": "range_gauge",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Range Gauge",
+        "ru": "Дальномер"
+      }
+    },
+    {
+      "id": "splendor_of_tranquil_waters",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Splendor of Tranquil Waters",
+        "ru": "Блеск тихих вод"
+      }
+    },
+    {
+      "id": "verdict",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Verdict",
+        "ru": "Вердикт"
+      }
+    },
+    {
+      "id": "ultimate_overlords_mega_magic_sword",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "\"Ultimate Overlord's Mega Magic Sword\"",
+        "ru": "«Магический супермеч высшего владыки»"
+      }
+    },
+    {
+      "id": "cranes_echoing_call",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Crane's Echoing Call",
+        "ru": "Звонкий клич журавля"
+      }
+    },
+    {
+      "id": "dialogues_of_the_desert_sages",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Dialogues of the Desert Sages",
+        "ru": "Диалог пустынных мудрецов"
+      }
+    },
+    {
+      "id": "uraku_misugiri",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Uraku Misugiri",
+        "ru": "Ураку мисугири"
+      }
+    },
+    {
+      "id": "crimson_moons_semblance",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Crimson Moon's Semblance",
+        "ru": "Очертания алой луны"
+      }
+    },
+    {
+      "id": "absolution",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Absolution",
+        "ru": "Отпущение грехов"
+      }
+    },
+    {
+      "id": "cloudforged",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Cloudforged",
+        "ru": "Выкованный из облаков"
+      }
+    },
+    {
+      "id": "silvershower_heartstrings",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Silvershower Heartstrings",
+        "ru": "Сердечные струны дождя"
+      }
+    },
+    {
+      "id": "lumidouce_elegy",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Lumidouce Elegy",
+        "ru": "Элегия Люмидус"
+      }
+    },
+    {
+      "id": "surfs_up",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Surf's Up",
+        "ru": "Лови волну"
+      }
+    },
+    {
+      "id": "ash-graven_drinking_horn",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Ash-Graven Drinking Horn",
+        "ru": "Пепельный рог"
+      }
+    },
+    {
+      "id": "chain_breaker",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Chain Breaker",
+        "ru": "Разбивающий цепи"
+      }
+    },
+    {
+      "id": "earth_shaker",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Earth Shaker",
+        "ru": "Сотрясающий землю"
+      }
+    },
+    {
+      "id": "flute_of_ezpitzal",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Flute of Ezpitzal",
+        "ru": "Флейта Эспицаль"
+      }
+    },
+    {
+      "id": "footprint_of_the_rainbow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Footprint of the Rainbow",
+        "ru": "След радуги"
+      }
+    },
+    {
+      "id": "ring_of_yaxche",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Ring of Yaxche",
+        "ru": "Кольцо Яшче"
+      }
+    },
+    {
+      "id": "fang_of_the_mountain_king",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Fang of the Mountain King",
+        "ru": "Клык Горного короля"
+      }
+    },
+    {
+      "id": "fruitful_hook",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Fruitful Hook",
+        "ru": "Плодотворный крюк"
+      }
+    },
+    {
+      "id": "mountain-bracing_bolt",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Mountain-Bracing Bolt",
+        "ru": "Крепящий горы шип"
+      }
+    },
+    {
+      "id": "peak_patrol_song",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Peak Patrol Song",
+        "ru": "Песнь патруля пиков"
+      }
+    },
+    {
+      "id": "sturdy_bone",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sturdy Bone",
+        "ru": "Крепкая кость"
+      }
+    },
+    {
+      "id": "astral_vultures_crimson_plumage",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Astral Vulture's Crimson Plumage",
+        "ru": "Алое перо звёздного грифа"
+      }
+    },
+    {
+      "id": "waveriding_whirl",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Waveriding Whirl",
+        "ru": "Вихрь на волнах"
+      }
+    },
+    {
+      "id": "flower-wreathed_feathers",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Flower-Wreathed Feathers",
+        "ru": "Украшенные цветами перья"
+      }
+    },
+    {
+      "id": "calamity_of_eshu",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Calamity of Eshu",
+        "ru": "Бедствие Эшу"
+      }
+    },
+    {
+      "id": "a_thousand_blazing_suns",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "A Thousand Blazing Suns",
+        "ru": "Тысяча ослепительных солнц"
+      }
+    },
+    {
+      "id": "starcallers_watch",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Starcaller's Watch",
+        "ru": "Бдение взывающего к звёздам"
+      }
+    },
+    {
+      "id": "sunny_morning_sleep-in",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Sunny Morning Sleep-In",
+        "ru": "Сон солнечным утром"
+      }
+    },
+    {
+      "id": "tamayuratei_no_ohanashi",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Tamayuratei no Ohanashi",
+        "ru": "Тамаюратэй но оханаси"
+      }
+    },
+    {
+      "id": "vivid_notions",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Vivid Notions",
+        "ru": "Переливающиеся чаяния"
+      }
+    },
+    {
+      "id": "symphonist_of_scents",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Symphonist of Scents",
+        "ru": "Симфонист ароматов"
+      }
+    },
+    {
+      "id": "sequence_of_solitude",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sequence of Solitude",
+        "ru": "Каденция одиночества"
+      }
+    },
+    {
+      "id": "azurelight",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Azurelight",
+        "ru": "Лазурное сияние"
+      }
+    },
+    {
+      "id": "fractured_halo",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Fractured Halo",
+        "ru": "Расколотый ореол"
+      }
+    },
+    {
+      "id": "flame-forged_insight",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Flame-Forged Insight",
+        "ru": "Выкованное пламенем озарение"
+      }
+    },
+    {
+      "id": "nightweavers_looking_glass",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Nightweaver's Looking Glass",
+        "ru": "Зеркало прядильщицы ночи"
+      }
+    },
+    {
+      "id": "etherlight_spindlelute",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Etherlight Spindlelute",
+        "ru": "Лютня ткача света"
+      }
+    },
+    {
+      "id": "bloodsoaked_ruins",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Bloodsoaked Ruins",
+        "ru": "Окровавленные руины"
+      }
+    },
+    {
+      "id": "reliquary_of_truth",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Reliquary of Truth",
+        "ru": "Шкатулка истин"
+      }
+    },
+    {
+      "id": "dawning_frost",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Dawning Frost",
+        "ru": "Рассветный иней"
+      }
+    },
+    {
+      "id": "moonweavers_dawn",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Moonweaver's Dawn",
+        "ru": "Рассвет прядильщицы луны"
+      }
+    },
+    {
+      "id": "sacrificers_staff",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sacrificer's Staff",
+        "ru": "Посох жертвующей"
+      }
+    },
+    {
+      "id": "athame_artis",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Athame Artis",
+        "ru": "Атаме артис"
+      }
+    },
+    {
+      "id": "the_daybreak_chronicles",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "The Daybreak Chronicles",
+        "ru": "Хроники рассвета"
+      }
+    },
+    {
+      "id": "rainbow_serpents_rain_bow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Rainbow Serpent's Rain Bow",
+        "ru": "Струны дождя радужного змея"
+      }
+    },
+    {
+      "id": "nocturnes_curtain_call",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Nocturne's Curtain Call",
+        "ru": "Вызов ноктюрна"
+      }
+    },
+    {
+      "id": "lightbearing_moonshard",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Lightbearing Moonshard",
+        "ru": "Светоносный осколок луны"
+      }
+    },
+    {
+      "id": "gest_of_the_mighty_wolf",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Gest of the Mighty Wolf",
+        "ru": "Подвиг могучего волка"
+      }
+    },
+    {
+      "id": "golden_frostbound_oath",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Golden Frostbound Oath",
+        "ru": "Золотая клятва льда"
+      }
+    },
+    {
+      "id": "angelos_heptades",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Angelos' Heptades",
+        "ru": "Гептада ангела"
+      }
+    },
+    {
+      "id": "disaster_and_remorse",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Disaster and Remorse",
+        "ru": "Бедствие и раскаяние"
+      }
+    },
+    {
+      "id": "a_teaspoon_of_transcendence",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "A Teaspoon of Transcendence",
+        "ru": "Чайная ложка трансцендентности"
+      }
+    },
+    {
+      "id": "blackmarrow_lantern",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blackmarrow Lantern",
+        "ru": "Фонарь чёрной сердцевины"
+      }
+    },
+    {
+      "id": "blade_of_atonement",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Blade of Atonement",
+        "ru": "Клинок искупления"
+      }
+    },
+    {
+      "id": "clash_of_kings",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Clash of Kings",
+        "ru": "Игры королей"
+      }
+    },
+    {
+      "id": "echoes_of_the_heart",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Echoes of the Heart",
+        "ru": "Отголоски сердца"
+      }
+    },
+    {
+      "id": "covenant_of_frost_and_snow",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Covenant of Frost and Snow",
+        "ru": "Завет льда и снега"
+      }
+    },
+    {
+      "id": "heretics_molten_blade",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Heretic's Molten Blade",
+        "ru": "Расплавленный клинок еретика"
+      }
+    },
+    {
+      "id": "jade_vista",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Jade Vista",
+        "ru": "Поникшая артемизия"
+      }
+    },
+    {
+      "id": "master_key",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Master Key",
+        "ru": "Мастер-ключ"
+      }
+    },
+    {
+      "id": "emberwell",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Emberwell",
+        "ru": "Источник пламени"
+      }
+    },
+    {
+      "id": "exaiphanes_blade",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Exaiphanes Blade",
+        "ru": "Клинок озарения"
+      }
+    },
+    {
+      "id": "forged_by_the_golden_melody",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Forged by the Golden Melody",
+        "ru": "Творение золотой мелодии"
+      }
+    },
+    {
+      "id": "frostbreath",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Frostbreath",
+        "ru": "Морозное дыхание"
+      }
+    },
+    {
+      "id": "serenitys_call",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Serenity's Call",
+        "ru": "Зов безмятежности"
+      }
+    },
+    {
+      "id": "prospectors_shovel",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Prospector's Shovel",
+        "ru": "Лопата старателя"
+      }
+    },
+    {
+      "id": "snare_hook",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Snare Hook",
+        "ru": "Крюк силка"
+      }
+    },
+    {
+      "id": "song_of_the_vigil",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Song of the Vigil",
+        "ru": "Песнь бдения"
+      }
+    },
+    {
+      "id": "whitelake_frostfeather",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Whitelake Frostfeather",
+        "ru": "Морозное перо белого озера"
+      }
+    },
+    {
+      "id": "sword_of_narzissenkreuz",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Sword of Narzissenkreuz",
+        "ru": "Меч Нарциссенкрейца"
+      }
+    },
+    {
+      "id": "beyond_the_chrysalis",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Beyond the Chrysalis",
+        "ru": "За пределами кокона"
+      }
+    },
+    {
+      "id": "breezeborne_refrain",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Breezeborne Refrain",
+        "ru": "Напевы нежного ветра"
+      }
+    },
+    {
+      "id": "hymn_of_the_maelstrom",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Hymn of the Maelstrom",
+        "ru": "Ода водоворота"
+      }
+    },
+    {
+      "id": "new_bough",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "New Bough",
+        "ru": "Новая ветвь"
+      }
+    },
+    {
+      "id": "silver_light",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Silver Light",
+        "ru": "Серебряный свет"
+      }
+    },
+    {
+      "id": "winters_heavy_heart",
+      "kind": "weapon",
+      "rarity": 4,
+      "name": {
+        "en": "Winter's Heavy Heart",
+        "ru": "Застывшее сердце зимы"
+      }
+    },
+    {
+      "id": "starsealed_edict",
+      "kind": "weapon",
+      "rarity": 5,
+      "name": {
+        "en": "Starsealed Edict",
+        "ru": "Звёздный указ"
+      }
+    }
+  ],
+  "banners": [
+    {
+      "pool_id": "character",
+      "name": "Ballad in Goblets",
+      "short_name": "Venti",
+      "version": "1.0",
+      "start": {
+        "time": "2020-09-28 00:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2020-10-18 18:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "venti"
+      ],
+      "featured_rare": [
+        "barbara",
+        "fischl",
+        "xiangling"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Sparkling Steps",
+      "short_name": "Klee",
+      "version": "1.0",
+      "start": {
+        "time": "2020-10-20 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2020-11-10 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "klee"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "sucrose",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Farewell of Snezhnaya",
+      "short_name": "Tartaglia",
+      "version": "1.1",
+      "start": {
+        "time": "2020-11-11 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2020-12-01 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "tartaglia"
+      ],
+      "featured_rare": [
+        "ningguang",
+        "beidou",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Gentry of Hermitage",
+      "short_name": "Zhongli",
+      "version": "1.1",
+      "start": {
+        "time": "2020-12-01 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2020-12-22 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "zhongli"
+      ],
+      "featured_rare": [
+        "xinyan",
+        "razor",
+        "chongyun"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Secretum Secretorum",
+      "short_name": "Albedo",
+      "version": "1.2",
+      "start": {
+        "time": "2020-12-23 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-01-12 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "albedo"
+      ],
+      "featured_rare": [
+        "fischl",
+        "bennett",
+        "sucrose"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Adrift in the Harbor",
+      "short_name": "Ganyu",
+      "version": "1.2",
+      "start": {
+        "time": "2021-01-12 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-02-02 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "ganyu"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "xiangling",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Invitation to Mundane Life",
+      "short_name": "Xiao",
+      "version": "1.3",
+      "start": {
+        "time": "2021-02-03 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-02-17 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "xiao"
+      ],
+      "featured_rare": [
+        "diona",
+        "xinyan",
+        "beidou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Dance of Lanterns",
+      "short_name": "Keqing",
+      "version": "1.3",
+      "start": {
+        "time": "2021-02-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-03-02 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "keqing"
+      ],
+      "featured_rare": [
+        "barbara",
+        "bennett",
+        "ningguang"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Moment of Bloom",
+      "short_name": "Hu Tao",
+      "version": "1.3",
+      "start": {
+        "time": "2021-03-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-03-16 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "hu_tao"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "xiangling",
+        "chongyun"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Ballad in Goblets",
+      "short_name": "Venti",
+      "version": "1.4",
+      "start": {
+        "time": "2021-03-17 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-04-06 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "venti"
+      ],
+      "featured_rare": [
+        "sucrose",
+        "razor",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Farewell of Snezhnaya",
+      "short_name": "Tartaglia",
+      "version": "1.4",
+      "start": {
+        "time": "2021-04-06 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-04-27 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "tartaglia"
+      ],
+      "featured_rare": [
+        "rosaria",
+        "fischl",
+        "barbara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Gentry of Hermitage",
+      "short_name": "Zhongli",
+      "version": "1.5",
+      "start": {
+        "time": "2021-04-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-05-18 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "zhongli"
+      ],
+      "featured_rare": [
+        "yanfei",
+        "noelle",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Born of Ocean Swell",
+      "short_name": "Eula",
+      "version": "1.5",
+      "start": {
+        "time": "2021-05-18 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-06-08 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "eula"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "beidou",
+        "xinyan"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Sparkling Steps",
+      "short_name": "Klee",
+      "version": "1.6",
+      "start": {
+        "time": "2021-06-09 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-06-29 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "klee"
+      ],
+      "featured_rare": [
+        "fischl",
+        "sucrose",
+        "barbara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Leaves in the Wind",
+      "short_name": "Kazuha",
+      "version": "1.6",
+      "start": {
+        "time": "2021-06-29 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-07-20 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kaedehara_kazuha"
+      ],
+      "featured_rare": [
+        "bennett",
+        "razor",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Herons Court",
+      "short_name": "Ayaka",
+      "version": "2.0",
+      "start": {
+        "time": "2021-07-21 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-08-10 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kamisato_ayaka"
+      ],
+      "featured_rare": [
+        "chongyun",
+        "ningguang",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Tapestry of Golden Flames",
+      "short_name": "Yoimiya",
+      "version": "2.0",
+      "start": {
+        "time": "2021-08-10 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-08-31 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yoimiya"
+      ],
+      "featured_rare": [
+        "sayu",
+        "diona",
+        "xinyan"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Reign of Serenity",
+      "short_name": "Raiden",
+      "version": "2.1",
+      "start": {
+        "time": "2021-09-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-09-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "raiden_shogun"
+      ],
+      "featured_rare": [
+        "xiangling",
+        "sucrose",
+        "kujou_sara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Drifting Luminescence",
+      "short_name": "Kokomi",
+      "version": "2.1",
+      "start": {
+        "time": "2021-09-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-10-12 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "sangonomiya_kokomi"
+      ],
+      "featured_rare": [
+        "rosaria",
+        "beidou",
+        "xingqiu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Farewell of Snezhnaya",
+      "short_name": "Tartaglia",
+      "version": "2.2",
+      "start": {
+        "time": "2021-10-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-11-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "tartaglia"
+      ],
+      "featured_rare": [
+        "ningguang",
+        "chongyun",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Moment of Bloom",
+      "short_name": "Hu Tao",
+      "version": "2.2",
+      "start": {
+        "time": "2021-11-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-11-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "hu_tao"
+      ],
+      "featured_rare": [
+        "thoma",
+        "diona",
+        "sayu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Secretum Secretorum",
+      "short_name": "Albedo",
+      "version": "2.3",
+      "start": {
+        "time": "2021-11-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-12-14 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "albedo",
+        "eula"
+      ],
+      "featured_rare": [
+        "rosaria",
+        "noelle",
+        "bennett"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Oni's Royale",
+      "short_name": "Itto",
+      "version": "2.3",
+      "start": {
+        "time": "2021-12-14 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-01-04 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "arataki_itto"
+      ],
+      "featured_rare": [
+        "gorou",
+        "xiangling",
+        "barbara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Transcendent One Returns",
+      "short_name": "Shenhe",
+      "version": "2.4",
+      "start": {
+        "time": "2022-01-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-01-25 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "shenhe",
+        "xiao"
+      ],
+      "featured_rare": [
+        "yun_jin",
+        "ningguang",
+        "chongyun"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Gentry of Hermitage",
+      "short_name": "Zhongli",
+      "version": "2.4",
+      "start": {
+        "time": "2022-01-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-02-15 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "zhongli",
+        "ganyu"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "beidou",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Everbloom Violet",
+      "short_name": "Yae",
+      "version": "2.5",
+      "start": {
+        "time": "2022-02-16 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-03-08 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yae_miko"
+      ],
+      "featured_rare": [
+        "thoma",
+        "diona",
+        "fischl"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Reign of Serenity",
+      "short_name": "Raiden",
+      "version": "2.5",
+      "start": {
+        "time": "2022-03-08 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-03-29 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "raiden_shogun",
+        "sangonomiya_kokomi"
+      ],
+      "featured_rare": [
+        "bennett",
+        "xinyan",
+        "kujou_sara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Azure Excursion",
+      "short_name": "Ayato",
+      "version": "2.6",
+      "start": {
+        "time": "2022-03-30 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-04-19 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kamisato_ayato",
+        "venti"
+      ],
+      "featured_rare": [
+        "yun_jin",
+        "xiangling",
+        "sucrose"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Herons Court",
+      "short_name": "Ayaka",
+      "version": "2.6",
+      "start": {
+        "time": "2022-04-19 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-05-31 05:59:59",
+        "asia_based": true
+      },
+      "featured": [
+        "kamisato_ayaka"
+      ],
+      "featured_rare": [
+        "sayu",
+        "razor",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Discerner of Enigmas",
+      "short_name": "Yelan",
+      "version": "2.7",
+      "start": {
+        "time": "2022-05-31 09:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-06-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yelan",
+        "xiao"
+      ],
+      "featured_rare": [
+        "barbara",
+        "noelle",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Oni's Royale",
+      "short_name": "Itto",
+      "version": "2.7",
+      "start": {
+        "time": "2022-06-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-07-12 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "arataki_itto"
+      ],
+      "featured_rare": [
+        "chongyun",
+        "gorou",
+        "kuki_shinobu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Leaves in the Wind",
+      "short_name": "Kazuha",
+      "version": "2.8",
+      "start": {
+        "time": "2022-07-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-08-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kaedehara_kazuha",
+        "klee"
+      ],
+      "featured_rare": [
+        "ningguang",
+        "thoma",
+        "shikanoin_heizou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Tapestry of Golden Flames",
+      "short_name": "Yoimiya",
+      "version": "2.8",
+      "start": {
+        "time": "2022-08-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-08-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yoimiya"
+      ],
+      "featured_rare": [
+        "yun_jin",
+        "xinyan",
+        "bennett"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Viridescent Vigil",
+      "short_name": "Tighnari",
+      "version": "3.0",
+      "start": {
+        "time": "2022-08-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-09-09 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "tighnari",
+        "zhongli"
+      ],
+      "featured_rare": [
+        "collei",
+        "fischl",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Adrift in the Harbor",
+      "short_name": "Ganyu",
+      "version": "3.0",
+      "start": {
+        "time": "2022-09-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-09-27 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "ganyu",
+        "sangonomiya_kokomi"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "sucrose",
+        "dori"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Twilight Arbiter",
+      "short_name": "Cyno",
+      "version": "3.1",
+      "start": {
+        "time": "2022-09-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-10-14 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "cyno",
+        "venti"
+      ],
+      "featured_rare": [
+        "sayu",
+        "candace",
+        "kuki_shinobu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Twirling Lotus",
+      "short_name": "Nilou",
+      "version": "3.1",
+      "start": {
+        "time": "2022-10-14 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-11-01 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "nilou",
+        "albedo"
+      ],
+      "featured_rare": [
+        "barbara",
+        "xiangling",
+        "beidou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Moongrass' Enlightenment",
+      "short_name": "Nahida",
+      "version": "3.2",
+      "start": {
+        "time": "2022-11-02 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-11-18 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "nahida",
+        "yoimiya"
+      ],
+      "featured_rare": [
+        "bennett",
+        "razor",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Everbloom Violet",
+      "short_name": "Yae Miko",
+      "version": "3.2",
+      "start": {
+        "time": "2022-11-18 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-12-06 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yae_miko",
+        "tartaglia"
+      ],
+      "featured_rare": [
+        "thoma",
+        "shikanoin_heizou",
+        "layla"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "From Ashes Reborn",
+      "short_name": "Wanderer",
+      "version": "3.3",
+      "start": {
+        "time": "2022-12-07 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-12-27 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "wanderer",
+        "arataki_itto"
+      ],
+      "featured_rare": [
+        "faruzan",
+        "yanfei",
+        "gorou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Reign of Serenity",
+      "short_name": "Raiden",
+      "version": "3.3",
+      "start": {
+        "time": "2022-12-27 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-01-17 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "raiden_shogun",
+        "kamisato_ayato"
+      ],
+      "featured_rare": [
+        "sayu",
+        "rosaria",
+        "kujou_sara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Caution in Confidence",
+      "short_name": "Alhaitham",
+      "version": "3.4",
+      "start": {
+        "time": "2023-01-18 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-02-07 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "alhaitham",
+        "xiao"
+      ],
+      "featured_rare": [
+        "xinyan",
+        "yun_jin",
+        "yaoyao"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Moment of Bloom",
+      "short_name": "Hu Tao",
+      "version": "3.4",
+      "start": {
+        "time": "2023-02-07 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-02-28 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "hu_tao",
+        "yelan"
+      ],
+      "featured_rare": [
+        "beidou",
+        "ningguang",
+        "xingqiu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Auric Blaze",
+      "short_name": "Dehya",
+      "version": "3.5",
+      "start": {
+        "time": "2023-03-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-03-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "dehya",
+        "cyno"
+      ],
+      "featured_rare": [
+        "bennett",
+        "collei",
+        "barbara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Transcendent One Returns",
+      "short_name": "Shenhe",
+      "version": "3.5",
+      "start": {
+        "time": "2023-03-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-04-11 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "shenhe",
+        "kamisato_ayaka"
+      ],
+      "featured_rare": [
+        "diona",
+        "sucrose",
+        "mika"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Moongrass' Enlightenment",
+      "short_name": "Nahida",
+      "version": "3.6",
+      "start": {
+        "time": "2023-04-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-05-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "nahida",
+        "nilou"
+      ],
+      "featured_rare": [
+        "kuki_shinobu",
+        "dori",
+        "layla"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Immaculate Pulse",
+      "short_name": "Baizhu",
+      "version": "3.6",
+      "start": {
+        "time": "2023-05-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-05-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "baizhu",
+        "ganyu"
+      ],
+      "featured_rare": [
+        "kaveh",
+        "candace",
+        "fischl"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Tapestry of Golden Flames",
+      "short_name": "Yoimiya",
+      "version": "3.7",
+      "start": {
+        "time": "2023-05-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-06-13 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "yoimiya",
+        "yae_miko"
+      ],
+      "featured_rare": [
+        "kirara",
+        "yun_jin",
+        "chongyun"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Caution in Confidence",
+      "short_name": "Alhaitham",
+      "version": "3.7",
+      "start": {
+        "time": "2023-06-13 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-07-04 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "alhaitham",
+        "kaedehara_kazuha"
+      ],
+      "featured_rare": [
+        "yaoyao",
+        "shikanoin_heizou",
+        "xiangling"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Born of Ocean Swell",
+      "short_name": "Eula",
+      "version": "3.8",
+      "start": {
+        "time": "2023-07-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-07-25 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "eula",
+        "klee"
+      ],
+      "featured_rare": [
+        "mika",
+        "razor",
+        "thoma"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Drifting Luminescence",
+      "short_name": "Kokomi",
+      "version": "3.8",
+      "start": {
+        "time": "2023-07-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-08-15 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "sangonomiya_kokomi",
+        "wanderer"
+      ],
+      "featured_rare": [
+        "yanfei",
+        "faruzan",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Conjuring Chiaroscuro",
+      "short_name": "Lyney",
+      "version": "4.0",
+      "start": {
+        "time": "2023-08-16 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-09-05 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "lyney",
+        "yelan"
+      ],
+      "featured_rare": [
+        "bennett",
+        "barbara",
+        "lynette"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Gentry of Hermitage",
+      "short_name": "Zhongli",
+      "version": "4.0",
+      "start": {
+        "time": "2023-09-05 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-09-26 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "tartaglia",
+        "zhongli"
+      ],
+      "featured_rare": [
+        "freminet",
+        "sayu",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Decree of the Deeps",
+      "short_name": "Neuvillette",
+      "version": "4.1",
+      "start": {
+        "time": "2023-09-27 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-10-17 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "neuvillette",
+        "hu_tao"
+      ],
+      "featured_rare": [
+        "fischl",
+        "xingqiu",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Tempestuous Destiny",
+      "short_name": "Wriothesley",
+      "version": "4.1",
+      "start": {
+        "time": "2023-10-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-11-07 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "wriothesley",
+        "venti"
+      ],
+      "featured_rare": [
+        "chongyun",
+        "thoma",
+        "dori"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Chanson of Many Waters",
+      "short_name": "Furina",
+      "version": "4.2",
+      "start": {
+        "time": "2023-11-08 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-11-28 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "furina",
+        "baizhu"
+      ],
+      "featured_rare": [
+        "charlotte",
+        "collei",
+        "beidou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Twilight Arbiter",
+      "short_name": "Cyno",
+      "version": "4.2",
+      "start": {
+        "time": "2023-11-28 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-12-19 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "cyno",
+        "kamisato_ayato"
+      ],
+      "featured_rare": [
+        "kuki_shinobu",
+        "xiangling",
+        "kirara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "In the Name of the Rosula",
+      "short_name": "Navia",
+      "version": "4.3",
+      "start": {
+        "time": "2023-12-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-01-09 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "navia",
+        "kamisato_ayaka"
+      ],
+      "featured_rare": [
+        "sucrose",
+        "candace",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Reign of Serenity",
+      "short_name": "Raiden",
+      "version": "4.3",
+      "start": {
+        "time": "2024-01-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-01-30 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "raiden_shogun",
+        "yoimiya"
+      ],
+      "featured_rare": [
+        "bennett",
+        "kujou_sara",
+        "chevreuse"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Crane Soars Skyward",
+      "short_name": "Xianyun",
+      "version": "4.4",
+      "start": {
+        "time": "2024-01-31 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-02-20 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "xianyun",
+        "nahida"
+      ],
+      "featured_rare": [
+        "gaming",
+        "faruzan",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Invitation to Mundane Life",
+      "short_name": "Xiao",
+      "version": "4.4",
+      "start": {
+        "time": "2024-02-20 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-03-12 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "xiao",
+        "yae_miko"
+      ],
+      "featured_rare": [
+        "yaoyao",
+        "xinyan",
+        "ningguang"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Of Silken Clouds Woven",
+      "short_name": "Chiori",
+      "version": "4.5",
+      "start": {
+        "time": "2024-03-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-04-02 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "chiori",
+        "arataki_itto"
+      ],
+      "featured_rare": [
+        "yun_jin",
+        "gorou",
+        "dori"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Decree of the Deeps",
+      "short_name": "Neuvillette",
+      "version": "4.5",
+      "start": {
+        "time": "2024-04-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-04-23 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "neuvillette",
+        "kaedehara_kazuha"
+      ],
+      "featured_rare": [
+        "barbara",
+        "xingqiu",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Hearth's Ashen Shadow",
+      "short_name": "Arlecchino",
+      "version": "4.6",
+      "start": {
+        "time": "2024-04-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-05-14 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "arlecchino",
+        "lyney"
+      ],
+      "featured_rare": [
+        "freminet",
+        "lynette",
+        "xiangling"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "From Ashes Reborn",
+      "short_name": "Wanderer",
+      "version": "4.6",
+      "start": {
+        "time": "2024-05-14 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-06-04 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "wanderer",
+        "baizhu"
+      ],
+      "featured_rare": [
+        "layla",
+        "faruzan",
+        "beidou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Illuminating Lightning",
+      "short_name": "Clorinde",
+      "version": "4.7",
+      "start": {
+        "time": "2024-06-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-06-25 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "clorinde",
+        "alhaitham"
+      ],
+      "featured_rare": [
+        "sethos",
+        "bennett",
+        "thoma"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Romaritime Meluserenity",
+      "short_name": "Sigewinne",
+      "version": "4.7",
+      "start": {
+        "time": "2024-06-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-07-16 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "sigewinne",
+        "furina"
+      ],
+      "featured_rare": [
+        "noelle",
+        "gaming",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "In the Name of the Rosula",
+      "short_name": "Navia",
+      "version": "4.8",
+      "start": {
+        "time": "2024-07-17 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-08-06 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "navia",
+        "nilou"
+      ],
+      "featured_rare": [
+        "kirara",
+        "kaveh",
+        "ningguang"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Ambrosial Essence",
+      "short_name": "Emilie",
+      "version": "4.8",
+      "start": {
+        "time": "2024-08-06 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-08-27 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "emilie",
+        "yelan"
+      ],
+      "featured_rare": [
+        "yanfei",
+        "xiangling",
+        "razor"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Sharktacular Surfari",
+      "short_name": "Mualani",
+      "version": "5.0",
+      "start": {
+        "time": "2024-08-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-09-17 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "mualani",
+        "kaedehara_kazuha"
+      ],
+      "featured_rare": [
+        "kachina",
+        "xinyan",
+        "bennett"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Seeker of Flame-Wrought Secrets",
+      "short_name": "Kinich",
+      "version": "5.0",
+      "start": {
+        "time": "2024-09-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-10-08 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "kinich",
+        "raiden_shogun"
+      ],
+      "featured_rare": [
+        "thoma",
+        "kujou_sara",
+        "chevreuse"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Forgefire's Blessing",
+      "short_name": "Xilonen",
+      "version": "5.1",
+      "start": {
+        "time": "2024-10-09 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-10-29 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "xilonen",
+        "chiori"
+      ],
+      "featured_rare": [
+        "dori",
+        "candace",
+        "collei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Moongrass' Enlightenment",
+      "short_name": "Nahida",
+      "version": "5.1",
+      "start": {
+        "time": "2024-10-29 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-11-19 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nahida",
+        "hu_tao"
+      ],
+      "featured_rare": [
+        "sethos",
+        "xingqiu",
+        "kuki_shinobu"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Piercing Shot's Crimson Wake",
+      "short_name": "Chasca",
+      "version": "5.2",
+      "start": {
+        "time": "2024-11-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-12-10 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "chasca",
+        "lyney"
+      ],
+      "featured_rare": [
+        "ororon",
+        "sucrose",
+        "barbara"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Decree of the Deeps",
+      "short_name": "Neuvillette",
+      "version": "5.2",
+      "start": {
+        "time": "2024-12-10 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-12-31 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "neuvillette",
+        "zhongli"
+      ],
+      "featured_rare": [
+        "shikanoin_heizou",
+        "fischl",
+        "yaoyao"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Ancient Flame Ablaze",
+      "short_name": "Mavuika",
+      "version": "5.3",
+      "start": {
+        "time": "2025-01-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-01-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "mavuika",
+        "citlali"
+      ],
+      "featured_rare": [
+        "kachina",
+        "bennett",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Hearth's Ashen Shadow",
+      "short_name": "Arlecchino",
+      "version": "5.3",
+      "start": {
+        "time": "2025-01-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-02-11 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "arlecchino",
+        "clorinde"
+      ],
+      "featured_rare": [
+        "lan_yan",
+        "chevreuse",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Dawn's Drifting Reverie",
+      "short_name": "Mizuki",
+      "version": "5.4",
+      "start": {
+        "time": "2025-02-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-03-04 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "yumemizuki_mizuki",
+        "sigewinne"
+      ],
+      "featured_rare": [
+        "gorou",
+        "sayu",
+        "xiangling"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Tempestuous Destiny",
+      "short_name": "Wriothesley",
+      "version": "5.4",
+      "start": {
+        "time": "2025-03-04 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-03-25 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "wriothesley",
+        "furina"
+      ],
+      "featured_rare": [
+        "charlotte",
+        "chongyun",
+        "mika"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Cornucopia of Contention",
+      "short_name": "Varesa",
+      "version": "5.5",
+      "start": {
+        "time": "2025-03-26 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-04-15 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "varesa",
+        "xianyun"
+      ],
+      "featured_rare": [
+        "iansan",
+        "chevreuse",
+        "gaming"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Forgefire's Blessing",
+      "short_name": "Xilonen",
+      "version": "5.5",
+      "start": {
+        "time": "2025-04-15 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-05-06 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "xilonen",
+        "venti"
+      ],
+      "featured_rare": [
+        "faruzan",
+        "beidou",
+        "yanfei"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "La Chanson Cerise",
+      "short_name": "Escoffier",
+      "version": "5.6",
+      "start": {
+        "time": "2025-05-07 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-05-27 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "escoffier",
+        "navia"
+      ],
+      "featured_rare": [
+        "ifa",
+        "ororon",
+        "layla"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Seeker of Flame-Wrought Secrets",
+      "short_name": "Kinich",
+      "version": "5.6",
+      "start": {
+        "time": "2025-05-27 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-06-17 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "kinich",
+        "raiden_shogun"
+      ],
+      "featured_rare": [
+        "thoma",
+        "kujou_sara",
+        "lynette"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Void Star's Advent",
+      "short_name": "Skirk",
+      "version": "5.7",
+      "start": {
+        "time": "2025-06-18 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-07-08 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "skirk",
+        "shenhe"
+      ],
+      "featured_rare": [
+        "dahlia",
+        "candace",
+        "diona"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Ancient Flame Ablaze",
+      "short_name": "Mavuika",
+      "version": "5.7",
+      "start": {
+        "time": "2025-07-08 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-07-29 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "mavuika",
+        "emilie"
+      ],
+      "featured_rare": [
+        "iansan",
+        "yaoyao",
+        "xiangling"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Astral Actuation",
+      "short_name": "Ineffa",
+      "version": "5.8",
+      "start": {
+        "time": "2025-07-30 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-08-19 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "ineffa",
+        "citlali"
+      ],
+      "featured_rare": [
+        "sethos",
+        "xingqiu",
+        "fischl"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Sharktacular Surfari",
+      "short_name": "Mualani",
+      "version": "5.8",
+      "start": {
+        "time": "2025-08-19 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-09-09 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "mualani",
+        "chasca"
+      ],
+      "featured_rare": [
+        "ifa",
+        "ororon",
+        "bennett"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Moonsong of the Groves",
+      "short_name": "Lauma",
+      "version": "6.0",
+      "start": {
+        "time": "2025-09-10 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-09-30 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lauma",
+        "nahida"
+      ],
+      "featured_rare": [
+        "barbara",
+        "kuki_shinobu",
+        "kaveh"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Lone Light Knocks at Night",
+      "short_name": "Flins",
+      "version": "6.0",
+      "start": {
+        "time": "2025-09-30 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-10-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "flins",
+        "yelan"
+      ],
+      "featured_rare": [
+        "aino",
+        "sucrose",
+        "dori"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Temptation of the Crimson Sands",
+      "short_name": "Nefer",
+      "version": "6.1",
+      "start": {
+        "time": "2025-10-22 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-11-11 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nefer",
+        "furina"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "collei",
+        "yaoyao"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Hearth's Ashen Shadow",
+      "short_name": "Arlecchino",
+      "version": "6.1",
+      "start": {
+        "time": "2025-11-11 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-12-02 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "arlecchino",
+        "zhongli"
+      ],
+      "featured_rare": [
+        "lan_yan",
+        "rosaria",
+        "yun_jin"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Rubedo, of White Stone Born",
+      "short_name": "Durin",
+      "version": "6.2",
+      "start": {
+        "time": "2025-12-03 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-12-23 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "durin",
+        "venti"
+      ],
+      "featured_rare": [
+        "bennett",
+        "faruzan",
+        "jahoda"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Cornucopia of Contention",
+      "short_name": "Varesa",
+      "version": "6.2",
+      "start": {
+        "time": "2025-12-23 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-01-13 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "varesa",
+        "xilonen"
+      ],
+      "featured_rare": [
+        "iansan",
+        "chevreuse",
+        "gaming"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Somnias a Luna",
+      "short_name": "Columbina",
+      "version": "6.3",
+      "start": {
+        "time": "2026-01-14 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-02-03 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "columbina",
+        "ineffa"
+      ],
+      "featured_rare": [
+        "fischl",
+        "sethos",
+        "ifa"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Harmonious Abundance",
+      "short_name": "Zibai",
+      "version": "6.3",
+      "start": {
+        "time": "2026-02-03 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-02-24 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "zibai",
+        "neuvillette"
+      ],
+      "featured_rare": [
+        "illuga",
+        "aino",
+        "gorou"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Northerly Wind's Song of Triumph",
+      "short_name": "Varka",
+      "version": "6.4",
+      "start": {
+        "time": "2026-02-25 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-03-17 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "varka",
+        "flins"
+      ],
+      "featured_rare": [
+        "bennett",
+        "xiangling",
+        "sucrose"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Void Star's Advent",
+      "short_name": "Skirk",
+      "version": "6.4",
+      "start": {
+        "time": "2026-03-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-04-07 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "skirk",
+        "escoffier"
+      ],
+      "featured_rare": [
+        "dahlia",
+        "candace",
+        "charlotte"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Ya-hoho! Compendium",
+      "short_name": "Linnea",
+      "version": "6.5",
+      "start": {
+        "time": "2026-04-08 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-04-28 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "linnea",
+        "chasca"
+      ],
+      "featured_rare": [
+        "illuga",
+        "aino",
+        "noelle"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Moonsong of the Groves",
+      "short_name": "Lauma",
+      "version": "6.5",
+      "start": {
+        "time": "2026-04-28 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-05-19 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lauma",
+        "nefer"
+      ],
+      "featured_rare": [
+        "xingqiu",
+        "kirara",
+        "jahoda"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Angel's Reverie",
+      "short_name": "Nicole",
+      "version": "6.6",
+      "start": {
+        "time": "2026-05-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-06-09 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nicole",
+        "durin"
+      ],
+      "featured_rare": [
+        "prune",
+        "fischl",
+        "razor"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Frostedge Nocturne",
+      "short_name": "Lohen",
+      "version": "6.6",
+      "start": {
+        "time": "2026-06-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-06-30 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lohen",
+        "mavuika"
+      ],
+      "featured_rare": [
+        "mika",
+        "xiangling",
+        "bennett"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "To the Looking-Glass the Mademoiselle Said",
+      "short_name": "Sandrone",
+      "version": "6.7",
+      "start": {
+        "time": "2026-07-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-07-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "sandrone",
+        "citlali"
+      ],
+      "featured_rare": [
+        "beidou",
+        "diona",
+        "freminet"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Somnias a Luna",
+      "short_name": "Columbina",
+      "version": "6.7",
+      "start": {
+        "time": "2026-07-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-08-11 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "columbina",
+        "raiden_shogun"
+      ],
+      "featured_rare": [
+        "jahoda",
+        "ororon",
+        "sethos"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Swan's Shadow in Silken Ice",
+      "short_name": "Odette",
+      "version": "7.0",
+      "start": {
+        "time": "2026-08-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-09-01 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "odette",
+        "arlecchino"
+      ],
+      "featured_rare": [
+        "alyosha",
+        "sucrose",
+        "lynette"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "The Lone Light Knocks at Night",
+      "short_name": "Flins",
+      "version": "7.0",
+      "start": {
+        "time": "2026-09-01 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-09-22 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "flins",
+        "ineffa"
+      ],
+      "featured_rare": [
+        "aino",
+        "iansan",
+        "lan_yan"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "When Warm Winds Cavort",
+      "short_name": "Vesna",
+      "version": "7.1",
+      "start": {
+        "time": "2026-09-23 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-10-13 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "vesna",
+        "vodyanitsa"
+      ],
+      "featured_rare": [
+        "diona",
+        "faruzan",
+        "chongyun"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Void Star's Advent",
+      "short_name": "Skirk",
+      "version": "7.1",
+      "start": {
+        "time": "2026-10-13 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-11-03 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "skirk",
+        "escoffier"
+      ],
+      "featured_rare": [
+        "dahlia",
+        "candace",
+        "mika"
+      ]
+    },
+    {
+      "pool_id": "character",
+      "name": "Myriad Patterns Unfold",
+      "short_name": "Mitya",
+      "version": "7.2",
+      "start": {
+        "time": "2026-11-04 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-11-24 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "mitya",
+        "furina"
+      ],
+      "featured_rare": [
+        "valeriy",
+        "charlotte",
+        "rosaria"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Amos",
+      "version": "1.0",
+      "start": {
+        "time": "2020-09-28 00:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2020-10-18 18:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "aquila_favonia",
+        "amos_bow"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "the_bell",
+        "the_widsith",
+        "the_stringless",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Lost Prayer",
+      "version": "1.0",
+      "start": {
+        "time": "2020-10-20 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2020-11-10 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lost_prayer_to_the_sacred_winds",
+        "wolfs_gravestone"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "sacrificial_bow",
+        "sacrificial_greatsword",
+        "sacrificial_fragments",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Skyward",
+      "version": "1.1",
+      "start": {
+        "time": "2020-11-11 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2020-12-01 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "skyward_harp",
+        "memory_of_dust"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "rainslasher",
+        "eye_of_perception",
+        "rust",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Vortex",
+      "version": "1.1",
+      "start": {
+        "time": "2020-12-01 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2020-12-22 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "vortex_vanquisher",
+        "the_unforged"
+      ],
+      "featured_rare": [
+        "lions_roar",
+        "the_bell",
+        "favonius_codex",
+        "favonius_warbow",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Summit",
+      "version": "1.2",
+      "start": {
+        "time": "2020-12-23 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-01-12 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "summit_shaper",
+        "skyward_atlas"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "favonius_greatsword",
+        "favonius_lance",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Amos",
+      "version": "1.2",
+      "start": {
+        "time": "2021-01-12 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-02-02 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "amos_bow",
+        "skyward_pride"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "the_bell",
+        "dragons_bane",
+        "eye_of_perception",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Primordial",
+      "version": "1.3",
+      "start": {
+        "time": "2021-02-03 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-02-23 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "primordial_jade_winged-spear",
+        "primordial_jade_cutter"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "sacrificial_greatsword",
+        "rust",
+        "eye_of_perception",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Homa",
+      "version": "1.3",
+      "start": {
+        "time": "2021-02-23 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-03-16 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "wolfs_gravestone",
+        "staff_of_homa"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "lithic_spear",
+        "lions_roar",
+        "sacrificial_bow",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Elegy",
+      "version": "1.4",
+      "start": {
+        "time": "2021-03-17 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-04-06 16:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "elegy_for_the_end",
+        "skyward_blade"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "wine_and_song",
+        "favonius_greatsword",
+        "favonius_warbow",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Skyward",
+      "version": "1.4",
+      "start": {
+        "time": "2021-04-06 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-04-27 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "skyward_harp",
+        "lost_prayer_to_the_sacred_winds"
+      ],
+      "featured_rare": [
+        "alley_hunter",
+        "favonius_codex",
+        "favonius_lance",
+        "sacrificial_greatsword",
+        "favonius_sword"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Summit",
+      "version": "1.5",
+      "start": {
+        "time": "2021-04-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-05-18 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "summit_shaper",
+        "memory_of_dust"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "lithic_spear",
+        "sacrificial_bow",
+        "eye_of_perception",
+        "the_flute"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Pines",
+      "version": "1.5",
+      "start": {
+        "time": "2021-05-18 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-06-08 15:00:00",
+        "asia_based": false
+      },
+      "featured": [
+        "song_of_broken_pines",
+        "aquila_favonia"
+      ],
+      "featured_rare": [
+        "rust",
+        "sacrificial_fragments",
+        "dragons_bane",
+        "rainslasher",
+        "sacrificial_sword"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Lost Prayer",
+      "version": "1.6",
+      "start": {
+        "time": "2021-06-09 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-06-29 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "lost_prayer_to_the_sacred_winds",
+        "skyward_pride"
+      ],
+      "featured_rare": [
+        "mitternachts_waltz",
+        "lions_roar",
+        "the_bell",
+        "favonius_lance",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Freedom-Sworn",
+      "version": "1.6",
+      "start": {
+        "time": "2021-06-29 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-07-20 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "freedom-sworn",
+        "skyward_atlas"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "wine_and_song",
+        "alley_hunter",
+        "favonius_greatsword",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Mistsplitter",
+      "version": "2.0",
+      "start": {
+        "time": "2021-07-21 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-08-10 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "mistsplitter_reforged",
+        "skyward_spine"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "sacrificial_greatsword",
+        "favonius_lance",
+        "favonius_codex",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Thundering Pulse",
+      "version": "2.0",
+      "start": {
+        "time": "2021-08-10 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-08-31 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "thundering_pulse",
+        "skyward_blade"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "rainslasher",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Engulfing",
+      "version": "2.1",
+      "start": {
+        "time": "2021-09-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-09-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "engulfing_lightning",
+        "the_unforged"
+      ],
+      "featured_rare": [
+        "lions_roar",
+        "the_bell",
+        "favonius_lance",
+        "the_widsith",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Moonglow",
+      "version": "2.1",
+      "start": {
+        "time": "2021-09-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-10-12 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "primordial_jade_cutter",
+        "everlasting_moonglow"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "favonius_greatsword",
+        "dragons_bane",
+        "favonius_codex",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Polar Star",
+      "version": "2.2",
+      "start": {
+        "time": "2021-10-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-11-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "polar_star",
+        "memory_of_dust"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "favonius_sword",
+        "favonius_lance",
+        "eye_of_perception",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Homa",
+      "version": "2.2",
+      "start": {
+        "time": "2021-11-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2021-11-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "staff_of_homa",
+        "elegy_for_the_end"
+      ],
+      "featured_rare": [
+        "wavebreakers_fin",
+        "mouuns_moon",
+        "sacrificial_sword",
+        "rainslasher",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Freedom",
+      "version": "2.3",
+      "start": {
+        "time": "2021-11-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2021-12-14 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "freedom-sworn",
+        "song_of_broken_pines"
+      ],
+      "featured_rare": [
+        "wine_and_song",
+        "alley_hunter",
+        "lions_roar",
+        "sacrificial_greatsword",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Redhorn",
+      "version": "2.3",
+      "start": {
+        "time": "2021-12-14 18:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-01-04 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "redhorn_stonethresher",
+        "skyward_harp"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "mitternachts_waltz",
+        "the_bell",
+        "favonius_lance",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Queller",
+      "version": "2.4",
+      "start": {
+        "time": "2022-01-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-01-25 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "calamity_queller",
+        "primordial_jade_winged-spear"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "the_flute",
+        "favonius_greatsword",
+        "the_widsith",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Amos",
+      "version": "2.4",
+      "start": {
+        "time": "2022-01-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-02-15 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "amos_bow",
+        "vortex_vanquisher"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "favonius_sword",
+        "dragons_bane",
+        "favonius_codex",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Verity",
+      "version": "2.5",
+      "start": {
+        "time": "2022-02-16 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-03-08 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kaguras_verity",
+        "primordial_jade_cutter"
+      ],
+      "featured_rare": [
+        "wavebreakers_fin",
+        "sacrificial_sword",
+        "rainslasher",
+        "eye_of_perception",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Engulfing",
+      "version": "2.5",
+      "start": {
+        "time": "2022-03-08 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-03-29 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "engulfing_lightning",
+        "everlasting_moonglow"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "mouuns_moon",
+        "lions_roar",
+        "favonius_lance",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Haran",
+      "version": "2.6",
+      "start": {
+        "time": "2022-03-30 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-04-19 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "haran_geppaku_futsu",
+        "elegy_for_the_end"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "the_widsith",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Mistsplitter",
+      "version": "2.6",
+      "start": {
+        "time": "2022-04-19 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-05-31 05:59:59",
+        "asia_based": true
+      },
+      "featured": [
+        "mistsplitter_reforged",
+        "the_unforged"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "the_bell",
+        "favonius_lance",
+        "favonius_codex",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Aqua",
+      "version": "2.7",
+      "start": {
+        "time": "2022-05-31 09:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-06-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "aqua_simulacra",
+        "primordial_jade_winged-spear"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "sacrificial_sword",
+        "favonius_greatsword",
+        "eye_of_perception",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Redhorn",
+      "version": "2.7",
+      "start": {
+        "time": "2022-06-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-07-12 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "redhorn_stonethresher",
+        "memory_of_dust"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "lions_roar",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Freedom-Sworn",
+      "version": "2.8",
+      "start": {
+        "time": "2022-07-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-08-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "freedom-sworn",
+        "lost_prayer_to_the_sacred_winds"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "mitternachts_waltz",
+        "rainslasher",
+        "favonius_lance",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Thundering",
+      "version": "2.8",
+      "start": {
+        "time": "2022-08-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-08-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "thundering_pulse",
+        "summit_shaper"
+      ],
+      "featured_rare": [
+        "wine_and_song",
+        "alley_hunter",
+        "the_flute",
+        "sacrificial_greatsword",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Hunters",
+      "version": "3.0",
+      "start": {
+        "time": "2022-08-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-09-09 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "hunters_path",
+        "vortex_vanquisher"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "the_bell",
+        "favonius_lance",
+        "favonius_codex",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Amos",
+      "version": "3.0",
+      "start": {
+        "time": "2022-09-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-09-27 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "amos_bow",
+        "everlasting_moonglow"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "favonius_greatsword",
+        "dragons_bane",
+        "eye_of_perception",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Scarlet",
+      "version": "3.1",
+      "start": {
+        "time": "2022-09-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-10-14 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "staff_of_the_scarlet_sands",
+        "elegy_for_the_end"
+      ],
+      "featured_rare": [
+        "makhaira_aquamarine",
+        "lions_roar",
+        "favonius_lance",
+        "sacrificial_fragments",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nisut",
+      "version": "3.1",
+      "start": {
+        "time": "2022-10-14 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-11-01 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "key_of_khaj-nisut",
+        "primordial_jade_cutter"
+      ],
+      "featured_rare": [
+        "xiphos_moonlight",
+        "wandering_evenstar",
+        "rainslasher",
+        "dragons_bane",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Dreams",
+      "version": "3.2",
+      "start": {
+        "time": "2022-11-02 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-11-18 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "a_thousand_floating_dreams",
+        "thundering_pulse"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "sacrificial_greatsword",
+        "favonius_lance",
+        "the_widsith",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Kagura",
+      "version": "3.2",
+      "start": {
+        "time": "2022-11-18 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2022-12-06 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "kaguras_verity",
+        "polar_star"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "the_bell",
+        "dragons_bane",
+        "favonius_codex",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Tulaytullah",
+      "version": "3.3",
+      "start": {
+        "time": "2022-12-07 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2022-12-27 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "tulaytullahs_remembrance",
+        "redhorn_stonethresher"
+      ],
+      "featured_rare": [
+        "wavebreakers_fin",
+        "sacrificial_sword",
+        "favonius_greatsword",
+        "eye_of_perception",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Egulfing",
+      "version": "3.3",
+      "start": {
+        "time": "2022-12-27 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-01-17 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "engulfing_lightning",
+        "haran_geppaku_futsu"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "mouuns_moon",
+        "lions_roar",
+        "favonius_lance",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Incision",
+      "version": "3.4",
+      "start": {
+        "time": "2023-01-18 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-02-07 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "light_of_foliar_incision",
+        "primordial_jade_winged-spear"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "the_flute",
+        "rainslasher",
+        "the_widsith",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Homa",
+      "version": "3.4",
+      "start": {
+        "time": "2023-02-07 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-02-28 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "staff_of_homa",
+        "aqua_simulacra"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "favonius_sword",
+        "dragons_bane",
+        "favonius_codex",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Incision",
+      "version": "3.5",
+      "start": {
+        "time": "2023-03-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-03-21 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "beacon_of_the_reed_sea",
+        "staff_of_the_scarlet_sands"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "alley_hunter",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "eye_of_perception"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Incision",
+      "version": "3.5",
+      "start": {
+        "time": "2023-03-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-04-11 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "calamity_queller",
+        "mistsplitter_reforged"
+      ],
+      "featured_rare": [
+        "wine_and_song",
+        "sacrificial_sword",
+        "the_bell",
+        "favonius_lance",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Dreams",
+      "version": "3.6",
+      "start": {
+        "time": "2023-04-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-05-02 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "key_of_khaj-nisut",
+        "a_thousand_floating_dreams"
+      ],
+      "featured_rare": [
+        "xiphos_moonlight",
+        "favonius_greatsword",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "jadefalls_splendor",
+      "version": "3.6",
+      "start": {
+        "time": "2023-05-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-05-23 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "jadefalls_splendor",
+        "amos_bow"
+      ],
+      "featured_rare": [
+        "makhaira_aquamarine",
+        "wandering_evenstar",
+        "lions_roar",
+        "favonius_lance",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Thundering",
+      "version": "3.7",
+      "start": {
+        "time": "2023-05-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-06-13 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "thundering_pulse",
+        "kaguras_verity"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "the_flute",
+        "dragons_bane",
+        "the_widsith",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Freedom",
+      "version": "3.7",
+      "start": {
+        "time": "2023-06-13 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-07-04 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "freedom-sworn",
+        "light_of_foliar_incision"
+      ],
+      "featured_rare": [
+        "wavebreakers_fin",
+        "mouuns_moon",
+        "favonius_sword",
+        "sacrificial_greatsword",
+        "favonius_codex"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Freedom",
+      "version": "3.8",
+      "start": {
+        "time": "2023-07-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-07-25 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "song_of_broken_pines",
+        "lost_prayer_to_the_sacred_winds"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "alley_hunter",
+        "rainslasher",
+        "favonius_lance",
+        "eye_of_perception"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Moonglow",
+      "version": "3.8",
+      "start": {
+        "time": "2023-07-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-08-15 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "everlasting_moonglow",
+        "tulaytullahs_remembrance"
+      ],
+      "featured_rare": [
+        "wine_and_song",
+        "lions_roar",
+        "the_bell",
+        "dragons_bane",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Great Magic",
+      "version": "4.0",
+      "start": {
+        "time": "2023-08-16 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-09-05 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "the_first_great_magic",
+        "aqua_simulacra"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "favonius_greatsword",
+        "favonius_lance",
+        "sacrificial_fragments",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Polar",
+      "version": "4.0",
+      "start": {
+        "time": "2023-09-05 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-09-26 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "polar_star",
+        "vortex_vanquisher"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "the_widsith",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Polar",
+      "version": "4.1",
+      "start": {
+        "time": "2023-09-27 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-10-17 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "tome_of_the_eternal_flow",
+        "staff_of_homa"
+      ],
+      "featured_rare": [
+        "the_dockhands_assistant",
+        "portable_power_saw",
+        "mitternachts_waltz",
+        "favonius_lance",
+        "favonius_codex"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Polar",
+      "version": "4.1",
+      "start": {
+        "time": "2023-10-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-11-07 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "cashflow_supervision",
+        "elegy_for_the_end"
+      ],
+      "featured_rare": [
+        "prospectors_drill",
+        "range_gauge",
+        "favonius_sword",
+        "rainslasher",
+        "eye_of_perception"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Tranquil",
+      "version": "4.2",
+      "start": {
+        "time": "2023-11-08 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2023-11-28 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "splendor_of_tranquil_waters",
+        "jadefalls_splendor"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "the_bell",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Scarlet",
+      "version": "4.2",
+      "start": {
+        "time": "2023-11-28 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2023-12-19 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "staff_of_the_scarlet_sands",
+        "haran_geppaku_futsu"
+      ],
+      "featured_rare": [
+        "lions_roar",
+        "the_widsith",
+        "favonius_warbow",
+        "favonius_greatsword",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Verdict",
+      "version": "4.3",
+      "start": {
+        "time": "2023-12-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-01-09 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "verdict",
+        "mistsplitter_reforged"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "mouuns_moon",
+        "the_flute",
+        "dragons_bane",
+        "favonius_codex"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Engulfing",
+      "version": "4.3",
+      "start": {
+        "time": "2024-01-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-01-30 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "engulfing_lightning",
+        "thundering_pulse"
+      ],
+      "featured_rare": [
+        "wavebreakers_fin",
+        "favonius_sword",
+        "rainslasher",
+        "eye_of_perception",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Crane",
+      "version": "4.4",
+      "start": {
+        "time": "2024-01-31 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-02-20 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "cranes_echoing_call",
+        "a_thousand_floating_dreams"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "sacrificial_sword",
+        "sacrificial_greatsword",
+        "sacrificial_fragments",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Primordial",
+      "version": "4.4",
+      "start": {
+        "time": "2024-02-20 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-03-12 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "primordial_jade_winged-spear",
+        "kaguras_verity"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "lions_roar",
+        "favonius_lance",
+        "the_widsith",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Misugiri",
+      "version": "4.5",
+      "start": {
+        "time": "2024-03-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-04-02 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "uraku_misugiri",
+        "redhorn_stonethresher"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "alley_hunter",
+        "the_bell",
+        "dragons_bane",
+        "favonius_codex"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Eternal",
+      "version": "4.5",
+      "start": {
+        "time": "2024-04-02 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-04-23 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "tome_of_the_eternal_flow",
+        "freedom-sworn"
+      ],
+      "featured_rare": [
+        "wine_and_song",
+        "mitternachts_waltz",
+        "the_flute",
+        "favonius_greatsword",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Crimson",
+      "version": "4.6",
+      "start": {
+        "time": "2024-04-24 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-05-14 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "crimson_moons_semblance",
+        "the_first_great_magic"
+      ],
+      "featured_rare": [
+        "the_dockhands_assistant",
+        "portable_power_saw",
+        "dragons_bane",
+        "eye_of_perception",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Tulaytullah",
+      "version": "4.6",
+      "start": {
+        "time": "2024-05-14 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-06-04 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "tulaytullahs_remembrance",
+        "jadefalls_splendor"
+      ],
+      "featured_rare": [
+        "prospectors_drill",
+        "range_gauge",
+        "favonius_sword",
+        "rainslasher",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Absolution",
+      "version": "4.7",
+      "start": {
+        "time": "2024-06-05 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-06-25 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "absolution",
+        "light_of_foliar_incision"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "sacrificial_sword",
+        "sacrificial_greatsword",
+        "the_widsith",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Silvershower",
+      "version": "4.7",
+      "start": {
+        "time": "2024-06-25 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-07-16 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "silvershower_heartstrings",
+        "splendor_of_tranquil_waters"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "lions_roar",
+        "favonius_lance",
+        "favonius_codex",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Verdict",
+      "version": "4.8",
+      "start": {
+        "time": "2024-07-17 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-08-06 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "verdict",
+        "key_of_khaj-nisut"
+      ],
+      "featured_rare": [
+        "xiphos_moonlight",
+        "the_bell",
+        "dragons_bane",
+        "eye_of_perception",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Lumidouce",
+      "version": "4.8",
+      "start": {
+        "time": "2024-08-06 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-08-27 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lumidouce_elegy",
+        "aqua_simulacra"
+      ],
+      "featured_rare": [
+        "makhaira_aquamarine",
+        "wandering_evenstar",
+        "the_flute",
+        "favonius_lance",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Surf's Up",
+      "version": "5.0",
+      "start": {
+        "time": "2024-08-28 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-09-17 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "surfs_up",
+        "freedom-sworn"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "favonius_greatsword",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Mountain King",
+      "version": "5.0",
+      "start": {
+        "time": "2024-09-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-10-08 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "fang_of_the_mountain_king",
+        "engulfing_lightning"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "rainslasher",
+        "favonius_lance",
+        "the_widsith",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Peak",
+      "version": "5.1",
+      "start": {
+        "time": "2024-10-09 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-10-29 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "peak_patrol_song",
+        "uraku_misugiri"
+      ],
+      "featured_rare": [
+        "sturdy_bone",
+        "mountain-bracing_bolt",
+        "sacrificial_greatsword",
+        "favonius_codex",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Dreams",
+      "version": "5.1",
+      "start": {
+        "time": "2024-10-29 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-11-19 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "a_thousand_floating_dreams",
+        "staff_of_homa"
+      ],
+      "featured_rare": [
+        "fruitful_hook",
+        "lions_roar",
+        "dragons_bane",
+        "eye_of_perception",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Astral",
+      "version": "5.2",
+      "start": {
+        "time": "2024-11-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-12-10 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "astral_vultures_crimson_plumage",
+        "the_first_great_magic"
+      ],
+      "featured_rare": [
+        "waveriding_whirl",
+        "flower-wreathed_feathers",
+        "the_flute",
+        "the_bell",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Tome",
+      "version": "5.2",
+      "start": {
+        "time": "2024-12-10 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2024-12-31 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "tome_of_the_eternal_flow",
+        "vortex_vanquisher"
+      ],
+      "featured_rare": [
+        "mitternachts_waltz",
+        "favonius_sword",
+        "favonius_greatsword",
+        "dragons_bane",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Blazing",
+      "version": "5.3",
+      "start": {
+        "time": "2025-01-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-01-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "a_thousand_blazing_suns",
+        "starcallers_watch"
+      ],
+      "featured_rare": [
+        "lithic_blade",
+        "sacrificial_sword",
+        "favonius_lance",
+        "favonius_codex",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Blazing",
+      "version": "5.3",
+      "start": {
+        "time": "2025-01-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-02-11 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "crimson_moons_semblance",
+        "absolution"
+      ],
+      "featured_rare": [
+        "lithic_spear",
+        "lions_roar",
+        "rainslasher",
+        "the_widsith",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Blazing",
+      "version": "5.4",
+      "start": {
+        "time": "2025-02-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-03-04 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "sunny_morning_sleep-in",
+        "silvershower_heartstrings"
+      ],
+      "featured_rare": [
+        "akuoumaru",
+        "wavebreakers_fin",
+        "mouuns_moon",
+        "the_flute",
+        "eye_of_perception"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Splendor",
+      "version": "5.4",
+      "start": {
+        "time": "2025-03-04 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-03-25 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "splendor_of_tranquil_waters",
+        "cashflow_supervision"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Vivid",
+      "version": "5.5",
+      "start": {
+        "time": "2025-03-26 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-04-15 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "vivid_notions",
+        "cranes_echoing_call"
+      ],
+      "featured_rare": [
+        "sturdy_bone",
+        "fruitful_hook",
+        "mountain-bracing_bolt",
+        "waveriding_whirl",
+        "flower-wreathed_feathers"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Vivid",
+      "version": "5.5",
+      "start": {
+        "time": "2025-04-15 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-05-06 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "peak_patrol_song",
+        "elegy_for_the_end"
+      ],
+      "featured_rare": [
+        "sacrificial_sword",
+        "the_bell",
+        "favonius_lance",
+        "favonius_codex",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Scents",
+      "version": "5.6",
+      "start": {
+        "time": "2025-05-07 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-05-27 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "symphonist_of_scents",
+        "verdict"
+      ],
+      "featured_rare": [
+        "the_dockhands_assistant",
+        "portable_power_saw",
+        "prospectors_drill",
+        "range_gauge",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Mountain King",
+      "version": "5.6",
+      "start": {
+        "time": "2025-05-27 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-06-17 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "fang_of_the_mountain_king",
+        "engulfing_lightning"
+      ],
+      "featured_rare": [
+        "lions_roar",
+        "favonius_greatsword",
+        "dragons_bane",
+        "eye_of_perception",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Azurelight",
+      "version": "5.7",
+      "start": {
+        "time": "2025-06-18 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-07-08 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "azurelight",
+        "calamity_queller"
+      ],
+      "featured_rare": [
+        "xiphos_moonlight",
+        "makhaira_aquamarine",
+        "wandering_evenstar",
+        "favonius_lance",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Blazing",
+      "version": "5.7",
+      "start": {
+        "time": "2025-07-08 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-07-29 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "a_thousand_blazing_suns",
+        "calamity_queller"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "rainslasher",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Halo",
+      "version": "5.8",
+      "start": {
+        "time": "2025-07-30 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-08-19 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "fractured_halo",
+        "starcallers_watch"
+      ],
+      "featured_rare": [
+        "sturdy_bone",
+        "mountain-bracing_bolt",
+        "sacrificial_greatsword",
+        "favonius_codex",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Surf's Up",
+      "version": "5.8",
+      "start": {
+        "time": "2025-08-19 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-09-09 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "surfs_up",
+        "astral_vultures_crimson_plumage"
+      ],
+      "featured_rare": [
+        "fruitful_hook",
+        "waveriding_whirl",
+        "flower-wreathed_feathers",
+        "favonius_sword",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nightweaver's",
+      "version": "6.0",
+      "start": {
+        "time": "2025-09-10 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-09-30 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nightweavers_looking_glass",
+        "a_thousand_floating_dreams"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nightweaver's",
+      "version": "6.0",
+      "start": {
+        "time": "2025-09-30 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-10-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "bloodsoaked_ruins",
+        "aqua_simulacra"
+      ],
+      "featured_rare": [
+        "lions_roar",
+        "favonius_greatsword",
+        "favonius_lance",
+        "favonius_codex",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Truth",
+      "version": "6.1",
+      "start": {
+        "time": "2025-10-22 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-11-11 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "reliquary_of_truth",
+        "splendor_of_tranquil_waters"
+      ],
+      "featured_rare": [
+        "moonweavers_dawn",
+        "sacrificers_staff",
+        "dawning_frost",
+        "the_bell",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Crimson",
+      "version": "6.1",
+      "start": {
+        "time": "2025-11-11 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-12-02 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "crimson_moons_semblance",
+        "vortex_vanquisher"
+      ],
+      "featured_rare": [
+        "the_dockhands_assistant",
+        "portable_power_saw",
+        "range_gauge",
+        "dragons_bane",
+        "sacrificial_fragments"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Athame",
+      "version": "6.2",
+      "start": {
+        "time": "2025-12-03 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-12-23 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "athame_artis",
+        "the_daybreak_chronicles"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "prospectors_drill",
+        "wine_and_song",
+        "rainslasher",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Vivid",
+      "version": "6.2",
+      "start": {
+        "time": "2025-12-23 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-01-13 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "vivid_notions",
+        "peak_patrol_song"
+      ],
+      "featured_rare": [
+        "fruitful_hook",
+        "alley_hunter",
+        "favonius_sword",
+        "favonius_lance",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nocturne",
+      "version": "6.3",
+      "start": {
+        "time": "2026-01-14 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-02-03 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nocturnes_curtain_call",
+        "fractured_halo"
+      ],
+      "featured_rare": [
+        "mountain-bracing_bolt",
+        "waveriding_whirl",
+        "mitternachts_waltz",
+        "the_flute",
+        "sacrificial_greatsword"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nocturne",
+      "version": "6.3",
+      "start": {
+        "time": "2026-02-03 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-02-24 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "lightbearing_moonshard",
+        "tome_of_the_eternal_flow"
+      ],
+      "featured_rare": [
+        "xiphos_moonlight",
+        "favonius_greatsword",
+        "dragons_bane",
+        "eye_of_perception",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Mighty Wolf",
+      "version": "6.4",
+      "start": {
+        "time": "2026-02-25 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-03-17 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "gest_of_the_mighty_wolf",
+        "bloodsoaked_ruins"
+      ],
+      "featured_rare": [
+        "sacrificers_staff",
+        "favonius_sword",
+        "favonius_greatsword",
+        "sacrificial_fragments",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Azurelight",
+      "version": "6.4",
+      "start": {
+        "time": "2026-03-17 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-04-07 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "azurelight",
+        "symphonist_of_scents"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "the_bell",
+        "favonius_lance",
+        "favonius_codex",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Frostbound",
+      "version": "6.5",
+      "start": {
+        "time": "2026-04-08 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-04-28 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "golden_frostbound_oath",
+        "astral_vultures_crimson_plumage"
+      ],
+      "featured_rare": [
+        "flower-wreathed_feathers",
+        "lions_roar",
+        "sacrificial_greatsword",
+        "dragons_bane",
+        "eye_of_perception"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nightweaver",
+      "version": "6.5",
+      "start": {
+        "time": "2026-04-28 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-05-19 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nightweavers_looking_glass",
+        "reliquary_of_truth"
+      ],
+      "featured_rare": [
+        "dawning_frost",
+        "sacrificial_sword",
+        "rainslasher",
+        "favonius_lance",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Angelos",
+      "version": "6.6",
+      "start": {
+        "time": "2026-05-20 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-06-09 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "angelos_heptades",
+        "athame_artis"
+      ],
+      "featured_rare": [
+        "moonweavers_dawn",
+        "mitternachts_waltz",
+        "the_bell",
+        "dragons_bane",
+        "the_widsith"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Disaster",
+      "version": "6.6",
+      "start": {
+        "time": "2026-06-09 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-06-30 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "disaster_and_remorse",
+        "a_thousand_blazing_suns"
+      ],
+      "featured_rare": [
+        "the_alley_flash",
+        "wine_and_song",
+        "alley_hunter",
+        "rainslasher",
+        "favonius_lance"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Transcendence",
+      "version": "6.7",
+      "start": {
+        "time": "2026-07-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-07-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "a_teaspoon_of_transcendence",
+        "starcallers_watch"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "rainslasher",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Nocturne",
+      "version": "6.7",
+      "start": {
+        "time": "2026-07-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-08-11 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "nocturnes_curtain_call",
+        "engulfing_lightning"
+      ],
+      "featured_rare": [
+        "waveriding_whirl",
+        "sacrificial_sword",
+        "the_bell",
+        "favonius_lance",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Whitelake",
+      "version": "7.0",
+      "start": {
+        "time": "2026-08-12 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-09-01 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "whitelake_frostfeather",
+        "crimson_moons_semblance"
+      ],
+      "featured_rare": [
+        "favonius_sword",
+        "the_bell",
+        "dragons_bane",
+        "sacrificial_fragments",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Bloodsoaked",
+      "version": "7.0",
+      "start": {
+        "time": "2026-09-01 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-09-22 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "bloodsoaked_ruins",
+        "fractured_halo"
+      ],
+      "featured_rare": [
+        "the_flute",
+        "favonius_greatsword",
+        "favonius_lance",
+        "eye_of_perception",
+        "the_stringless"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Chrysalis",
+      "version": "7.1",
+      "start": {
+        "time": "2026-09-23 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-10-13 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "beyond_the_chrysalis",
+        "hymn_of_the_maelstrom"
+      ],
+      "featured_rare": [
+        "new_bough",
+        "winters_heavy_heart",
+        "breezeborne_refrain",
+        "favonius_greatsword",
+        "dragons_bane"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Azurelight",
+      "version": "7.1",
+      "start": {
+        "time": "2026-10-13 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-11-03 14:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "azurelight",
+        "symphonist_of_scents"
+      ],
+      "featured_rare": [
+        "sturdy_bone",
+        "sacrificial_greatsword",
+        "favonius_lance",
+        "the_widsith",
+        "sacrificial_bow"
+      ]
+    },
+    {
+      "pool_id": "weapon",
+      "name": "Epitome Invocation",
+      "short_name": "Starsealed",
+      "version": "7.2",
+      "start": {
+        "time": "2026-11-04 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-11-24 17:59:59",
+        "asia_based": false
+      },
+      "featured": [
+        "starsealed_edict",
+        "splendor_of_tranquil_waters"
+      ],
+      "featured_rare": [
+        "the_dockhands_assistant",
+        "prospectors_drill",
+        "dawning_frost",
+        "rainslasher",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Ode to the Dawn Breeze",
+      "short_name": "Mondstadt",
+      "version": "4.5",
+      "start": {
+        "time": "2024-03-13 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2024-04-02 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "eula",
+        "mona",
+        "albedo",
+        "klee",
+        "diluc",
+        "jean",
+        "skyward_blade",
+        "aquila_favonia",
+        "beacon_of_the_reed_sea",
+        "song_of_broken_pines",
+        "wolfs_gravestone",
+        "skyward_pride",
+        "skyward_spine",
+        "lost_prayer_to_the_sacred_winds",
+        "skyward_atlas",
+        "hunters_path",
+        "skyward_harp"
+      ],
+      "featured_rare": [
+        "mika",
+        "rosaria",
+        "sucrose",
+        "diona",
+        "noelle",
+        "bennett",
+        "fischl",
+        "amber",
+        "razor",
+        "kaeya",
+        "barbara",
+        "lisa",
+        "the_alley_flash",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "favonius_lance",
+        "dragons_bane",
+        "wine_and_song",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "mitternachts_waltz",
+        "alley_hunter",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Remembrance of Jade and Stone",
+      "short_name": "Liyue",
+      "version": "5.3",
+      "start": {
+        "time": "2025-01-21 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-02-11 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "baizhu",
+        "shenhe",
+        "keqing",
+        "ganyu",
+        "qiqi",
+        "tartaglia",
+        "xiao",
+        "primordial_jade_cutter",
+        "summit_shaper",
+        "the_unforged",
+        "calamity_queller",
+        "primordial_jade_winged-spear",
+        "jadefalls_splendor",
+        "memory_of_dust",
+        "polar_star",
+        "amos_bow"
+      ],
+      "featured_rare": [
+        "gaming",
+        "yaoyao",
+        "yun_jin",
+        "yanfei",
+        "xinyan",
+        "chongyun",
+        "ningguang",
+        "xingqiu",
+        "beidou",
+        "xiangling",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "lithic_blade",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "favonius_lance",
+        "lithic_spear",
+        "dragons_bane",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Thunder Rends the Plains on High",
+      "short_name": "Inazuma",
+      "version": "5.6",
+      "start": {
+        "time": "2025-05-27 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2025-06-17 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "kamisato_ayaka",
+        "kamisato_ayato",
+        "yoimiya",
+        "chiori",
+        "yae_miko",
+        "arataki_itto",
+        "sangonomiya_kokomi",
+        "kaedehara_kazuha",
+        "uraku_misugiri",
+        "haran_geppaku_futsu",
+        "mistsplitter_reforged",
+        "freedom-sworn",
+        "redhorn_stonethresher",
+        "kaguras_verity",
+        "everlasting_moonglow",
+        "thundering_pulse"
+      ],
+      "featured_rare": [
+        "kuki_shinobu",
+        "kirara",
+        "shikanoin_heizou",
+        "kujou_sara",
+        "gorou",
+        "sayu",
+        "thoma",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "akuoumaru",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "wavebreakers_fin",
+        "favonius_lance",
+        "dragons_bane",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "mouuns_moon",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Roving Chalice of Dewgrass",
+      "short_name": "Sumeru",
+      "version": "6.0",
+      "start": {
+        "time": "2025-09-10 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2025-09-30 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "dehya",
+        "alhaitham",
+        "wanderer",
+        "cyno",
+        "nilou",
+        "tighnari",
+        "light_of_foliar_incision",
+        "key_of_khaj-nisut",
+        "beacon_of_the_reed_sea",
+        "staff_of_the_scarlet_sands",
+        "tulaytullahs_remembrance",
+        "hunters_path"
+      ],
+      "featured_rare": [
+        "sethos",
+        "kaveh",
+        "faruzan",
+        "layla",
+        "candace",
+        "dori",
+        "collei",
+        "xiphos_moonlight",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "makhaira_aquamarine",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "favonius_lance",
+        "dragons_bane",
+        "wandering_evenstar",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Ode to the Dawn Breeze",
+      "short_name": "Mondstadt",
+      "version": "6.0",
+      "start": {
+        "time": "2026-02-25 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-03-17 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "eula",
+        "mona",
+        "albedo",
+        "klee",
+        "diluc",
+        "jean",
+        "skyward_blade",
+        "aquila_favonia",
+        "song_of_broken_pines",
+        "wolfs_gravestone",
+        "skyward_pride",
+        "skyward_spine",
+        "lost_prayer_to_the_sacred_winds",
+        "skyward_atlas",
+        "elegy_for_the_end",
+        "skyward_harp"
+      ],
+      "featured_rare": [
+        "dahlia",
+        "mika",
+        "rosaria",
+        "sucrose",
+        "diona",
+        "noelle",
+        "bennett",
+        "fischl",
+        "amber",
+        "razor",
+        "kaeya",
+        "barbara",
+        "lisa",
+        "the_alley_flash",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "favonius_lance",
+        "dragons_bane",
+        "wine_and_song",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "mitternachts_waltz",
+        "alley_hunter",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Dewlit Tranquility",
+      "short_name": "Fontaine",
+      "version": "6.5",
+      "start": {
+        "time": "2026-04-28 18:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2026-05-19 14:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "emilie",
+        "clorinde",
+        "sigewinne",
+        "navia",
+        "lyney",
+        "absolution",
+        "verdict",
+        "lumidouce_elegy",
+        "silvershower_heartstrings",
+        "the_first_great_magic"
+      ],
+      "featured_rare": [
+        "chevreuse",
+        "charlotte",
+        "freminet",
+        "lynette",
+        "the_dockhands_assistant",
+        "lions_roar",
+        "sacrificial_sword",
+        "the_flute",
+        "favonius_sword",
+        "portable_power_saw",
+        "rainslasher",
+        "sacrificial_greatsword",
+        "the_bell",
+        "favonius_greatsword",
+        "prospectors_drill",
+        "favonius_lance",
+        "dragons_bane",
+        "eye_of_perception",
+        "sacrificial_fragments",
+        "the_widsith",
+        "favonius_codex",
+        "range_gauge",
+        "rust",
+        "sacrificial_bow",
+        "the_stringless",
+        "favonius_warbow"
+      ]
+    },
+    {
+      "pool_id": "chronicled",
+      "name": "Heavenlit Prophecy",
+      "short_name": "Mixed",
+      "version": "6.7",
+      "start": {
+        "time": "2026-07-01 06:00:00",
+        "asia_based": true
+      },
+      "end": {
+        "time": "2026-07-21 17:59:00",
+        "asia_based": false
+      },
+      "featured": [
+        "yumemizuki_mizuki",
+        "wriothesley",
+        "cyno",
+        "yae_miko",
+        "qiqi",
+        "sunny_morning_sleep-in",
+        "cashflow_supervision",
+        "staff_of_the_scarlet_sands",
+        "kaguras_verity",
+        "skyward_blade"
+      ],
+      "featured_rare": [
+        "aino",
+        "amber",
+        "barbara",
+        "beidou",
+        "bennett",
+        "candace",
+        "charlotte",
+        "chevreuse",
+        "chongyun",
+        "collei",
+        "dahlia",
+        "diona",
+        "dori",
+        "faruzan",
+        "fischl",
+        "freminet",
+        "gaming",
+        "gorou",
+        "iansan",
+        "ifa",
+        "illuga",
+        "jahoda",
+        "kachina",
+        "kaeya",
+        "kaveh",
+        "kirara",
+        "kujou_sara",
+        "kuki_shinobu",
+        "lan_yan",
+        "layla",
+        "lisa",
+        "lynette",
+        "mika",
+        "ningguang",
+        "noelle",
+        "ororon",
+        "prune",
+        "razor",
+        "rosaria",
+        "sayu",
+        "sethos",
+        "shikanoin_heizou",
+        "sucrose",
+        "thoma",
+        "xiangling",
+        "xingqiu",
+        "xinyan",
+        "yanfei",
+        "yaoyao",
+        "yun_jin",
+        "favonius_sword",
+        "the_flute",
+        "sacrificial_sword",
+        "lions_roar",
+        "favonius_greatsword",
+        "the_bell",
+        "sacrificial_greatsword",
+        "rainslasher",
+        "dragons_bane",
+        "favonius_lance",
+        "favonius_codex",
+        "the_widsith",
+        "sacrificial_fragments",
+        "eye_of_perception",
+        "favonius_warbow",
+        "the_stringless",
+        "sacrificial_bow",
+        "rust"
+      ]
+    },
+    {
+      "pool_id": "standard",
+      "name": "Wanderlust Invocation",
+      "short_name": "Wanderlust Invocation",
+      "version": null,
+      "start": {
+        "time": "2000-01-01 00:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2200-01-01 00:00:00",
+        "asia_based": false
+      },
+      "featured": [],
+      "featured_rare": []
+    },
+    {
+      "pool_id": "beginner",
+      "name": "Beginners' Wish",
+      "short_name": "Beginners' Wish",
+      "version": null,
+      "start": {
+        "time": "2000-01-01 00:00:00",
+        "asia_based": false
+      },
+      "end": {
+        "time": "2200-01-01 00:00:00",
+        "asia_based": false
+      },
+      "featured": [],
+      "featured_rare": []
+    }
+  ]
+}

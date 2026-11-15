@@ -43,6 +43,12 @@ export const ru = {
   'settings.theme': 'Тема оформления',
   'settings.language': 'Язык',
   'settings.save_error': 'Не удалось сохранить настройки',
+  'settings.reference': 'Справочные данные',
+
+  'reference.counts': 'Персонажей: {characters} · Оружия: {weapons} · Баннеров: {banners}',
+  'reference.latest_banner': 'Последний баннер: {name} (версия {version}), начало {start}',
+  'reference.source': 'Данные Paimon.moe от {date}, ревизия {revision}',
+  'reference.license': 'Источник данных — Paimon.moe (лицензия MIT). Genshin Impact © HoYoverse.',
 
   'theme.dark': 'Тёмная',
   'theme.light': 'Светлая',

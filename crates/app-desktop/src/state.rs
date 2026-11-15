@@ -2,7 +2,7 @@
 
 use std::sync::Arc;
 
-use application::services::{GameCatalog, SettingsService, StatisticsService};
+use application::services::{GameCatalog, ReferenceService, SettingsService, StatisticsService};
 
 /// Сервисы, которые нужны командам интерфейса.
 ///
@@ -14,6 +14,8 @@ pub struct AppState {
     pub game_catalog: Arc<GameCatalog>,
     /// Сервис пользовательских настроек.
     pub settings_service: SettingsService,
+    /// Сервис справочных данных (персонажи, оружие, баннеры).
+    pub reference_service: ReferenceService,
     /// Сервис статистики молитв.
     pub statistics_service: StatisticsService,
 }

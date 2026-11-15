@@ -1,7 +1,7 @@
 //! Ошибки уровня приложения: запуска и выполнения команд.
 
 use application::ports::RepositoryError;
-use application::services::StatisticsError;
+use application::services::{ReferenceError, StatisticsError};
 use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
@@ -66,6 +66,17 @@ impl From<StatisticsError> for CommandError {
                     message: error.to_string(),
                 }
             }
+        }
+    }
+}
+
+impl From<ReferenceError> for CommandError {
+    /// Преобразует ошибку справочника в ошибку команды.
+    fn from(error: ReferenceError) -> Self {
+        tracing::warn!(%error, "справочник недоступен");
+        Self {
+            code: "unknown_game",
+            message: error.to_string(),
         }
     }
 }

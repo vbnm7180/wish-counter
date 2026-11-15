@@ -1,9 +1,18 @@
-<!-- Страница настроек: выбор темы оформления и языка интерфейса. -->
+<!-- Страница настроек: тема оформления, язык интерфейса, сведения о справочных данных. -->
 <script lang="ts">
-  import type { LanguageCode } from '../lib/api/types';
+  import type { GameInfo, LanguageCode } from '../lib/api/types';
+  import ReferenceInfo from '../lib/components/ReferenceInfo.svelte';
   import { i18n, LANGUAGES } from '../lib/i18n/index.svelte';
   import { settingsState } from '../lib/state/settings.svelte';
   import { THEMES } from '../lib/themes/registry';
+
+  /** Свойства компонента. */
+  interface Props {
+    /** Поддерживаемые игры (для блока справочных данных). */
+    games: GameInfo[];
+  }
+
+  let { games }: Props = $props();
 
   /** Выбирает тему оформления. */
   function selectTheme(themeId: string): void {
@@ -47,6 +56,14 @@
         </button>
       {/each}
     </div>
+  </div>
+
+  <div class="group">
+    <h2>{i18n.t('settings.reference')}</h2>
+    {#each games as game (game.id)}
+      <ReferenceInfo gameId={game.id} />
+    {/each}
+    <p class="license">{i18n.t('reference.license')}</p>
   </div>
 
   {#if settingsState.error}
@@ -99,5 +116,11 @@
   .error {
     margin: 0;
     color: var(--color-danger);
+  }
+
+  .license {
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-text-muted);
   }
 </style>

@@ -33,6 +33,7 @@
 | `cargo test --workspace` | Все тесты Rust |
 | `cargo clippy --workspace --all-targets` | Анализатор кода Rust |
 | `cargo fmt --all` | Автоформатирование Rust-кода |
+| `cargo run -p data-sync` | Обновить встроенный справочник из Paimon.moe (нужен интернет) |
 
 ## Версии Tauri
 
@@ -41,6 +42,12 @@
 При обновлении крейта (`cargo update -p tauri`) нужно обновить и npm-пакеты.
 
 ## Как добавить…
+
+### …обновить встроенный справочник (новый патч, новые персонажи)
+1. `cargo run -p data-sync` — скачает последнюю ревизию Paimon.moe и перезапишет `crates/games/genshin/data/reference.json`.
+2. Посмотреть вывод: число предметов и баннеров, предупреждения о неизвестных идентификаторах.
+3. `cargo test -p game-genshin` — тесты проверят, что снимок корректен.
+4. Закоммитить `reference.json` и пересобрать приложение.
 
 ### …миграцию базы данных
 1. Создать `crates/infrastructure/src/database/migrations/sql/000N_описание.sql`.

@@ -16,6 +16,7 @@ members = [
     "crates/infrastructure",
     "crates/games/genshin",
     "crates/app-desktop",
+    "crates/tools/data-sync",
 ]
 
 # Общие метаданные, которые крейты наследуют через `version.workspace = true`.
@@ -50,6 +51,10 @@ tauri-build = { version = "2", features = [] }
 # SQLite: встраиваемая база данных. `bundled` компилирует SQLite из исходников
 # прямо в .exe — ничего не нужно устанавливать отдельно.
 rusqlite = { version = "0.43", features = ["bundled"] }
+# HTTP-клиент для скачивания справочников. TLS через rustls (на Rust, без OpenSSL).
+ureq = { version = "3", default-features = false, features = ["rustls", "gzip"] }
+# Дата и время (текущее время UTC для отметок о скачивании).
+chrono = { version = "0.4", default-features = false, features = ["std", "clock"] }
 # Временные папки для тестов.
 tempfile = "3"
 

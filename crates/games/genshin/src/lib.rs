@@ -3,20 +3,26 @@
 //! Описывает Genshin Impact для приложения:
 //! - идентификатор игры;
 //! - баннеры и правила гаранта ([`pools`]): 90/80 молитв, 4★ каждые 10,
-//!   50/50 и Capturing Radiance на баннере персонажа.
-//!
-//! На следующих этапах сюда добавятся данные о баннерах (для 50/50)
-//! и разбор истории молитв из игры и из файлов Paimon.moe / UIGF.
+//!   50/50 и Capturing Radiance на баннере персонажа;
+//! - справочник ([`reference`](mod@reference)): персонажи, оружие, расписание баннеров —
+//!   встроенный снимок данных Paimon.moe;
+//! - перевод данных Paimon.moe в справочник ([`paimon`]).
 
 use std::sync::Arc;
 
 use domain::game::{GameId, GameInfo, GameModule};
 use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
 use domain::pity::rules::PoolDefinition;
+use domain::reference::ReferenceSnapshot;
 
 // Код модуля лежит в папке модуля вместе с тестами: pools/pools.rs
 #[path = "pools/pools.rs"]
 pub mod pools;
+
+pub mod paimon;
+// Код модуля лежит в папке модуля вместе с тестами: reference/reference.rs
+#[path = "reference/reference.rs"]
+pub mod reference;
 
 pub use pools::{banner_codes, pool_ids};
 
@@ -50,6 +56,11 @@ impl GameModule for GenshinModule {
     /// Пока данных о баннерах нет (этап 4), статус 50/50 будет «неизвестен».
     fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
         Arc::new(NoFeaturedData)
+    }
+
+    /// Разбирает встроенный снимок справочника (≈ миллисекунды; вызывать один раз).
+    fn embedded_reference(&self) -> ReferenceSnapshot {
+        reference::embedded_reference()
     }
 }
 

@@ -44,6 +44,12 @@ export const en: Record<TranslationKey, string> = {
   'settings.theme': 'Theme',
   'settings.language': 'Language',
   'settings.save_error': 'Failed to save settings',
+  'settings.reference': 'Reference data',
+
+  'reference.counts': 'Characters: {characters} · Weapons: {weapons} · Banners: {banners}',
+  'reference.latest_banner': 'Latest banner: {name} (version {version}), starts {start}',
+  'reference.source': 'Paimon.moe data from {date}, revision {revision}',
+  'reference.license': 'Data source: Paimon.moe (MIT license). Genshin Impact © HoYoverse.',
 
   'theme.dark': 'Dark',
   'theme.light': 'Light',

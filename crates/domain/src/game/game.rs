@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::pity::featured::FeaturedLookup;
 use crate::pity::rules::PoolDefinition;
+use crate::reference::ReferenceSnapshot;
 
 /// Уникальный идентификатор игры, например `"genshin"`.
 ///
@@ -76,6 +77,10 @@ pub trait GameModule: Send + Sync {
 
     /// Возвращает проверку «предмет с баннера или нет» для расчёта 50/50.
     fn featured_lookup(&self) -> Arc<dyn FeaturedLookup>;
+
+    /// Возвращает справочник, встроенный в программу (предметы и баннеры).
+    /// Разбор может занимать миллисекунды — вызывать один раз при запуске.
+    fn embedded_reference(&self) -> ReferenceSnapshot;
 }
 
 // Тесты лежат рядом, в файле `game.tests.rs`.

@@ -60,6 +60,8 @@ Wish Counter — portable-приложение для Windows, которое с
 - 📌 Ближе к **этапу 10** напомнить владельцу обсудить формат дистрибутива (ZIP с одним .exe и т.п.).
 - 📌 Отложено, но **обязательно**: шанс нужного 4★ (50%/75%) — см. «Отложено» в docs/roadmap.md.
 - Правила гаранта Genshin и решения владельца по ним — в docs/genshin-rules.md. Перед изменением расчёта сверяться с ним.
+- Справочник `crates/games/genshin/data/reference.json` — только через `cargo run -p data-sync`, не вручную (ADR-020).
+  Данные Paimon.moe под MIT: атрибуция в THIRD_PARTY_NOTICES.md и в настройках приложения — не удалять.
 - Установщик VS Build Tools просил перезагрузку (2026-11-14). Сборка работает и без неё.
 
 ## Журнал работы
@@ -150,4 +152,26 @@ games/genshin (`lib.tests.rs`). Промежуточный вариант `foo.r
 - Проверено запуском .exe: окно открывается, `data/webview/EBWebView` создаётся, в `%LOCALAPPDATA%`/`%APPDATA%` следов нет.
 - Решение владельца: картинки и WebView2 в .exe не встраивать (ADR-018).
 
-**Следующий шаг:** этап 4 — справочные данные (персонажи, оружие, баннеры, картинки) и `FeaturedLookup` на их основе.
+### 2026-11-15 — Этап 4a-1: справочник из данных Paimon.moe
+**Решения владельца:** источник — Paimon.moe; сервер игрока выбирается вручную / читается из JSON Paimon.moe
+(пересчёт времени как в Paimon.moe); картинки — кэш при первом показе + докачка при импорте (без кнопки «Скачать все»);
+автообновление раз в сутки + кнопка; шанс нужного 4★ — в 4a-2. Этап 4 разбит на 4a-1, 4a-2, 4b, 4c, коммит на каждый шаг.
+
+**Исследовано:** `banners.js` (5 разделов, у двойных баннеров `featured` уже содержит обоих персонажей),
+`characters.js`, `weaponList.js`, `locales/items/ru.json` (ключ — английское имя). Время баннеров — по UTC+8;
+флаги `timezoneDependent` (начало) и `timezoneDependentEnd` (конец) означают «пересчитать на пояс сервера»
+(`src/functions/wish.js` Paimon.moe: `start - (8 - offset)`). Смещения серверов: Asia/China +8, America −5, Europe +1.
+
+**Сделано:**
+1. `domain::reference`: `LocalizedText`, `ItemInfo`, `ScheduleTime` (`asia_based`), `BannerInfo`, `ReferenceSnapshot`, `ReferenceData` (индекс).
+2. `game_genshin::paimon`: `js_literal` (разборщик без выполнения кода, лимит вложенности 64), `converter`
+   (предметы ≥3★, имена RU/EN, баннеры 5 пулов, выравнивание `-`/`_` в id, отчёт о неизвестных id).
+3. `infrastructure::remote`: `HttpClient` (ureq/rustls, HTTPS, белый список хостов, без редиректов, лимиты), `GitHubRepository`.
+4. `crates/tools/data-sync`: генерирует `crates/games/genshin/data/reference.json` (371 предмет, 224 баннера, ревизия 4b873a6).
+5. `GameModule::embedded_reference`, `ReferenceService` (+ лог загрузки), команда `get_reference_summary`,
+   блок «Справочные данные» в настройках с атрибуцией Paimon.moe (MIT); `THIRD_PARTY_NOTICES.md`.
+
+**Проверено:** 112 Rust-тестов, 11 тестов UI; clippy 0; svelte-check 0. .exe 6,9 МБ (+0,2 МБ), справочник загружается < 1 мс,
+RAM ≈ 33 МБ.
+
+**Следующий шаг:** 4a-2 — сервер игрока, `FeaturedLookup` по расписанию баннеров, шанс нужного 4★.

@@ -75,6 +75,7 @@ wish-counter/
 │   │   ├── wish/
 │   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
 │   │   │   └── wish.tests.rs
+│   │   ├── reference/      # reference.rs: ItemInfo, BannerInfo, ScheduleTime, LocalizedText, ReferenceSnapshot, ReferenceData + тесты
 │   │   └── pity/
 │   │       ├── mod.rs          # описание модуля гаранта
 │   │       ├── rules.rs        # PoolId, Probability, PityRules, FiftyFiftyRule, CapturingRadianceRule, PoolDefinition
@@ -83,7 +84,7 @@ wish-counter/
 │   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
 │   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, RepositoryError)
-│   │   └── services/       # game_catalog/, settings_service/, statistics_service/ (+ тесты)
+│   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
@@ -91,11 +92,18 @@ wish-counter/
 │   │   ├── database/       # mod.rs: DatabaseError
 │   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
 │   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql
+│   │   ├── remote/         # http_client/ (HTTPS, белый список хостов, лимиты), github/ (ревизия, файлы) + тесты
 │   │   └── wishes/         # sqlite_wish_repository/: SqliteWishRepository + тесты
 │   ├── games/genshin/src/
 │   │   ├── lib.rs          # GenshinModule
 │   │   ├── lib.tests.rs    # тесты
-│   │   └── pools/          # pools.rs: коды баннеров (banner_codes), пулы и правила + pools.tests.rs
+│   │   ├── pools/          # pools.rs: коды баннеров (banner_codes), пулы и правила + pools.tests.rs
+│   │   ├── paimon/         # mod.rs: репозиторий и пути файлов Paimon.moe
+│   │   │   ├── js_literal/ # разборщик JS-литералов (без выполнения кода) + тесты
+│   │   │   └── converter/  # Paimon.moe → ReferenceSnapshot + тесты
+│   │   └── reference/      # встроенный снимок (include_str!) + тесты
+│   ├── games/genshin/data/reference.json   # снимок справочника (генерирует data-sync)
+│   ├── tools/data-sync/    # инструмент разработчика: скачать Paimon.moe → reference.json
 │   └── app-desktop/
 │       ├── tauri.conf.json # окно, CSP, сборка, установщик
 │       ├── capabilities/   # права интерфейса (минимальные)
@@ -107,7 +115,7 @@ wish-counter/
 │           ├── window.rs   # создание главного окна (папка данных WebView2 → data/webview)
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
-│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics), settings.rs
+│           └── commands/   # команды Tauri: games.rs, reference.rs (get_reference_summary), settings.rs
 ├── ui/
 │   ├── index.html
 │   └── src/
@@ -121,7 +129,7 @@ wish-counter/
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
-│           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView
+│           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView, ReferenceInfo
 └── docs/                   # документация
 ```
 
@@ -139,6 +147,15 @@ data/
 ```
 
 С этапа 4 там же появится кэш справочников и картинок.
+
+## Справочные данные
+
+```
+Paimon.moe (GitHub) ──data-sync──► crates/games/genshin/data/reference.json ──include_str!──► .exe
+                                     (разработчик запускает и коммитит)
+.exe ► GameModule::embedded_reference() ► ReferenceService (ReferenceData с индексом) ► команды / расчёт
+```
+Справочник разбирается при запуске один раз (< 1 мс). На этапе 4b добавится скачанное обновление в `data/catalog/`.
 
 ## Поток данных: статистика молитв
 

@@ -6,6 +6,9 @@
 // Код модуля лежит в папке модуля вместе с тестами: game_catalog/game_catalog.rs
 #[path = "game_catalog/game_catalog.rs"]
 mod game_catalog;
+// Код модуля лежит в папке модуля вместе с тестами: reference_service/reference_service.rs
+#[path = "reference_service/reference_service.rs"]
+mod reference_service;
 // Код модуля лежит в папке модуля вместе с тестами: settings_service/settings_service.rs
 #[path = "settings_service/settings_service.rs"]
 mod settings_service;
@@ -14,5 +17,6 @@ mod settings_service;
 mod statistics_service;
 
 pub use game_catalog::GameCatalog;
+pub use reference_service::{LatestBanner, ReferenceError, ReferenceService, ReferenceSummary};
 pub use settings_service::SettingsService;
 pub use statistics_service::{GameStatistics, PoolSummary, StatisticsError, StatisticsService};

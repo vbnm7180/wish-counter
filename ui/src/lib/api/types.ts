@@ -71,3 +71,24 @@ export interface GameStatistics {
   primogems_spent: number;
   pools: PoolSummary[];
 }
+
+/** Самый новый баннер справочника (application LatestBanner). */
+export interface LatestBanner {
+  short_name: string;
+  version: string | null;
+  /** Начало баннера, 'ГГГГ-ММ-ДД чч:мм:сс'. */
+  start: string;
+}
+
+/** Сводка о справочнике игры (application ReferenceSummary). */
+export interface ReferenceSummary {
+  game_id: string;
+  /** Ревизия источника — коммит Paimon.moe. */
+  source_revision: string;
+  /** Когда создан снимок (UTC), 'ГГГГ-ММ-ДД чч:мм:сс'. */
+  generated_at: string;
+  character_count: number;
+  weapon_count: number;
+  banner_count: number;
+  latest_banner: LatestBanner | null;
+}

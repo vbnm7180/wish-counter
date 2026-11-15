@@ -8,6 +8,7 @@ use domain::game::GameInfo;
 use domain::pity::featured::NoFeaturedData;
 use domain::pity::rules::PityRules;
 use domain::pity::statistics::FeaturedStatus;
+use domain::reference::ReferenceSnapshot;
 use domain::wish::{BannerCode, ItemId, ItemKind, Rarity, WishId, WishTime};
 
 use super::*;
@@ -39,6 +40,15 @@ impl GameModule for FakeGame {
 
     fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
         Arc::new(NoFeaturedData)
+    }
+
+    fn embedded_reference(&self) -> ReferenceSnapshot {
+        ReferenceSnapshot {
+            source_revision: "test".into(),
+            generated_at: "2026-01-01 00:00:00".into(),
+            items: Vec::new(),
+            banners: Vec::new(),
+        }
     }
 }
 

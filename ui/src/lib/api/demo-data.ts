@@ -2,7 +2,7 @@
 // Показывают разные состояния карточек, чтобы было удобно верстать:
 // гарант после проигрыша, неизвестный статус, пустой баннер.
 // В настоящем приложении (Tauri) не используются.
-import type { GameStatistics, PityCounter, PoolSummary } from './types';
+import type { GameStatistics, PityCounter, PoolSummary, ReferenceSummary } from './types';
 
 /** Стоимость одной молитвы в примогемах. */
 const PRIMOGEMS_PER_WISH = 160;
@@ -51,5 +51,18 @@ export function demoGameStatistics(gameId: string): GameStatistics {
     total_wishes: pools.reduce((sum, item) => sum + item.total_wishes, 0),
     primogems_spent: pools.reduce((sum, item) => sum + item.primogems_spent, 0),
     pools,
+  };
+}
+
+/** Возвращает демо-сводку о справочнике. */
+export function demoReferenceSummary(gameId: string): ReferenceSummary {
+  return {
+    game_id: gameId,
+    source_revision: '4b873a6decad0384665084c69e9927a9fa266555',
+    generated_at: '2026-11-15 17:30:00',
+    character_count: 128,
+    weapon_count: 243,
+    banner_count: 224,
+    latest_banner: { short_name: 'Mitya', version: '7.2', start: '2026-11-04 06:00:00' },
   };
 }

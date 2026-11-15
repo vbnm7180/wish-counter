@@ -6,7 +6,7 @@
 
 use std::sync::Arc;
 
-use application::services::{GameCatalog, SettingsService, StatisticsService};
+use application::services::{GameCatalog, ReferenceService, SettingsService, StatisticsService};
 use game_genshin::GenshinModule;
 use infrastructure::database::open_database;
 use infrastructure::logging::init_logging;
@@ -46,6 +46,7 @@ pub fn run() -> Result<(), StartupError> {
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
+            commands::reference::get_reference_summary,
             commands::settings::get_settings,
             commands::settings::update_settings,
         ])
@@ -66,6 +67,7 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
     let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
 
     Ok(AppState {
+        reference_service: ReferenceService::from_catalog(&game_catalog),
         statistics_service: StatisticsService::new(Arc::clone(&game_catalog), wish_repository),
         game_catalog,
         settings_service: SettingsService::new(settings_repository),

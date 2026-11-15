@@ -6,8 +6,8 @@
 //   (`npm run dev`), чтобы верстать без сборки Rust.
 // Компоненты зависят только от интерфейса Backend (принцип D из SOLID).
 import { invoke, isTauri } from '@tauri-apps/api/core';
-import { demoGameStatistics } from './demo-data';
-import type { AppSettings, GameInfo, GameStatistics } from './types';
+import { demoGameStatistics, demoReferenceSummary } from './demo-data';
+import type { AppSettings, GameInfo, GameStatistics, ReferenceSummary } from './types';
 
 /** Операции, которые предоставляет Rust-ядро. */
 export interface Backend {
@@ -19,6 +19,8 @@ export interface Backend {
   updateSettings(settings: AppSettings): Promise<AppSettings>;
   /** Статистика молитв игры: итоги и карточки баннеров. */
   getGameStatistics(gameId: string): Promise<GameStatistics>;
+  /** Сводка о справочнике игры (версия данных, количество предметов и баннеров). */
+  getReferenceSummary(gameId: string): Promise<ReferenceSummary>;
 }
 
 /** Реализация через команды Tauri (см. crates/app-desktop/src/commands). */
@@ -37,6 +39,10 @@ class TauriBackend implements Backend {
 
   getGameStatistics(gameId: string): Promise<GameStatistics> {
     return invoke<GameStatistics>('get_game_statistics', { gameId });
+  }
+
+  getReferenceSummary(gameId: string): Promise<ReferenceSummary> {
+    return invoke<ReferenceSummary>('get_reference_summary', { gameId });
   }
 }
 
@@ -61,6 +67,10 @@ class BrowserBackend implements Backend {
 
   async getGameStatistics(gameId: string): Promise<GameStatistics> {
     return demoGameStatistics(gameId);
+  }
+
+  async getReferenceSummary(gameId: string): Promise<ReferenceSummary> {
+    return demoReferenceSummary(gameId);
   }
 }
 

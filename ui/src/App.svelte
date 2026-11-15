@@ -47,7 +47,7 @@
     {:else if navigation.current.kind === 'game'}
       <GamePage gameId={navigation.current.gameId} />
     {:else if navigation.current.kind === 'settings'}
-      <SettingsPage />
+      <SettingsPage {games} />
     {/if}
   </main>
 </div>
