@@ -42,6 +42,15 @@
 
 ## Как добавить…
 
+### …миграцию базы данных
+1. Создать `crates/infrastructure/src/database/migrations/sql/000N_описание.sql`.
+2. Добавить `include_str!("sql/000N_описание.sql")` в конец `MIGRATIONS` (`migrations.rs`).
+3. Уже выпущенные миграции **не менять**: у пользователей они уже применены.
+
+### Как посмотреть базу
+Файл `target/release/data/wish-counter.sqlite` (или `data/` рядом с dev-сборкой) открывается в
+[DB Browser for SQLite](https://sqlitebrowser.org/) или через `sqlite3`. Перед этим лучше закрыть приложение.
+
 ### …тему оформления
 1. Скопировать `ui/src/lib/themes/dark.css` в `<id>.css`, заменить селектор на `:root[data-theme='<id>']` и цвета.
 2. Импортировать файл в `ui/src/main.ts`.

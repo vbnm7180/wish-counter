@@ -47,6 +47,9 @@ tracing-appender = "0.2"
 # Tauri: десктопное окно с веб-интерфейсом.
 tauri = { version = "2", features = [] }
 tauri-build = { version = "2", features = [] }
+# SQLite: встраиваемая база данных. `bundled` компилирует SQLite из исходников
+# прямо в .exe — ничего не нужно устанавливать отдельно.
+rusqlite = { version = "0.43", features = ["bundled"] }
 # Временные папки для тестов.
 tempfile = "3"
 

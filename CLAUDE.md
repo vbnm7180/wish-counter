@@ -8,7 +8,7 @@
 
 Wish Counter — portable-приложение для Windows, которое считает молитвы в гача-играх HoYoverse
 (сначала Genshin Impact, потом HSR и ZZZ). Аналог Paimon.moe, StarRailStation, ZZZ.moe в одном приложении.
-Стек: Rust (ядро) + Tauri 2 + Svelte 5/TypeScript (интерфейс) + SQLite (с этапа 3).
+Стек: Rust (ядро) + Tauri 2 + Svelte 5/TypeScript (интерфейс) + SQLite (rusqlite, bundled).
 
 Владелец проекта **изучает Rust** по этому коду, общается на русском. Работа идёт пошагово, вместе с владельцем.
 
@@ -34,6 +34,8 @@ Wish Counter — portable-приложение для Windows, которое с
 8. Тексты интерфейса — только через словари `ui/src/lib/i18n/locales/` (оба языка), цвета — только через CSS-переменные тем.
 9. **Стили компонентов — внутри `.svelte` в теге `<style>`** (стандартный подход Svelte: стили автоматически
    изолированы внутри компонента). Глобальные стили и цвета тем — только в `ui/src/lib/themes/`.
+10. **Миграции БД:** выпущенные миграции не менять; изменения схемы — только новым файлом `sql/000N_*.sql`
+   (docs/development.md). SQL — только с параметрами, без подстановки строк.
 
 ## Окружение и команды
 
@@ -122,4 +124,20 @@ games/genshin (`lib.tests.rs`). Промежуточный вариант `foo.r
 **Проверено:** 62 Rust-теста, 11 тестов интерфейса; clippy 0 предупреждений; svelte-check 0 ошибок; portable .exe собирается.
 В окне приложения статистика пустая (история ещё не хранится), визуально проверялась только сборка.
 
-**Следующий шаг:** этап 3 — хранилище SQLite (заменить `InMemoryWishRepository` в `bootstrap.rs`).
+### 2026-11-15 — Этап 3: хранилище SQLite
+**Решение:** rusqlite (bundled) вместо sqlx, миграции написаны вручную (ADR-015).
+
+**Сделано:**
+1. `infrastructure::database`: `open_database` (WAL, synchronous=NORMAL, foreign_keys, busy_timeout),
+   `open_in_memory_database` (для тестов), миграции через `PRAGMA user_version`, `DatabaseError::NewerSchema`.
+2. Миграция `0001_create_wishes.sql`: таблица `wishes` с CHECK-ограничениями, UNIQUE (game_id, wish_id), индекс.
+3. Порт `WishRepository` дополнен методом `add_wishes` (атомарно, дубликаты пропускаются, возвращает число новых).
+4. `SqliteWishRepository` (Mutex<Connection>, подготовленные запросы, проверка строк через доменные типы).
+   `InMemoryWishRepository` удалён: в тестах используется SQLite в памяти.
+5. `AppPaths.database_file` = `data/wish-counter.sqlite`; `bootstrap.rs` открывает базу, `StartupError::Database`.
+6. Сквозной тест `crates/app-desktop/tests/statistics_end_to_end.rs` (SQLite → StatisticsService → правила Genshin).
+
+**Проверено:** 74 Rust-теста (73 модульных + 1 сквозной), 11 тестов UI; clippy 0; svelte-check 0; cargo doc 0.
+.exe ≈ 6,6 МБ (+1,6 МБ SQLite), при запуске создаёт базу и применяет миграцию 1, основной процесс ≈ 32 МБ RAM.
+
+**Следующий шаг:** этап 4 — справочные данные (персонажи, оружие, баннеры, картинки) и `FeaturedLookup` на их основе.

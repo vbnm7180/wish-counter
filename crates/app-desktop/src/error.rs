@@ -2,6 +2,7 @@
 
 use application::ports::RepositoryError;
 use application::services::StatisticsError;
+use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
 use serde::Serialize;
@@ -16,6 +17,9 @@ pub enum StartupError {
     /// Не удалось создать папку данных (например, нет прав на запись).
     #[error("не удалось создать папку данных: {0}")]
     DataDirectory(#[source] std::io::Error),
+    /// Не удалось открыть базу данных или обновить её схему.
+    #[error(transparent)]
+    Database(#[from] DatabaseError),
     /// Не удалось включить логирование.
     #[error(transparent)]
     Logging(#[from] LoggingError),

@@ -37,7 +37,7 @@
 |---|---|---|
 | `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`; правила гаранта (`PoolDefinition`, `PityRules`) и расчёт (`PityTracker`) |
 | `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`) |
-| `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, `InMemoryWishRepository` (до SQLite), `init_logging` |
+| `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, база SQLite (`open_database`, миграции), `SqliteWishRepository`, `init_logging` |
 | `game-genshin` | `crates/games/genshin` | `GenshinModule`; коды баннеров и правила пулов (`pools.rs`) |
 | `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
 
@@ -88,7 +88,10 @@ wish-counter/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
 │   │   ├── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
-│   │   └── wishes/         # in_memory_wish_repository/: InMemoryWishRepository (до этапа 3) + тесты
+│   │   ├── database/       # mod.rs: DatabaseError
+│   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
+│   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql
+│   │   └── wishes/         # sqlite_wish_repository/: SqliteWishRepository + тесты
 │   ├── games/genshin/src/
 │   │   ├── lib.rs          # GenshinModule
 │   │   ├── lib.tests.rs    # тесты
@@ -97,6 +100,7 @@ wish-counter/
 │       ├── tauri.conf.json # окно, CSP, сборка, установщик
 │       ├── capabilities/   # права интерфейса (минимальные)
 │       ├── icons/          # сгенерированные иконки
+│       ├── tests/          # сквозные тесты: statistics_end_to_end.rs (SQLite → статистика)
 │       └── src/
 │           ├── main.rs     # точка входа
 │           ├── bootstrap.rs# composition root: создание и связывание объектов
@@ -126,17 +130,18 @@ wish-counter/
 
 ```
 data/
-├── settings.json   # тема и язык
-└── logs/           # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
+├── settings.json         # тема и язык
+├── wish-counter.sqlite   # база: история молитв (+ служебные -wal, -shm пока приложение запущено)
+└── logs/                 # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
 ```
 
-С этапа 3 там же появятся база SQLite, а с этапа 4 — кэш справочников и картинок.
+С этапа 4 там же появится кэш справочников и картинок.
 
 ## Поток данных: статистика молитв
 
 1. `GamePage.svelte` → `backend.getGameStatistics('genshin')` → `invoke('get_game_statistics', { gameId })`
 2. `commands::games::get_game_statistics` → `StatisticsService::game_statistics`
-3. Сервис берёт модуль игры из `GameCatalog`, молитвы — из `WishRepository` (в хронологическом порядке)
+3. Сервис берёт модуль игры из `GameCatalog`, молитвы — из `WishRepository` (SQLite, `ORDER BY wish_time, row_id`)
 4. Для каждого пула (`GameModule::pools`) молитвы фильтруются по кодам баннеров и передаются в
    `calculate_pool_statistics`. `PityTracker` проходит по ним и считает счётчики и статус 50/50
 5. Сервис добавляет примогемы (`PoolDefinition::primogems_for`) и итоги по игре → JSON → карточки `BannerCard`

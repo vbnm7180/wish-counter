@@ -15,6 +15,10 @@ fn paths_are_built_from_data_dir() {
         paths.settings_file,
         PathBuf::from("root").join("settings.json")
     );
+    assert_eq!(
+        paths.database_file,
+        PathBuf::from("root").join("wish-counter.sqlite")
+    );
 }
 
 #[test]

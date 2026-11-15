@@ -21,6 +21,8 @@ const USER_PROFILE_DIR_NAME: &str = "WishCounter";
 const LOGS_DIR_NAME: &str = "logs";
 /// Имя файла настроек внутри папки данных.
 const SETTINGS_FILE_NAME: &str = "settings.json";
+/// Имя файла базы данных SQLite внутри папки данных.
+const DATABASE_FILE_NAME: &str = "wish-counter.sqlite";
 
 /// Где хранить данные приложения.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -54,6 +56,8 @@ pub struct AppPaths {
     pub logs_dir: PathBuf,
     /// Файл с пользовательскими настройками.
     pub settings_file: PathBuf,
+    /// Файл базы данных SQLite с историей молитв.
+    pub database_file: PathBuf,
 }
 
 impl AppPaths {
@@ -74,6 +78,7 @@ impl AppPaths {
         Self {
             logs_dir: data_dir.join(LOGS_DIR_NAME),
             settings_file: data_dir.join(SETTINGS_FILE_NAME),
+            database_file: data_dir.join(DATABASE_FILE_NAME),
             data_dir,
         }
     }

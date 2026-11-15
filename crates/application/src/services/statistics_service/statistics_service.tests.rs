@@ -67,6 +67,10 @@ impl WishRepository for FixedWishes {
     fn list_wishes(&self, _game_id: &GameId) -> Result<Vec<Wish>, RepositoryError> {
         Ok(self.0.clone())
     }
+
+    fn add_wishes(&self, _game_id: &GameId, _wishes: &[Wish]) -> Result<usize, RepositoryError> {
+        unimplemented!("сервис статистики не записывает молитвы")
+    }
 }
 
 /// Хранилище, которое всегда возвращает ошибку чтения.
@@ -75,6 +79,10 @@ struct BrokenRepository;
 impl WishRepository for BrokenRepository {
     fn list_wishes(&self, _game_id: &GameId) -> Result<Vec<Wish>, RepositoryError> {
         Err(RepositoryError::Io("disk".into()))
+    }
+
+    fn add_wishes(&self, _game_id: &GameId, _wishes: &[Wish]) -> Result<usize, RepositoryError> {
+        unimplemented!("сервис статистики не записывает молитвы")
     }
 }
 

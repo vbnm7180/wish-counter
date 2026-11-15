@@ -8,10 +8,11 @@ use std::sync::Arc;
 
 use application::services::{GameCatalog, SettingsService, StatisticsService};
 use game_genshin::GenshinModule;
+use infrastructure::database::open_database;
 use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
 use infrastructure::settings::JsonSettingsRepository;
-use infrastructure::wishes::InMemoryWishRepository;
+use infrastructure::wishes::SqliteWishRepository;
 
 use crate::commands;
 use crate::error::StartupError;
@@ -33,7 +34,7 @@ pub fn run() -> Result<(), StartupError> {
     let _log_guard = init_logging(&paths.logs_dir)?;
     tracing::info!(data_dir = %paths.data_dir.display(), "запуск Wish Counter");
 
-    let state = build_state(&paths);
+    let state = build_state(&paths)?;
 
     tauri::Builder::default()
         .manage(state)
@@ -50,15 +51,18 @@ pub fn run() -> Result<(), StartupError> {
 }
 
 /// Создаёт сервисы приложения и связывает их с реализациями.
-fn build_state(paths: &AppPaths) -> AppState {
+///
+/// Возвращает ошибку, если не удалось открыть базу данных.
+fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
     let settings_repository = Arc::new(JsonSettingsRepository::new(&paths.settings_file));
-    // ВРЕМЕННО: пустая история в памяти. На этапе 3 — хранилище SQLite.
-    let wish_repository = Arc::new(InMemoryWishRepository::new());
+    let wish_repository = Arc::new(SqliteWishRepository::new(open_database(
+        &paths.database_file,
+    )?));
     let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
 
-    AppState {
+    Ok(AppState {
         statistics_service: StatisticsService::new(Arc::clone(&game_catalog), wish_repository),
         game_catalog,
         settings_service: SettingsService::new(settings_repository),
-    }
+    })
 }
