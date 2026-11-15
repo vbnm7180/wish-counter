@@ -19,6 +19,7 @@ fn paths_are_built_from_data_dir() {
         paths.database_file,
         PathBuf::from("root").join("wish-counter.sqlite")
     );
+    assert_eq!(paths.webview_dir, PathBuf::from("root").join("webview"));
 }
 
 #[test]

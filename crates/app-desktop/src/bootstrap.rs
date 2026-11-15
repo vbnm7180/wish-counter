@@ -17,6 +17,7 @@ use infrastructure::wishes::SqliteWishRepository;
 use crate::commands;
 use crate::error::StartupError;
 use crate::state::AppState;
+use crate::window;
 
 /// Режим хранения данных. Для будущей версии с установщиком
 /// достаточно поменять его на [`StorageMode::UserProfile`].
@@ -35,9 +36,13 @@ pub fn run() -> Result<(), StartupError> {
     tracing::info!(data_dir = %paths.data_dir.display(), "запуск Wish Counter");
 
     let state = build_state(&paths)?;
+    let webview_dir = paths.webview_dir.clone();
 
     tauri::Builder::default()
         .manage(state)
+        // `setup` выполняется один раз после запуска Tauri, до показа окон.
+        // `move` переносит `webview_dir` внутрь замыкания.
+        .setup(move |app| window::create_main_window(app, webview_dir))
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,

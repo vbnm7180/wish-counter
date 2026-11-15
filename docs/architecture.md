@@ -104,6 +104,7 @@ wish-counter/
 │       └── src/
 │           ├── main.rs     # точка входа
 │           ├── bootstrap.rs# composition root: создание и связывание объектов
+│           ├── window.rs   # создание главного окна (папка данных WebView2 → data/webview)
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
 │           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics), settings.rs
@@ -126,12 +127,14 @@ wish-counter/
 
 ## Данные во время работы
 
-В portable-режиме рядом с `wish-counter.exe` создаётся папка `data/`:
+В portable-режиме рядом с `wish-counter.exe` создаётся папка `data/`. **Вне этой папки приложение ничего не пишет**
+(проверено: в `%LOCALAPPDATA%` и `%APPDATA%` следов нет):
 
 ```
 data/
 ├── settings.json         # тема и язык
 ├── wish-counter.sqlite   # база: история молитв (+ служебные -wal, -shm пока приложение запущено)
+├── webview/              # служебные данные WebView2 (кэш движка окна)
 └── logs/                 # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
 ```
 

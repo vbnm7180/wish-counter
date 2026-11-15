@@ -21,6 +21,8 @@ const USER_PROFILE_DIR_NAME: &str = "WishCounter";
 const LOGS_DIR_NAME: &str = "logs";
 /// Имя файла настроек внутри папки данных.
 const SETTINGS_FILE_NAME: &str = "settings.json";
+/// Имя папки служебных данных WebView2 (кэш движка окна) внутри папки данных.
+const WEBVIEW_DIR_NAME: &str = "webview";
 /// Имя файла базы данных SQLite внутри папки данных.
 const DATABASE_FILE_NAME: &str = "wish-counter.sqlite";
 
@@ -58,6 +60,9 @@ pub struct AppPaths {
     pub settings_file: PathBuf,
     /// Файл базы данных SQLite с историей молитв.
     pub database_file: PathBuf,
+    /// Папка служебных данных WebView2. Без явного указания WebView2 пишет
+    /// в `%LOCALAPPDATA%`, а portable-приложение не должно оставлять следов вне своей папки.
+    pub webview_dir: PathBuf,
 }
 
 impl AppPaths {
@@ -79,6 +84,7 @@ impl AppPaths {
             logs_dir: data_dir.join(LOGS_DIR_NAME),
             settings_file: data_dir.join(SETTINGS_FILE_NAME),
             database_file: data_dir.join(DATABASE_FILE_NAME),
+            webview_dir: data_dir.join(WEBVIEW_DIR_NAME),
             data_dir,
         }
     }
