@@ -1,0 +1,15 @@
+# Сборка Rust
+/target/
+# Зависимости и сборка интерфейса
+/node_modules/
+/dist/
+# Файлы, которые Tauri генерирует при сборке
+/crates/app-desktop/gen/
+# Данные приложения, созданные при локальном запуске
+/data/
+# Редакторы и ОС
+.vscode/*
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+.DS_Store

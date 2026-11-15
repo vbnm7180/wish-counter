@@ -1,0 +1,130 @@
+# Архитектура Wish Counter
+
+## Общая идея
+
+Приложение состоит из двух частей, работающих в одном процессе:
+
+1. **Ядро на Rust**: данные, правила подсчёта, импорт, сеть, файлы.
+2. **Интерфейс на Svelte**: отображение. Он работает внутри окна Tauri (WebView2)
+   и обращается к ядру только через **команды Tauri** (`invoke('имя_команды')`).
+
+Интерфейс не имеет прямого доступа к файлам, сети или ОС. Всё это делает ядро
+(см. [security.md](security.md)).
+
+## Слои ядра (Clean Architecture)
+
+```
+        ┌──────────────────────────────┐
+        │  app-desktop (Tauri, main)   │  ← сборка всех частей, команды для UI
+        └──────────────┬───────────────┘
+           ┌───────────┼────────────────┐
+           ▼           ▼                ▼
+   infrastructure   application     games/genshin
+   (файлы, SQLite,  (сценарии,      (правила
+    сеть, логи)      порты-трейты)   конкретной игры)
+           │           │                │
+           └───────────┴───────┬────────┘
+                               ▼
+                            domain
+               (сущности и правила, без зависимостей)
+```
+
+Правило зависимостей: стрелки направлены **только внутрь**, к `domain`.
+`domain` ничего не знает о других слоях. `application` объявляет трейты (порты),
+`infrastructure` их реализует, а `app-desktop` связывает реализацию с портом.
+
+| Крейт | Папка | Ответственность |
+|---|---|---|
+| `domain` | `crates/domain` | Сущности: `GameId`, `GameInfo`, `GameModule`, `AppSettings`, `ThemeId`, `Language` |
+| `application` | `crates/application` | Порты (`SettingsRepository`) и сервисы (`GameCatalog`, `SettingsService`) |
+| `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, `init_logging` |
+| `game-genshin` | `crates/games/genshin` | `GenshinModule`: реализация `GameModule` для Genshin Impact |
+| `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
+
+### Как SOLID проявляется в коде
+
+- **S (единственная ответственность):** у каждого модуля одна задача. `paths.rs` отвечает
+  только за пути, `logging.rs` только за логи, команды Tauri только передают вызов сервису.
+- **O (открытость/закрытость):** новая игра — это новый крейт с реализацией `GameModule`
+  и одна строка регистрации в `bootstrap.rs`. Новая тема — CSS-файл и запись в реестре.
+- **L (подстановка Лисков):** любая реализация `SettingsRepository` (JSON, в памяти в тестах,
+  позже SQLite) взаимозаменяема.
+- **I (разделение интерфейсов):** трейты маленькие и узкие (`SettingsRepository` — 2 метода).
+- **D (инверсия зависимостей):** сервисы получают зависимости через конструктор
+  (`SettingsService::new(Arc<dyn SettingsRepository>)`), а конкретные классы
+  создаются в одном месте, в `bootstrap.rs`.
+
+## Структура папок
+
+```
+wish-counter/
+├── Cargo.toml              # Cargo workspace: список крейтов, общие версии, lints, release-профиль
+├── package.json            # зависимости и скрипты интерфейса
+├── vite.config.ts          # сборщик интерфейса (ui/ → dist/)
+├── svelte.config.js, tsconfig.json
+├── assets/branding/        # исходник иконки (SVG)
+├── crates/
+│   ├── domain/src/
+│   │   ├── lib.rs          # корень крейта, описание модулей
+│   │   ├── game/
+│   │   │   ├── game.rs         # GameId, GameInfo, трейт GameModule
+│   │   │   └── game.tests.rs   # тесты game.rs (так устроены все модули с тестами)
+│   │   └── settings/
+│   │       ├── settings.rs     # AppSettings, ThemeId (с проверкой), Language
+│   │       └── settings.tests.rs
+│   ├── application/src/
+│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, RepositoryError)
+│   │   └── services/       # game_catalog/, settings_service/: GameCatalog, SettingsService + тесты
+│   ├── infrastructure/src/
+│   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
+│   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
+│   │   └── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
+│   ├── games/genshin/src/
+│   │   ├── lib.rs          # GenshinModule
+│   │   └── lib.tests.rs    # тесты
+│   └── app-desktop/
+│       ├── tauri.conf.json # окно, CSP, сборка, установщик
+│       ├── capabilities/   # права интерфейса (минимальные)
+│       ├── icons/          # сгенерированные иконки
+│       └── src/
+│           ├── main.rs     # точка входа
+│           ├── bootstrap.rs# composition root: создание и связывание объектов
+│           ├── state.rs    # AppState: сервисы, доступные командам
+│           ├── error.rs    # StartupError, CommandError (ошибка для UI)
+│           └── commands/   # команды Tauri: games.rs, settings.rs
+├── ui/
+│   ├── index.html
+│   └── src/
+│       ├── main.ts         # точка входа интерфейса
+│       ├── App.svelte      # каркас: меню + текущая страница
+│       ├── pages/          # HomePage, GamePage, SettingsPage
+│       └── lib/
+│           ├── api/        # backend.ts (вызовы ядра), types.ts (типы данных ядра)
+│           ├── i18n/       # локализация: index.svelte.ts, locales/ru.ts, en.ts
+│           ├── themes/     # registry.ts, base.css, dark.css, light.css
+│           ├── state/      # реактивное состояние: settings, navigation
+│           └── components/ # Sidebar, BannerCard
+└── docs/                   # документация
+```
+
+## Данные во время работы
+
+В portable-режиме рядом с `wish-counter.exe` создаётся папка `data/`:
+
+```
+data/
+├── settings.json   # тема и язык
+└── logs/           # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
+```
+
+С этапа 3 там же появятся база SQLite, а с этапа 4 — кэш справочников и картинок.
+
+## Поток данных на примере смены темы
+
+1. `SettingsPage.svelte` → `settingsState.update({ theme })`
+2. Тема сразу применяется к странице (`applyTheme`, атрибут `data-theme`)
+3. `backend.updateSettings()` → `invoke('update_settings', { settings })`
+4. Tauri проверяет JSON: `ThemeId` отклонит недопустимую строку
+5. `commands::settings::update_settings` → `SettingsService::update_settings`
+6. `JsonSettingsRepository::save` → атомарная запись в `data/settings.json`
+7. Если сохранение не удалось, интерфейс откатывает тему и показывает ошибку

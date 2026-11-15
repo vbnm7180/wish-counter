@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Исходник иконки приложения. Иконки всех размеров генерируются командой:
+       npx tauri icon assets/branding/icon.svg -o crates/app-desktop/icons -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a2f45"/>
+      <stop offset="1" stop-color="#15171f"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe2a3"/>
+      <stop offset="1" stop-color="#e0a33c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M256 72 C276 196 316 236 440 256 C316 276 276 316 256 440 C236 316 196 276 72 256 C196 236 236 196 256 72 Z" fill="url(#star)"/>
+  <circle cx="380" cy="132" r="22" fill="#a67ce6"/>
+</svg>

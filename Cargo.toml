@@ -1,0 +1,70 @@
+# =============================================================================
+# Корневой манифест Cargo workspace.
+#
+# Workspace объединяет несколько крейтов (библиотек и программ Rust) в один
+# проект: у них общая папка сборки `target/`, общий файл версий `Cargo.lock`
+# и общие настройки. Каждый крейт — это отдельный слой архитектуры
+# (см. docs/architecture.md).
+# =============================================================================
+
+[workspace]
+# Резолвер зависимостей версии 3 (стандарт для edition 2024).
+resolver = "3"
+members = [
+    "crates/domain",
+    "crates/application",
+    "crates/infrastructure",
+    "crates/games/genshin",
+    "crates/app-desktop",
+]
+
+# Общие метаданные, которые крейты наследуют через `version.workspace = true`.
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+# Единый список версий внешних библиотек. Крейты подключают их строкой
+# `serde.workspace = true`, поэтому версия меняется в одном месте.
+[workspace.dependencies]
+# --- Внутренние крейты проекта ---
+domain = { path = "crates/domain" }
+application = { path = "crates/application" }
+infrastructure = { path = "crates/infrastructure" }
+game-genshin = { path = "crates/games/genshin" }
+
+# --- Внешние библиотеки ---
+# Сериализация: превращение структур Rust в JSON и обратно.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Удобное объявление собственных типов ошибок.
+thiserror = "2"
+# Структурированное логирование.
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+# Tauri: десктопное окно с веб-интерфейсом.
+tauri = { version = "2", features = [] }
+tauri-build = { version = "2", features = [] }
+# Временные папки для тестов.
+tempfile = "3"
+
+# Общие правила проверки кода (lints) для всех крейтов.
+[workspace.lints.rust]
+# Запрещаем `unsafe`: весь код проекта должен быть безопасным Rust.
+unsafe_code = "forbid"
+# Предупреждаем о публичных элементах без документирующего комментария.
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+# Clippy — анализатор, который подсказывает идиоматичный Rust.
+all = { level = "warn", priority = -1 }
+
+# Настройки релизной сборки: максимальная скорость и минимальный размер .exe.
+[profile.release]
+opt-level = 3        # максимальная оптимизация скорости
+lto = true           # оптимизация на этапе компоновки (всех крейтов вместе)
+codegen-units = 1    # медленнее компиляция, но быстрее и меньше результат
+strip = true         # убираем отладочные символы из .exe
+panic = "abort"      # при панике сразу завершаемся, без раскрутки стека

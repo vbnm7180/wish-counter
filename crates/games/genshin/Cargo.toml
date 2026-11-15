@@ -1,0 +1,15 @@
+# Модуль игры Genshin Impact: описание игры, баннеров и правил гаранта.
+# Новая игра (HSR, ZZZ) добавляется отдельным крейтом рядом с этим.
+[package]
+name = "game-genshin"
+description = "Поддержка Genshin Impact в Wish Counter"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+domain.workspace = true
+
+[lints]
+workspace = true

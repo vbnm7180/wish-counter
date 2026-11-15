@@ -1,0 +1,17 @@
+/* Светлая тема. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-bg: #f3f4f8;
+  --color-surface: #ffffff;
+  --color-surface-hover: #eceef4;
+  --color-border: #dcdfe8;
+  --color-text: #1d2030;
+  --color-text-muted: #5f6578;
+  --color-accent: #b9862c;
+  --color-accent-contrast: #ffffff;
+  --color-rarity-5: #c4841c;
+  --color-rarity-4: #8255c9;
+  --color-rarity-3: #3a78bd;
+  --color-danger: #c93c47;
+  --shadow-card: 0 2px 8px rgb(20 24 40 / 8%);
+}

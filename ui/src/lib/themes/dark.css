@@ -1,0 +1,17 @@
+/* Тёмная тема (по умолчанию). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #15171f;
+  --color-surface: #1e212c;
+  --color-surface-hover: #272b38;
+  --color-border: #2f3442;
+  --color-text: #e6e8ef;
+  --color-text-muted: #9aa0b2;
+  --color-accent: #e0b25c;
+  --color-accent-contrast: #1a1406;
+  --color-rarity-5: #e0a33c;
+  --color-rarity-4: #a67ce6;
+  --color-rarity-3: #5b9be0;
+  --color-danger: #e5616b;
+  --shadow-card: 0 2px 10px rgb(0 0 0 / 35%);
+}

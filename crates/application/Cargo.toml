@@ -1,0 +1,17 @@
+# Слой приложения: сценарии использования (use cases) и интерфейсы (порты),
+# которые реализует инфраструктура.
+[package]
+name = "application"
+description = "Сценарии использования Wish Counter и интерфейсы хранилищ"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+domain.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

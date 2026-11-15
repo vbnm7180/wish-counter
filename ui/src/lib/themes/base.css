@@ -1,0 +1,54 @@
+/*
+ * Базовые стили, общие для всех тем.
+ * Цвета здесь НЕ задаются — только через переменные из файлов тем
+ * (dark.css, light.css, ...). Размеры и отступы — общие.
+ */
+:root {
+  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --radius-small: 6px;
+  --radius-medium: 10px;
+  --radius-large: 14px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --sidebar-width: 232px;
+  --transition-fast: 120ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-family);
+  font-size: 14px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+#app {
+  height: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+}

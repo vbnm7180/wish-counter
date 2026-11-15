@@ -1,0 +1,30 @@
+# Десктопное приложение на Tauri — «точка сборки» (composition root):
+# здесь создаются все объекты и связываются между собой, а интерфейс
+# (папка ui/) получает доступ к ним через команды Tauri.
+[package]
+name = "wish-counter"
+description = "Wish Counter — трекер молитв для гача-игр HoYoverse"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "wish-counter"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build.workspace = true
+
+[dependencies]
+domain.workspace = true
+application.workspace = true
+infrastructure.workspace = true
+game-genshin.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tauri.workspace = true
+
+[lints]
+workspace = true

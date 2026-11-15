@@ -1,0 +1,19 @@
+# Доменный слой: сущности и правила предметной области.
+# Не зависит ни от базы данных, ни от интерфейса, ни от сети.
+[package]
+name = "domain"
+description = "Сущности и бизнес-правила Wish Counter (без внешних зависимостей от инфраструктуры)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true
