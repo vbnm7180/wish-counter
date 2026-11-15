@@ -1,7 +1,7 @@
 //! Ошибки уровня приложения: запуска и выполнения команд.
 
 use application::ports::RepositoryError;
-use application::services::{ReferenceError, StatisticsError};
+use application::services::{ProfileError, ReferenceError, StatisticsError};
 use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
@@ -77,6 +77,22 @@ impl From<ReferenceError> for CommandError {
         Self {
             code: "unknown_game",
             message: error.to_string(),
+        }
+    }
+}
+
+impl From<ProfileError> for CommandError {
+    /// Преобразует ошибку сервиса профилей в ошибку команды.
+    fn from(error: ProfileError) -> Self {
+        match error {
+            ProfileError::Repository(repository_error) => repository_error.into(),
+            ProfileError::UnknownGame(_) => {
+                tracing::warn!(%error, "профиль для неизвестной игры");
+                Self {
+                    code: "unknown_game",
+                    message: error.to_string(),
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 
 use std::fmt;
 
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -140,6 +141,8 @@ impl From<Rarity> for u8 {
 
 /// Шаблон времени молитвы: `0` — любая цифра, остальные символы — как есть.
 const WISH_TIME_PATTERN: &str = "0000-00-00 00:00:00";
+/// Тот же формат в записи библиотеки `chrono`.
+const WISH_TIME_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
 /// Ошибка проверки времени молитвы.
 #[derive(Debug, Clone, PartialEq, Eq, Error)]
@@ -153,16 +156,20 @@ pub enum WishTimeError {
 ///
 /// Это тот же формат, что в истории молитв игры и в Paimon.moe.
 /// Строки такого вида сортируются по алфавиту в том же порядке, что и по
-/// времени, поэтому для сравнения не нужна библиотека дат.
+/// времени, поэтому для сравнения и сортировки достаточно строк.
+/// Для арифметики (сдвиг на часовой пояс) есть [`WishTime::to_date_time`].
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(try_from = "String", into = "String")]
 pub struct WishTime(String);
 
 impl WishTime {
     /// Проверяет строку и создаёт время молитвы.
+    ///
+    /// Проверяются и формат (`ГГГГ-ММ-ДД чч:мм:сс`, ровно с ведущими нулями),
+    /// и то, что такая дата существует (`2026-13-45` будет отклонено).
     pub fn parse(value: impl Into<String>) -> Result<Self, WishTimeError> {
         let value = value.into();
-        if matches_wish_time_pattern(&value) {
+        if matches_wish_time_pattern(&value) && parse_date_time(&value).is_some() {
             Ok(Self(value))
         } else {
             Err(WishTimeError::InvalidFormat(value))
@@ -173,6 +180,22 @@ impl WishTime {
     pub fn as_str(&self) -> &str {
         &self.0
     }
+
+    /// Возвращает время как дату `chrono` (без часового пояса) для арифметики.
+    pub fn to_date_time(&self) -> NaiveDateTime {
+        // Строка проверена в `parse`, поэтому разбор здесь всегда успешен.
+        parse_date_time(&self.0).expect("WishTime содержит только проверенные даты")
+    }
+
+    /// Создаёт время молитвы из даты `chrono`.
+    pub fn from_date_time(date_time: NaiveDateTime) -> Self {
+        Self(date_time.format(WISH_TIME_FORMAT).to_string())
+    }
+}
+
+/// Разбирает строку как дату; `None`, если такой даты нет.
+fn parse_date_time(value: &str) -> Option<NaiveDateTime> {
+    NaiveDateTime::parse_from_str(value, WISH_TIME_FORMAT).ok()
 }
 
 /// Проверяет, что строка совпадает с [`WISH_TIME_PATTERN`] посимвольно.

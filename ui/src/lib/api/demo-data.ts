@@ -2,7 +2,27 @@
 // Показывают разные состояния карточек, чтобы было удобно верстать:
 // гарант после проигрыша, неизвестный статус, пустой баннер.
 // В настоящем приложении (Tauri) не используются.
-import type { GameStatistics, PityCounter, PoolSummary, ReferenceSummary } from './types';
+import type { FeaturedStatus, GameStatistics, PityCounter, PoolSummary, ReferenceSummary, ServerRegion } from './types';
+
+/** Выбранный в демо-режиме сервер (в браузере хранится до перезагрузки страницы). */
+let demoServerRegion: ServerRegion | null = null;
+
+/** Запоминает сервер, выбранный в демо-режиме. */
+export function setDemoServerRegion(region: ServerRegion): void {
+  demoServerRegion = region;
+}
+
+/** Статус «4★ с баннера» для демо-карточек. */
+function fourStar(guaranteed: boolean, chance: number): FeaturedStatus {
+  return {
+    state: 'known',
+    guaranteed,
+    losing_streak: 0,
+    losses_until_radiance: null,
+    next_featured_chance: guaranteed ? 10000 : chance,
+    chance_source: guaranteed ? 'guaranteed' : 'base',
+  };
+}
 
 /** Стоимость одной молитвы в примогемах. */
 const PRIMOGEMS_PER_WISH = 160;
@@ -19,6 +39,7 @@ function pool(
   fiveStar: PityCounter,
   fourStar: PityCounter,
   featured: PoolSummary['featured'],
+  fourStarFeatured: PoolSummary['four_star_featured'] = null,
 ): PoolSummary {
   return {
     pool_id: poolId,
@@ -27,6 +48,7 @@ function pool(
     five_star: fiveStar,
     four_star: fourStar,
     featured,
+    four_star_featured: fourStarFeatured,
   };
 }
 
@@ -40,14 +62,15 @@ export function demoGameStatistics(gameId: string): GameStatistics {
       losses_until_radiance: 1,
       next_featured_chance: 5500,
       chance_source: 'base',
-    }),
-    pool('weapon', 96, counter(17, 80), counter(10, 10), null),
+    }, fourStar(true, 5000)),
+    pool('weapon', 96, counter(17, 80), counter(10, 10), null, fourStar(false, 7500)),
     pool('chronicled', 0, counter(0, 90), counter(0, 10), null),
     pool('standard', 238, counter(41, 90), counter(7, 10), null),
     pool('beginner', 20, counter(20, 90), counter(3, 10), null),
   ];
   return {
     game_id: gameId,
+    server_region: demoServerRegion,
     total_wishes: pools.reduce((sum, item) => sum + item.total_wishes, 0),
     primogems_spent: pools.reduce((sum, item) => sum + item.primogems_spent, 0),
     pools,

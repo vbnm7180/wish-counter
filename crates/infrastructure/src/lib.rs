@@ -10,6 +10,7 @@
 //! - [`settings`] — хранение пользовательских настроек в JSON-файле;
 //! - [`database`] — база SQLite: открытие файла, настройка, миграции схемы;
 //! - [`wishes`] — хранение истории молитв в SQLite;
+//! - [`profiles`] — профили игр (сервер игрока) в SQLite;
 //! - [`remote`] — скачивание данных: безопасный HTTP-клиент и GitHub.
 
 pub mod database;
@@ -17,6 +18,7 @@ pub mod logging;
 // Код модуля лежит в папке модуля вместе с тестами: paths/paths.rs
 #[path = "paths/paths.rs"]
 pub mod paths;
+pub mod profiles;
 pub mod remote;
 pub mod settings;
 pub mod wishes;

@@ -19,7 +19,10 @@ use super::DatabaseError;
 ///
 /// `include_str!` встраивает содержимое файла в программу при компиляции,
 /// поэтому SQL-файлы не нужно поставлять рядом с `.exe`.
-const MIGRATIONS: &[&str] = &[include_str!("sql/0001_create_wishes.sql")];
+const MIGRATIONS: &[&str] = &[
+    include_str!("sql/0001_create_wishes.sql"),
+    include_str!("sql/0002_create_game_profiles.sql"),
+];
 
 /// Применяет к базе все недостающие миграции.
 ///

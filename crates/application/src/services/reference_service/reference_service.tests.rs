@@ -5,7 +5,6 @@
 //! Это дочерний модуль, поэтому через `use super::*` он видит и приватные элементы.
 
 use domain::game::{GameInfo, GameModule};
-use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
 use domain::pity::rules::{PoolDefinition, PoolId};
 use domain::reference::{ItemInfo, LocalizedText, ReferenceSnapshot, ScheduleTime};
 use domain::wish::{ItemId, Rarity, WishTime};
@@ -56,10 +55,6 @@ impl GameModule for FakeGame {
 
     fn pools(&self) -> Vec<PoolDefinition> {
         Vec::new()
-    }
-
-    fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
-        Arc::new(NoFeaturedData)
     }
 
     fn embedded_reference(&self) -> ReferenceSnapshot {

@@ -12,7 +12,10 @@ mod connection;
 #[path = "migrations/migrations.rs"]
 mod migrations;
 
+mod shared_connection;
+
 pub use connection::{open_database, open_in_memory_database};
+pub use shared_connection::SharedConnection;
 
 /// Ошибка открытия базы данных или применения миграций.
 #[derive(Debug, Error)]

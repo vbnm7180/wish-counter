@@ -35,6 +35,8 @@ fn wish_time_rejects_other_formats() {
         "2026-11-15",
         "2026-11-15T18:04:59",
         "2026-1x-15 18:04:59",
+        "2026-13-45 18:04:59",
+        "2026-02-30 00:00:00",
         "",
     ] {
         assert!(
@@ -78,4 +80,14 @@ fn wish_roundtrips_through_json() {
     assert_eq!(serde_json::from_str::<Wish>(&json).unwrap(), wish);
     assert!(json.contains(r#""item_kind":"character""#));
     assert!(json.contains(r#""banner_code":301"#));
+}
+
+/// Перевод в дату и обратно не меняет значение.
+#[test]
+fn wish_time_roundtrips_through_date_time() {
+    let time = WishTime::parse("2026-11-15 18:04:59").unwrap();
+
+    let restored = WishTime::from_date_time(time.to_date_time());
+
+    assert_eq!(restored, time);
 }

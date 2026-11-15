@@ -1,12 +1,13 @@
 <!--
   Карточка баннера: всего молитв, потраченные примогемы, сколько осталось
-  до гарантов 5★ и 4★, статус 50/50 и кнопка «Посмотреть» (таблица — этап 5).
+  до гарантов 5★ и 4★, статус 50/50, шанс 4★ с баннера и кнопка «Посмотреть» (таблица — этап 5).
 -->
 <script lang="ts">
   import type { PityCounter, PoolSummary } from '../api/types';
   import { formatNumber } from '../format/format';
   import { i18n } from '../i18n/index.svelte';
   import FeaturedStatusView from './FeaturedStatusView.svelte';
+  import FourStarFeaturedView from './FourStarFeaturedView.svelte';
 
   /** Свойства компонента. */
   interface Props {
@@ -14,11 +15,13 @@
     title: string;
     /** Статистика пула из ядра. */
     pool: PoolSummary;
+    /** Выбран ли сервер игрока. */
+    serverChosen: boolean;
     /** Вызывается по кнопке «Посмотреть». Если не задан — кнопка неактивна. */
     onView?: () => void;
   }
 
-  let { title, pool, onView }: Props = $props();
+  let { title, pool, serverChosen, onView }: Props = $props();
 
   /** Подпись «счётчик 34 / 90» под числом «до гаранта». */
   function progress(counter: PityCounter): string {
@@ -49,7 +52,11 @@
   </dl>
 
   {#if pool.featured}
-    <FeaturedStatusView status={pool.featured} />
+    <FeaturedStatusView status={pool.featured} {serverChosen} />
+  {/if}
+
+  {#if pool.four_star_featured}
+    <FourStarFeaturedView status={pool.four_star_featured} />
   {/if}
 
   <button class="view" disabled={!onView} onclick={onView}>{i18n.t('game.view')}</button>

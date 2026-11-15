@@ -1,16 +1,19 @@
 //! Сборка приложения (composition root).
 //!
 //! Это единственное место, где создаются конкретные реализации
-//! (файловое хранилище, игровые модули) и передаются в сервисы.
+//! (файловое хранилище, база данных, игровые модули) и передаются в сервисы.
 //! Остальной код зависит только от абстракций (трейтов).
 
 use std::sync::Arc;
 
-use application::services::{GameCatalog, ReferenceService, SettingsService, StatisticsService};
+use application::services::{
+    GameCatalog, ProfileService, ReferenceService, SettingsService, StatisticsService,
+};
 use game_genshin::GenshinModule;
-use infrastructure::database::open_database;
+use infrastructure::database::{SharedConnection, open_database};
 use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
+use infrastructure::profiles::SqliteProfileRepository;
 use infrastructure::settings::JsonSettingsRepository;
 use infrastructure::wishes::SqliteWishRepository;
 
@@ -46,6 +49,7 @@ pub fn run() -> Result<(), StartupError> {
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
+            commands::games::set_server_region,
             commands::reference::get_reference_summary,
             commands::settings::get_settings,
             commands::settings::update_settings,
@@ -61,14 +65,23 @@ pub fn run() -> Result<(), StartupError> {
 /// Возвращает ошибку, если не удалось открыть базу данных.
 fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
     let settings_repository = Arc::new(JsonSettingsRepository::new(&paths.settings_file));
-    let wish_repository = Arc::new(SqliteWishRepository::new(open_database(
-        &paths.database_file,
-    )?));
+    // Одно соединение с базой на все хранилища.
+    let database = SharedConnection::new(open_database(&paths.database_file)?);
+    let wish_repository = Arc::new(SqliteWishRepository::new(database.clone()));
+    let profile_repository = Arc::new(SqliteProfileRepository::new(database));
+
     let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
+    let reference_service = Arc::new(ReferenceService::from_catalog(&game_catalog));
 
     Ok(AppState {
-        reference_service: ReferenceService::from_catalog(&game_catalog),
-        statistics_service: StatisticsService::new(Arc::clone(&game_catalog), wish_repository),
+        statistics_service: StatisticsService::new(
+            Arc::clone(&game_catalog),
+            wish_repository,
+            Arc::clone(&reference_service),
+            profile_repository.clone(),
+        ),
+        profile_service: ProfileService::new(Arc::clone(&game_catalog), profile_repository),
+        reference_service,
         game_catalog,
         settings_service: SettingsService::new(settings_repository),
     })

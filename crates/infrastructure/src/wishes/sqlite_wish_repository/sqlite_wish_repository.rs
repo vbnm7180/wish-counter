@@ -1,11 +1,11 @@
 //! Хранилище истории молитв в базе SQLite (таблица `wishes`).
 
-use std::sync::{Mutex, MutexGuard};
-
 use application::ports::{RepositoryError, WishRepository};
 use domain::game::GameId;
 use domain::wish::{BannerCode, ItemId, ItemKind, Rarity, Wish, WishId, WishTime};
-use rusqlite::{Connection, Row, params};
+use rusqlite::{Row, params};
+
+use crate::database::SharedConnection;
 
 /// Все молитвы игры в хронологическом порядке. При равном времени
 /// порядок задаёт `row_id` — порядок добавления (см. миграцию 0001).
@@ -67,38 +67,21 @@ impl StoredWish {
 }
 
 /// Хранилище молитв на SQLite.
-///
-/// `rusqlite::Connection` нельзя одновременно использовать из нескольких
-/// потоков, а Tauri вызывает команды в разных потоках. `Mutex` пропускает
-/// к соединению только один поток за раз — так хранилище становится `Sync`.
 pub struct SqliteWishRepository {
-    connection: Mutex<Connection>,
+    connection: SharedConnection,
 }
 
 impl SqliteWishRepository {
-    /// Создаёт хранилище поверх открытого соединения
-    /// (см. `database::open_database`).
-    pub fn new(connection: Connection) -> Self {
-        Self {
-            connection: Mutex::new(connection),
-        }
-    }
-
-    /// Захватывает соединение для одного запроса.
-    ///
-    /// `Mutex` «отравляется» (poisoned), если поток упал, удерживая его.
-    /// Тогда возвращаем ошибку, а не падаем следом.
-    fn lock(&self) -> Result<MutexGuard<'_, Connection>, RepositoryError> {
-        self.connection
-            .lock()
-            .map_err(|_| RepositoryError::Io("соединение с базой недоступно после сбоя".into()))
+    /// Создаёт хранилище поверх общего соединения с базой.
+    pub fn new(connection: SharedConnection) -> Self {
+        Self { connection }
     }
 }
 
 impl WishRepository for SqliteWishRepository {
     /// Читает молитвы игры от старых к новым.
     fn list_wishes(&self, game_id: &GameId) -> Result<Vec<Wish>, RepositoryError> {
-        let connection = self.lock()?;
+        let connection = self.connection.lock()?;
         let mut statement = connection
             .prepare_cached(SELECT_WISHES_SQL)
             .map_err(sql_error)?;
@@ -111,7 +94,7 @@ impl WishRepository for SqliteWishRepository {
 
     /// Добавляет молитвы в одной транзакции и считает новые.
     fn add_wishes(&self, game_id: &GameId, wishes: &[Wish]) -> Result<usize, RepositoryError> {
-        let mut connection = self.lock()?;
+        let mut connection = self.connection.lock()?;
         let transaction = connection.transaction().map_err(sql_error)?;
         let mut inserted = 0;
         {

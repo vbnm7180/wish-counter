@@ -7,11 +7,11 @@
 //! Тесты работают с настоящей SQLite в оперативной памяти.
 
 use super::*;
-use crate::database::open_in_memory_database;
+use crate::database::{SharedConnection, open_in_memory_database};
 
 /// Хранилище на пустой базе в памяти.
 fn repository() -> SqliteWishRepository {
-    SqliteWishRepository::new(open_in_memory_database().unwrap())
+    SqliteWishRepository::new(SharedConnection::new(open_in_memory_database().unwrap()))
 }
 
 /// Идентификатор Genshin для тестов.
@@ -130,6 +130,7 @@ fn games_are_stored_separately() {
 fn invalid_time_in_table_is_reported_as_corrupted() {
     let repository = repository();
     repository
+        .connection
         .lock()
         .unwrap()
         .execute(

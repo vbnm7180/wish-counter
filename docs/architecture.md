@@ -35,8 +35,8 @@
 
 | Крейт | Папка | Ответственность |
 |---|---|---|
-| `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`; правила гаранта (`PoolDefinition`, `PityRules`) и расчёт (`PityTracker`) |
-| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`) |
+| `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`, `ServerRegion`; справочник (`ReferenceData`); правила гаранта (`PoolDefinition`, `PityRules`), расчёт (`PityTracker`), исход 50/50 по расписанию (`ScheduleFeaturedLookup`) |
+| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`, `ProfileRepository`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`, `ReferenceService`, `ProfileService`) |
 | `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, база SQLite (`open_database`, миграции), `SqliteWishRepository`, `init_logging` |
 | `game-genshin` | `crates/games/genshin` | `GenshinModule`; коды баннеров и правила пулов (`pools.rs`) |
 | `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
@@ -75,24 +75,27 @@ wish-counter/
 │   │   ├── wish/
 │   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
 │   │   │   └── wish.tests.rs
+│   │   ├── region/         # region.rs: ServerRegion (смещения часовых поясов как в Paimon.moe) + тесты
 │   │   ├── reference/      # reference.rs: ItemInfo, BannerInfo, ScheduleTime, LocalizedText, ReferenceSnapshot, ReferenceData + тесты
 │   │   └── pity/
 │   │       ├── mod.rs          # описание модуля гаранта
 │   │       ├── rules.rs        # PoolId, Probability, PityRules, FiftyFiftyRule, CapturingRadianceRule, PoolDefinition
 │   │       ├── featured.rs     # трейт FeaturedLookup («с баннера ли 5★»), заглушка NoFeaturedData
 │   │       ├── statistics.rs   # PityCounter, FeaturedStatus, ChanceSource, WishAnnotation, PoolStatistics
+│   │       ├── schedule_lookup/ # ScheduleFeaturedLookup: «с баннера ли предмет» по расписанию и серверу + тесты
 │   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
-│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, RepositoryError)
-│   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/ (+ тесты)
+│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository, RepositoryError)
+│   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/, profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
 │   │   ├── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
-│   │   ├── database/       # mod.rs: DatabaseError
+│   │   ├── database/       # mod.rs: DatabaseError; shared_connection.rs: SharedConnection (одно соединение на все хранилища)
 │   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
-│   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql
+│   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql, 0002_create_game_profiles.sql
 │   │   ├── remote/         # http_client/ (HTTPS, белый список хостов, лимиты), github/ (ревизия, файлы) + тесты
+│   │   ├── profiles/       # sqlite_profile_repository/: SqliteProfileRepository (сервер игрока) + тесты
 │   │   └── wishes/         # sqlite_wish_repository/: SqliteWishRepository + тесты
 │   ├── games/genshin/src/
 │   │   ├── lib.rs          # GenshinModule
@@ -115,7 +118,7 @@ wish-counter/
 │           ├── window.rs   # создание главного окна (папка данных WebView2 → data/webview)
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
-│           └── commands/   # команды Tauri: games.rs, reference.rs (get_reference_summary), settings.rs
+│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region), reference.rs, settings.rs
 ├── ui/
 │   ├── index.html
 │   └── src/
@@ -129,7 +132,7 @@ wish-counter/
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
-│           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView, ReferenceInfo
+│           └── components/ # Sidebar, RegionSelector, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView, ReferenceInfo
 └── docs/                   # документация
 ```
 
@@ -161,7 +164,9 @@ Paimon.moe (GitHub) ──data-sync──► crates/games/genshin/data/reference
 
 1. `GamePage.svelte` → `backend.getGameStatistics('genshin')` → `invoke('get_game_statistics', { gameId })`
 2. `commands::games::get_game_statistics` → `StatisticsService::game_statistics`
-3. Сервис берёт модуль игры из `GameCatalog`, молитвы — из `WishRepository` (SQLite, `ORDER BY wish_time, row_id`)
+3. Сервис берёт модуль игры из `GameCatalog`, молитвы — из `WishRepository` (SQLite, `ORDER BY wish_time, row_id`),
+   сервер игрока — из `ProfileRepository`, справочник — из `ReferenceService`. Если сервер выбран, строится
+   `ScheduleFeaturedLookup` (исход 50/50 по расписанию баннеров), иначе `NoFeaturedData` (статус «неизвестен»)
 4. Для каждого пула (`GameModule::pools`) молитвы фильтруются по кодам баннеров и передаются в
    `calculate_pool_statistics`. `PityTracker` проходит по ним и считает счётчики и статус 50/50
 5. Сервис добавляет примогемы (`PoolDefinition::primogems_for`) и итоги по игре → JSON → карточки `BannerCard`

@@ -71,7 +71,10 @@ pub struct PityTracker<'a> {
     total_wishes: u32,
     since_five_star: u32,
     since_four_star: u32,
+    /// Состояние 50/50 для 5★.
     fifty_fifty: FiftyFiftyState,
+    /// Состояние 50/50 для 4★ (свой гарант: после проигрыша следующий 4★ с баннера).
+    four_star_fifty_fifty: FiftyFiftyState,
 }
 
 impl<'a> PityTracker<'a> {
@@ -84,6 +87,7 @@ impl<'a> PityTracker<'a> {
             since_five_star: 0,
             since_four_star: 0,
             fifty_fifty: FiftyFiftyState::new(),
+            four_star_fifty_fifty: FiftyFiftyState::new(),
         }
     }
 
@@ -96,7 +100,7 @@ impl<'a> PityTracker<'a> {
         self.since_four_star += 1;
         match wish.rarity {
             Rarity::Five => self.record_five_star(wish),
-            Rarity::Four => self.record_four_star(),
+            Rarity::Four => self.record_four_star(wish),
             Rarity::Three => WishAnnotation::default(),
         }
     }
@@ -108,33 +112,27 @@ impl<'a> PityTracker<'a> {
     fn record_five_star(&mut self, wish: &Wish) -> WishAnnotation {
         // `mem::take` возвращает текущее значение и записывает на его место 0.
         let pity = mem::take(&mut self.since_five_star);
+        let outcome = self
+            .rules
+            .fifty_fifty
+            .as_ref()
+            .map(|_| resolve_fifty_fifty(&mut self.fifty_fifty, self.featured_lookup, wish));
         WishAnnotation {
             pity: Some(pity),
-            outcome: self.resolve_fifty_fifty(wish),
+            outcome,
         }
     }
 
-    /// Обрабатывает 4★: сбрасывает счётчик 4★.
-    fn record_four_star(&mut self) -> WishAnnotation {
+    /// Обрабатывает 4★: сбрасывает счётчик 4★ и определяет исход 50/50 для 4★.
+    fn record_four_star(&mut self, wish: &Wish) -> WishAnnotation {
+        let pity = mem::take(&mut self.since_four_star);
+        let outcome = self.rules.four_star_featured.as_ref().map(|_| {
+            resolve_fifty_fifty(&mut self.four_star_fifty_fifty, self.featured_lookup, wish)
+        });
         WishAnnotation {
-            pity: Some(mem::take(&mut self.since_four_star)),
-            outcome: None,
+            pity: Some(pity),
+            outcome,
         }
-    }
-
-    /// Определяет исход 50/50 для 5★ и обновляет состояние.
-    /// Возвращает `None`, если в пуле нет правила 50/50.
-    fn resolve_fifty_fifty(&mut self, wish: &Wish) -> Option<FiftyFiftyOutcome> {
-        // Оператор `?` на `Option`: если правила нет, сразу вернуть `None`.
-        self.rules.fifty_fifty.as_ref()?;
-        let outcome = match self.featured_lookup.is_featured(wish) {
-            Some(is_featured) => self.fifty_fifty.apply(is_featured),
-            None => {
-                self.fifty_fifty.history_complete = false;
-                FiftyFiftyOutcome::Unknown
-            }
-        };
-        Some(outcome)
     }
 
     /// Возвращает итоговую статистику по учтённым молитвам.
@@ -143,33 +141,58 @@ impl<'a> PityTracker<'a> {
             total_wishes: self.total_wishes,
             five_star: PityCounter::new(self.since_five_star, self.rules.five_star_hard_pity),
             four_star: PityCounter::new(self.since_four_star, self.rules.four_star_hard_pity),
-            featured: self.featured_status(),
+            featured: self
+                .rules
+                .fifty_fifty
+                .as_ref()
+                .map(|rule| featured_status(rule, self.fifty_fifty)),
+            four_star_featured: self
+                .rules
+                .four_star_featured
+                .as_ref()
+                .map(|rule| featured_status(rule, self.four_star_fifty_fifty)),
         }
-    }
-
-    /// Вычисляет статус 50/50; `None`, если в пуле нет такого правила.
-    fn featured_status(&self) -> Option<FeaturedStatus> {
-        let rule = self.rules.fifty_fifty.as_ref()?;
-        if !self.fifty_fifty.history_complete {
-            return Some(FeaturedStatus::Unknown);
-        }
-        let state = self.fifty_fifty;
-        let (next_featured_chance, chance_source) = next_featured_chance(rule, state);
-        Some(FeaturedStatus::Known {
-            guaranteed: state.guaranteed,
-            losing_streak: state.losing_streak,
-            losses_until_radiance: rule.capturing_radiance.as_ref().map(|radiance| {
-                radiance
-                    .losses_for_guarantee
-                    .saturating_sub(state.losing_streak)
-            }),
-            next_featured_chance,
-            chance_source,
-        })
     }
 }
 
-/// Шанс, что следующий 5★ будет с баннера, и его причина.
+/// Определяет исход 50/50 для молитвы и обновляет состояние `state`.
+///
+/// Это отдельная функция, а не метод: она одинаково работает и для 5★,
+/// и для 4★ — меняется только переданное состояние.
+fn resolve_fifty_fifty(
+    state: &mut FiftyFiftyState,
+    featured_lookup: &dyn FeaturedLookup,
+    wish: &Wish,
+) -> FiftyFiftyOutcome {
+    match featured_lookup.is_featured(wish) {
+        Some(is_featured) => state.apply(is_featured),
+        None => {
+            state.history_complete = false;
+            FiftyFiftyOutcome::Unknown
+        }
+    }
+}
+
+/// Вычисляет статус 50/50 по правилу и состоянию.
+fn featured_status(rule: &FiftyFiftyRule, state: FiftyFiftyState) -> FeaturedStatus {
+    if !state.history_complete {
+        return FeaturedStatus::Unknown;
+    }
+    let (next_featured_chance, chance_source) = next_featured_chance(rule, state);
+    FeaturedStatus::Known {
+        guaranteed: state.guaranteed,
+        losing_streak: state.losing_streak,
+        losses_until_radiance: rule.capturing_radiance.as_ref().map(|radiance| {
+            radiance
+                .losses_for_guarantee
+                .saturating_sub(state.losing_streak)
+        }),
+        next_featured_chance,
+        chance_source,
+    }
+}
+
+/// Шанс, что следующий предмет этой редкости будет с баннера, и его причина.
 ///
 /// 1. Прошлое 50/50 проиграно → 100% (гарант).
 /// 2. Проиграно N раз подряд (Capturing Radiance) → 100%.

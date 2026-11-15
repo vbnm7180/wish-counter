@@ -1,12 +1,13 @@
 <!--
-  Страница игры: итоги (всего молитв, примогемы) и карточки баннеров.
+  Страница игры: сервер игрока, итоги (всего молитв, примогемы) и карточки баннеров.
   Статистика приходит из Rust-ядра (команда get_game_statistics).
 -->
 <script lang="ts">
   import { backend } from '../lib/api/backend';
-  import type { GameStatistics } from '../lib/api/types';
+  import type { GameStatistics, ServerRegion } from '../lib/api/types';
   import BannerCard from '../lib/components/BannerCard.svelte';
   import GameSummary from '../lib/components/GameSummary.svelte';
+  import RegionSelector from '../lib/components/RegionSelector.svelte';
   import { i18n } from '../lib/i18n/index.svelte';
 
   /** Свойства компонента. */
@@ -21,6 +22,8 @@
   let statistics = $state<GameStatistics | null>(null);
   /** Загрузка завершилась ошибкой. */
   let failed = $state(false);
+  /** Не удалось сохранить сервер. */
+  let regionSaveFailed = $state(false);
 
   /** Загружает статистику игры из ядра. */
   async function loadStatistics(id: string): Promise<void> {
@@ -30,6 +33,18 @@
     } catch (cause) {
       console.error('Не удалось загрузить статистику', cause);
       failed = true;
+    }
+  }
+
+  /** Сохраняет выбранный сервер и пересчитывает статистику. */
+  async function selectRegion(region: ServerRegion): Promise<void> {
+    regionSaveFailed = false;
+    try {
+      await backend.setServerRegion(gameId, region);
+      await loadStatistics(gameId);
+    } catch (cause) {
+      console.error('Не удалось сохранить сервер', cause);
+      regionSaveFailed = true;
     }
   }
 
@@ -45,6 +60,11 @@
   {#if failed}
     <p class="error">{i18n.t('error.load_failed')}</p>
   {:else if statistics}
+    <RegionSelector selected={statistics.server_region} onSelect={(region) => void selectRegion(region)} />
+    {#if regionSaveFailed}
+      <p class="error">{i18n.t('region.save_error')}</p>
+    {/if}
+
     <GameSummary totalWishes={statistics.total_wishes} primogemsSpent={statistics.primogems_spent} />
     {#if statistics.total_wishes === 0}
       <p class="hint">{i18n.t('game.placeholder')}</p>
@@ -53,7 +73,11 @@
     <h2>{i18n.t('game.banners')}</h2>
     <div class="grid">
       {#each statistics.pools as pool (pool.pool_id)}
-        <BannerCard title={i18n.poolName(gameId, pool.pool_id)} {pool} />
+        <BannerCard
+          title={i18n.poolName(gameId, pool.pool_id)}
+          {pool}
+          serverChosen={statistics.server_region !== null}
+        />
       {/each}
     </div>
   {/if}

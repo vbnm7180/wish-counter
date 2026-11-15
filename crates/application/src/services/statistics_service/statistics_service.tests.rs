@@ -4,11 +4,12 @@
 //! `#[cfg(test)] #[path = "statistics_service.tests.rs"] mod tests;`.
 //! Это дочерний модуль, поэтому через `use super::*` он видит и приватные элементы.
 
+use std::sync::Mutex;
+
 use domain::game::GameInfo;
-use domain::pity::featured::NoFeaturedData;
-use domain::pity::rules::PityRules;
+use domain::pity::rules::{FiftyFiftyRule, PityRules, Probability};
 use domain::pity::statistics::FeaturedStatus;
-use domain::reference::ReferenceSnapshot;
+use domain::reference::{BannerInfo, ReferenceSnapshot, ScheduleTime};
 use domain::wish::{BannerCode, ItemId, ItemKind, Rarity, WishId, WishTime};
 
 use super::*;
@@ -19,8 +20,13 @@ const CHARACTER_CODE: BannerCode = BannerCode::new(1);
 const STANDARD_CODE: BannerCode = BannerCode::new(2);
 /// Код баннера, которого нет ни в одном пуле.
 const UNKNOWN_CODE: BannerCode = BannerCode::new(99);
+/// Время всех тестовых молитв — внутри единственного баннера персонажа.
+const WISH_TIME: &str = "2026-01-10 12:00:00";
+/// Предмет с баннера персонажа.
+const FEATURED_ITEM: &str = "featured_hero";
 
-/// Тестовая игра с двумя пулами: «персонажи» (с 50/50) и «стандартный».
+/// Тестовая игра: пулы «персонажи» (с 50/50) и «стандартный»,
+/// в справочнике один баннер персонажа на январь 2026.
 struct FakeGame;
 
 impl GameModule for FakeGame {
@@ -38,23 +44,31 @@ impl GameModule for FakeGame {
         ]
     }
 
-    fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
-        Arc::new(NoFeaturedData)
-    }
-
     fn embedded_reference(&self) -> ReferenceSnapshot {
+        let at = |time: &str| ScheduleTime {
+            time: WishTime::parse(time).unwrap(),
+            asia_based: false,
+        };
         ReferenceSnapshot {
             source_revision: "test".into(),
             generated_at: "2026-01-01 00:00:00".into(),
             items: Vec::new(),
-            banners: Vec::new(),
+            banners: vec![BannerInfo {
+                pool_id: PoolId::new("character"),
+                name: "Test".into(),
+                short_name: "Test".into(),
+                version: None,
+                start: at("2026-01-01 00:00:00"),
+                end: at("2026-01-21 00:00:00"),
+                featured: vec![ItemId::new(FEATURED_ITEM)],
+                featured_rare: vec![],
+            }],
         }
     }
 }
 
 /// Пул тестовой игры: гарант 90/10, 160 примогемов за молитву.
 fn fake_pool(id: &str, code: BannerCode, with_fifty_fifty: bool) -> PoolDefinition {
-    use domain::pity::rules::{FiftyFiftyRule, Probability};
     PoolDefinition {
         id: PoolId::new(id),
         banner_codes: vec![code],
@@ -65,6 +79,7 @@ fn fake_pool(id: &str, code: BannerCode, with_fifty_fifty: bool) -> PoolDefiniti
                 base_win_chance: Probability::from_basis_points(5_000),
                 capturing_radiance: None,
             }),
+            four_star_featured: None,
         },
         primogems_per_wish: 160,
     }
@@ -96,23 +111,55 @@ impl WishRepository for BrokenRepository {
     }
 }
 
-/// Создаёт `count` молитв с 3★ на указанном баннере.
-fn wishes_on(code: BannerCode, count: usize) -> Vec<Wish> {
-    let wish = Wish {
-        id: WishId::new("1"),
-        banner_code: code,
-        item_id: ItemId::new("sword"),
-        item_kind: ItemKind::Weapon,
-        rarity: Rarity::Three,
-        time: WishTime::parse("2026-01-01 00:00:00").unwrap(),
-    };
-    vec![wish; count]
+/// Профиль с заранее заданным сервером (или без него).
+struct FixedRegion(Mutex<Option<ServerRegion>>);
+
+impl ProfileRepository for FixedRegion {
+    fn server_region(&self, _game_id: &GameId) -> Result<Option<ServerRegion>, RepositoryError> {
+        Ok(*self.0.lock().unwrap())
+    }
+
+    fn set_server_region(
+        &self,
+        _game_id: &GameId,
+        region: ServerRegion,
+    ) -> Result<(), RepositoryError> {
+        *self.0.lock().unwrap() = Some(region);
+        Ok(())
+    }
 }
 
-/// Создаёт сервис с тестовой игрой и заданным хранилищем.
-fn service(repository: impl WishRepository + 'static) -> StatisticsService {
+/// Создаёт молитву на указанном баннере.
+fn wish(code: BannerCode, rarity: Rarity, item: &str) -> Wish {
+    Wish {
+        id: WishId::new("1"),
+        banner_code: code,
+        item_id: ItemId::new(item),
+        item_kind: ItemKind::Character,
+        rarity,
+        time: WishTime::parse(WISH_TIME).unwrap(),
+    }
+}
+
+/// Создаёт `count` молитв с 3★ на указанном баннере.
+fn wishes_on(code: BannerCode, count: usize) -> Vec<Wish> {
+    vec![wish(code, Rarity::Three, "sword"); count]
+}
+
+/// Создаёт сервис с тестовой игрой, хранилищем и сервером игрока.
+fn service_with(
+    repository: impl WishRepository + 'static,
+    region: Option<ServerRegion>,
+) -> StatisticsService {
     let catalog = Arc::new(GameCatalog::new().with_module(Arc::new(FakeGame)));
-    StatisticsService::new(catalog, Arc::new(repository))
+    let references = Arc::new(ReferenceService::from_catalog(&catalog));
+    let profiles = Arc::new(FixedRegion(Mutex::new(region)));
+    StatisticsService::new(catalog, Arc::new(repository), references, profiles)
+}
+
+/// Сервис без выбранного сервера.
+fn service(repository: impl WishRepository + 'static) -> StatisticsService {
+    service_with(repository, None)
 }
 
 /// Запрашивает статистику тестовой игры.
@@ -159,6 +206,39 @@ fn featured_status_present_only_for_pools_with_fifty_fifty() {
         Some(FeaturedStatus::Known { .. })
     ));
     assert_eq!(statistics.pools[1].statistics.featured, None);
+}
+
+/// Без выбранного сервера исход 50/50 не определяется.
+#[test]
+fn fifty_fifty_is_unknown_without_server_region() {
+    let wishes = vec![wish(CHARACTER_CODE, Rarity::Five, FEATURED_ITEM)];
+
+    let statistics = fake_statistics(&service(FixedWishes(wishes)));
+
+    assert_eq!(statistics.server_region, None);
+    assert_eq!(
+        statistics.pools[0].statistics.featured,
+        Some(FeaturedStatus::Unknown)
+    );
+}
+
+/// С выбранным сервером исход 50/50 определяется по расписанию баннеров.
+#[test]
+fn fifty_fifty_is_resolved_with_server_region() {
+    let wishes = vec![wish(CHARACTER_CODE, Rarity::Five, "standard_hero")];
+
+    let statistics = fake_statistics(&service_with(
+        FixedWishes(wishes),
+        Some(ServerRegion::Europe),
+    ));
+
+    assert_eq!(statistics.server_region, Some(ServerRegion::Europe));
+    match statistics.pools[0].statistics.featured {
+        Some(FeaturedStatus::Known { guaranteed, .. }) => {
+            assert!(guaranteed, "после проигрыша следующий 5★ гарантирован")
+        }
+        other => panic!("ожидался известный статус, получено {other:?}"),
+    }
 }
 
 #[test]

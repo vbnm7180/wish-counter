@@ -44,6 +44,10 @@ fn character_rules() -> PityRules {
                 consolidated_win_chance: Probability::from_basis_points(5_500),
             }),
         }),
+        four_star_featured: Some(FiftyFiftyRule {
+            base_win_chance: Probability::from_basis_points(5_000),
+            capturing_radiance: None,
+        }),
     }
 }
 
@@ -51,6 +55,7 @@ fn character_rules() -> PityRules {
 fn standard_rules() -> PityRules {
     PityRules {
         fifty_fifty: None,
+        four_star_featured: None,
         ..character_rules()
     }
 }
@@ -321,4 +326,63 @@ fn featured_status_serializes_with_state_tag() {
     );
     assert!(json.contains(r#""chance_source":"base""#));
     assert!(json.contains(r#""next_featured_chance":5500"#));
+}
+
+// ---------- 4★ с баннера ----------
+
+/// Достаёт известный статус «4★ с баннера».
+fn four_star_status(statistics: &PoolStatistics) -> (bool, Probability, ChanceSource) {
+    match statistics.four_star_featured {
+        Some(FeaturedStatus::Known {
+            guaranteed,
+            next_featured_chance,
+            chance_source,
+            ..
+        }) => (guaranteed, next_featured_chance, chance_source),
+        other => panic!("ожидался известный статус 4★, получено {other:?}"),
+    }
+}
+
+#[test]
+fn four_star_starts_with_base_chance() {
+    let (guaranteed, chance, source) = four_star_status(&character_statistics(&[]));
+
+    assert!(!guaranteed);
+    assert_eq!(chance.basis_points(), 5_000);
+    assert_eq!(source, ChanceSource::Base);
+}
+
+/// Проигрыш 4★ даёт гарант на следующий 4★ и не влияет на 50/50 для 5★.
+#[test]
+fn lost_four_star_makes_next_four_star_guaranteed() {
+    let wishes = vec![wish(Rarity::Four, OFF_BANNER)];
+
+    let statistics = character_statistics(&wishes);
+    let (guaranteed, chance, source) = four_star_status(&statistics);
+
+    assert!(guaranteed);
+    assert_eq!(chance, Probability::CERTAIN);
+    assert_eq!(source, ChanceSource::Guaranteed);
+    let (five_star_guaranteed, ..) = known_status(&statistics);
+    assert!(!five_star_guaranteed);
+}
+
+#[test]
+fn four_star_outcomes_are_annotated() {
+    let wishes = vec![wish(Rarity::Four, OFF_BANNER), wish(Rarity::Four, FEATURED)];
+
+    let annotations = annotate_wishes(&wishes, &character_rules(), &FakeLookup);
+
+    assert_eq!(annotations[0].outcome, Some(FiftyFiftyOutcome::Lost));
+    assert_eq!(annotations[1].outcome, Some(FiftyFiftyOutcome::Guaranteed));
+}
+
+#[test]
+fn pool_without_four_star_rule_has_no_four_star_status() {
+    let statistics = calculate_pool_statistics(
+        &[wish(Rarity::Four, OFF_BANNER)],
+        &standard_rules(),
+        &FakeLookup,
+    );
+    assert_eq!(statistics.four_star_featured, None);
 }

@@ -55,6 +55,10 @@ const FOUR_STAR_HARD_PITY: u32 = 10;
 const CHARACTER_BASE_WIN_CHANCE: Probability = Probability::from_basis_points(5_000);
 /// Итоговый шанс выиграть 50/50 с Capturing Radiance (официально 55,000%).
 const CHARACTER_CONSOLIDATED_WIN_CHANCE: Probability = Probability::from_basis_points(5_500);
+/// Шанс, что 4★ на баннере персонажа — один из трёх 4★ с баннера.
+const CHARACTER_FOUR_STAR_FEATURED_CHANCE: Probability = Probability::from_basis_points(5_000);
+/// Шанс, что 4★ на оружейном баннере — одно из пяти 4★ оружий с баннера.
+const WEAPON_FOUR_STAR_FEATURED_CHANCE: Probability = Probability::from_basis_points(7_500);
 /// После скольких проигранных 50/50 подряд Capturing Radiance гарантирован.
 const LOSSES_FOR_CAPTURING_RADIANCE: u32 = 3;
 
@@ -69,7 +73,7 @@ pub fn genshin_pools() -> Vec<PoolDefinition> {
     ]
 }
 
-/// Баннеры события персонажа: 90 / 10, 50/50 с Capturing Radiance.
+/// Баннеры события персонажа: 90 / 10, 50/50 с Capturing Radiance, 4★ с баннера — 50%.
 fn character_pool() -> PoolDefinition {
     pool(
         pool_ids::CHARACTER,
@@ -84,19 +88,23 @@ fn character_pool() -> PoolDefinition {
                     consolidated_win_chance: CHARACTER_CONSOLIDATED_WIN_CHANCE,
                 }),
             }),
+            four_star_featured: Some(four_star_rule(CHARACTER_FOUR_STAR_FEATURED_CHANCE)),
         },
     )
 }
 
-/// Баннер оружия: 80 / 10.
+/// Баннер оружия: 80 / 10, 4★ с баннера — 75%.
 ///
-/// Гарант выбранного оружия (Epitomized Path) по истории не вычислить:
-/// в ней не записано, какое оружие выбрано целью. Поэтому без правила 50/50.
+/// Гарант выбранного 5★ оружия (Epitomized Path) по истории не вычислить:
+/// в ней не записано, какое оружие выбрано целью. Поэтому без правила 50/50 для 5★.
 fn weapon_pool() -> PoolDefinition {
     pool(
         pool_ids::WEAPON,
         vec![banner_codes::WEAPON],
-        rules_without_fifty_fifty(WEAPON_FIVE_STAR_HARD_PITY),
+        PityRules {
+            four_star_featured: Some(four_star_rule(WEAPON_FOUR_STAR_FEATURED_CHANCE)),
+            ..rules_without_fifty_fifty(WEAPON_FIVE_STAR_HARD_PITY)
+        },
     )
 }
 
@@ -134,6 +142,15 @@ fn rules_without_fifty_fifty(five_star_hard_pity: u32) -> PityRules {
         five_star_hard_pity,
         four_star_hard_pity: FOUR_STAR_HARD_PITY,
         fifty_fifty: None,
+        four_star_featured: None,
+    }
+}
+
+/// Правило «4★ с баннера» с указанным шансом (без Capturing Radiance).
+fn four_star_rule(win_chance: Probability) -> FiftyFiftyRule {
+    FiftyFiftyRule {
+        base_win_chance: win_chance,
+        capturing_radiance: None,
     }
 }
 

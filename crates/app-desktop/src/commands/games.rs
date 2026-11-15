@@ -2,6 +2,7 @@
 
 use application::services::GameStatistics;
 use domain::game::{GameId, GameInfo};
+use domain::region::ServerRegion;
 use tauri::State;
 
 use crate::error::CommandError;
@@ -25,4 +26,17 @@ pub fn get_game_statistics(
     game_id: GameId,
 ) -> Result<GameStatistics, CommandError> {
     Ok(state.statistics_service.game_statistics(&game_id)?)
+}
+
+/// Сохраняет сервер игрока для игры.
+///
+/// Вызов из интерфейса: `invoke('set_server_region', { gameId: 'genshin', region: 'europe' })`.
+/// Недопустимое значение `region` отклоняется ещё при разборе JSON (enum `ServerRegion`).
+#[tauri::command]
+pub fn set_server_region(
+    state: State<'_, AppState>,
+    game_id: GameId,
+    region: ServerRegion,
+) -> Result<(), CommandError> {
+    Ok(state.profile_service.set_server_region(&game_id, region)?)
 }

@@ -6,8 +6,8 @@
 //   (`npm run dev`), чтобы верстать без сборки Rust.
 // Компоненты зависят только от интерфейса Backend (принцип D из SOLID).
 import { invoke, isTauri } from '@tauri-apps/api/core';
-import { demoGameStatistics, demoReferenceSummary } from './demo-data';
-import type { AppSettings, GameInfo, GameStatistics, ReferenceSummary } from './types';
+import { demoGameStatistics, demoReferenceSummary, setDemoServerRegion } from './demo-data';
+import type { AppSettings, GameInfo, GameStatistics, ReferenceSummary, ServerRegion } from './types';
 
 /** Операции, которые предоставляет Rust-ядро. */
 export interface Backend {
@@ -21,6 +21,8 @@ export interface Backend {
   getGameStatistics(gameId: string): Promise<GameStatistics>;
   /** Сводка о справочнике игры (версия данных, количество предметов и баннеров). */
   getReferenceSummary(gameId: string): Promise<ReferenceSummary>;
+  /** Сохраняет сервер игрока для игры. */
+  setServerRegion(gameId: string, region: ServerRegion): Promise<void>;
 }
 
 /** Реализация через команды Tauri (см. crates/app-desktop/src/commands). */
@@ -43,6 +45,10 @@ class TauriBackend implements Backend {
 
   getReferenceSummary(gameId: string): Promise<ReferenceSummary> {
     return invoke<ReferenceSummary>('get_reference_summary', { gameId });
+  }
+
+  setServerRegion(gameId: string, region: ServerRegion): Promise<void> {
+    return invoke<void>('set_server_region', { gameId, region });
   }
 }
 
@@ -71,6 +77,10 @@ class BrowserBackend implements Backend {
 
   async getReferenceSummary(gameId: string): Promise<ReferenceSummary> {
     return demoReferenceSummary(gameId);
+  }
+
+  async setServerRegion(_gameId: string, region: ServerRegion): Promise<void> {
+    setDemoServerRegion(region);
   }
 }
 

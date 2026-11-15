@@ -56,9 +56,9 @@ Wish Counter — portable-приложение для Windows, которое с
 
 ## Напоминания для владельца
 
-- 📌 На **этапе 6** попросить владельца прислать файл экспорта из Paimon.moe, чтобы сверить формат.
+- 📌 На **этапе 6** попросить владельца прислать файл экспорта из Paimon.moe, чтобы сверить формат
+  (и читать из него сервер игрока → `ProfileService`).
 - 📌 Ближе к **этапу 10** напомнить владельцу обсудить формат дистрибутива (ZIP с одним .exe и т.п.).
-- 📌 Отложено, но **обязательно**: шанс нужного 4★ (50%/75%) — см. «Отложено» в docs/roadmap.md.
 - Правила гаранта Genshin и решения владельца по ним — в docs/genshin-rules.md. Перед изменением расчёта сверяться с ним.
 - Справочник `crates/games/genshin/data/reference.json` — только через `cargo run -p data-sync`, не вручную (ADR-020).
   Данные Paimon.moe под MIT: атрибуция в THIRD_PARTY_NOTICES.md и в настройках приложения — не удалять.
@@ -174,4 +174,23 @@ games/genshin (`lib.tests.rs`). Промежуточный вариант `foo.r
 **Проверено:** 112 Rust-тестов, 11 тестов UI; clippy 0; svelte-check 0. .exe 6,9 МБ (+0,2 МБ), справочник загружается < 1 мс,
 RAM ≈ 33 МБ.
 
-**Следующий шаг:** 4a-2 — сервер игрока, `FeaturedLookup` по расписанию баннеров, шанс нужного 4★.
+### 2026-11-15 — Этап 4a-2: сервер игрока, исход 50/50 по расписанию, 4★ с баннера
+**Сделано:**
+1. `WishTime`: проверка существования даты (chrono), `to_date_time` / `from_date_time`.
+2. `domain::region::ServerRegion` (america −5, europe +1, asia/china +8; `parse` без учёта регистра — для JSON Paimon.moe).
+3. `domain::pity::schedule_lookup::ScheduleFeaturedLookup`: баннер пула, действовавший в момент молитвы
+   (`asia_based` время сдвигается на `hours_behind_asia`, +1 мин к концу), 5★ → `featured`, 4★ → `featured_rare`.
+4. `PityRules.four_star_featured`, `PoolStatistics.four_star_featured`, отдельное состояние 50/50 для 4★ в трекере;
+   Genshin: персонажи 50%, оружие 75%.
+5. `GameModule::featured_lookup` удалён (ADR-023). `StatisticsService` получает `ReferenceService` и `ProfileRepository`;
+   `GameStatistics.server_region`.
+6. Миграция 0002 `game_profiles`, `SqliteProfileRepository`, `ProfileService`, команда `set_server_region`,
+   `SharedConnection` — одно соединение на все хранилища (ADR-024).
+7. Интерфейс: `RegionSelector` (с подсказкой, пока сервер не выбран), `FourStarFeaturedView`, тексты «неизвестен»
+   с/без выбранного сервера.
+8. Сквозные тесты на **настоящем** справочнике: Дилюк на баннере Мити → проигрыш, Митя → гарант, the_flute → гарант 4★.
+
+**Проверено:** 141 Rust-тест, 11 тестов UI; clippy 0; svelte-check 0. Существующая база v1 обновилась до v2 при запуске
+(применена только миграция 2). RAM ≈ 32 МБ. Окно не проверялось вручную (нет истории для отображения до этапа 6).
+
+**Следующий шаг:** 4b — онлайн-обновление справочника в приложении (авто раз в сутки + кнопка).

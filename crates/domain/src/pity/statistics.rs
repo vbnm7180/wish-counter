@@ -87,7 +87,7 @@ pub enum FiftyFiftyOutcome {
 pub struct WishAnnotation {
     /// На какой по счёту молитве выпал предмет (только для 4★ и 5★).
     pub pity: Option<u32>,
-    /// Исход 50/50 (только для 5★ на баннерах с правилом 50/50).
+    /// Исход 50/50 (для 5★ и 4★ на баннерах с соответствующим правилом).
     pub outcome: Option<FiftyFiftyOutcome>,
 }
 
@@ -100,6 +100,8 @@ pub struct PoolStatistics {
     pub five_star: PityCounter,
     /// Счётчик гаранта 4★.
     pub four_star: PityCounter,
-    /// Статус 50/50; `None`, если правило к пулу не применяется.
+    /// Статус 50/50 для 5★; `None`, если правило к пулу не применяется.
     pub featured: Option<FeaturedStatus>,
+    /// Статус «4★ с баннера»; `None`, если правило к пулу не применяется.
+    pub four_star_featured: Option<FeaturedStatus>,
 }

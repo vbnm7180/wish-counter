@@ -72,6 +72,16 @@
 - `env!("CARGO_MANIFEST_DIR")` и `concat!` — макросы, которые подставляют значения при компиляции
   (`data-sync`, `USER_AGENT` в `http_client.rs`).
 
+## Приёмы из этапа 4a-2
+- `Box<dyn Trait>` (`build_featured_lookup` в `statistics_service.rs`) — функция возвращает объекты **разных** типов
+  (`ScheduleFeaturedLookup` или `NoFeaturedData`) через один тип результата. Объект живёт в куче.
+- `Option::transpose()` превращает `Option<Result<T, E>>` в `Result<Option<T>, E>` (`SqliteProfileRepository::server_region`).
+- `OptionalExtension::optional()` из rusqlite: «строк нет» становится `Ok(None)`, а не ошибкой.
+- `chrono::NaiveDateTime` — дата и время без часового пояса; `+ Duration::hours(..)` — арифметика (`schedule_lookup.rs`).
+- `HashSet` — множество для быстрой проверки «есть ли предмет в списке» (`BannerWindow`).
+- `Arc::clone(&x)` и `x.clone()` для `Arc` делают одно и то же: копируют указатель, а не данные.
+  Первая запись подчёркивает, что копируется именно указатель (`bootstrap.rs`).
+
 ## Тесты
 - Тесты подключаются из отдельного файла: `#[cfg(test)] #[path = "game.tests.rs"] mod tests;` в конце `game/game.rs`.
   Атрибут `#[cfg(test)]` означает, что модуль компилируется только при `cargo test`, поэтому в `.exe` тесты не попадают.

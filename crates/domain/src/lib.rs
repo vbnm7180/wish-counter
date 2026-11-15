@@ -10,7 +10,8 @@
 //! - [`settings`] — пользовательские настройки (тема, язык);
 //! - [`wish`] — молитва: предмет, редкость, баннер, время;
 //! - [`pity`] — правила гаранта, расчёт счётчиков и статуса 50/50;
-//! - [`reference`](mod@reference) — справочник: предметы с названиями и расписание баннеров.
+//! - [`reference`](mod@reference) — справочник: предметы с названиями и расписание баннеров;
+//! - [`region`] — сервер игрока и его часовой пояс.
 
 // Код модуля лежит в папке модуля вместе с тестами: game/game.rs
 #[path = "game/game.rs"]
@@ -19,6 +20,9 @@ pub mod pity;
 // Код модуля лежит в папке модуля вместе с тестами: reference/reference.rs
 #[path = "reference/reference.rs"]
 pub mod reference;
+// Код модуля лежит в папке модуля вместе с тестами: region/region.rs
+#[path = "region/region.rs"]
+pub mod region;
 // Код модуля лежит в папке модуля вместе с тестами: settings/settings.rs
 #[path = "settings/settings.rs"]
 pub mod settings;

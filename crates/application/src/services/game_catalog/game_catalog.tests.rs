@@ -3,7 +3,6 @@
 //! Подключаются в `game_catalog.rs` строками `#[cfg(test)] #[path = "game_catalog.tests.rs"] mod tests;`.
 //! Это дочерний модуль, поэтому через `use super::*` он видит и приватные элементы.
 
-use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
 use domain::pity::rules::PoolDefinition;
 use domain::reference::ReferenceSnapshot;
 
@@ -25,10 +24,6 @@ impl GameModule for FakeGame {
 
     fn pools(&self) -> Vec<PoolDefinition> {
         Vec::new()
-    }
-
-    fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
-        Arc::new(NoFeaturedData)
     }
 
     fn embedded_reference(&self) -> ReferenceSnapshot {

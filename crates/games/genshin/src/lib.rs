@@ -8,10 +8,7 @@
 //!   встроенный снимок данных Paimon.moe;
 //! - перевод данных Paimon.moe в справочник ([`paimon`]).
 
-use std::sync::Arc;
-
 use domain::game::{GameId, GameInfo, GameModule};
-use domain::pity::featured::{FeaturedLookup, NoFeaturedData};
 use domain::pity::rules::PoolDefinition;
 use domain::reference::ReferenceSnapshot;
 
@@ -51,11 +48,6 @@ impl GameModule for GenshinModule {
     /// Возвращает пулы баннеров Genshin Impact.
     fn pools(&self) -> Vec<PoolDefinition> {
         pools::genshin_pools()
-    }
-
-    /// Пока данных о баннерах нет (этап 4), статус 50/50 будет «неизвестен».
-    fn featured_lookup(&self) -> Arc<dyn FeaturedLookup> {
-        Arc::new(NoFeaturedData)
     }
 
     /// Разбирает встроенный снимок справочника (≈ миллисекунды; вызывать один раз).

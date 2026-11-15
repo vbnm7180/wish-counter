@@ -13,14 +13,16 @@
   interface Props {
     /** Статус 50/50 из ядра. */
     status: FeaturedStatus;
+    /** Выбран ли сервер игрока (от этого зависит текст при неизвестном статусе). */
+    serverChosen: boolean;
   }
 
-  let { status }: Props = $props();
+  let { status, serverChosen }: Props = $props();
 </script>
 
 <section class="featured">
   {#if status.state === 'unknown'}
-    <p class="muted">{i18n.t('featured.unknown')}</p>
+    <p class="muted">{i18n.t(serverChosen ? 'featured.unknown' : 'featured.unknown_no_region')}</p>
   {:else}
     {@const threshold = radianceThreshold(status)}
     <p class="headline" class:certain={status.chance_source !== 'base'}>

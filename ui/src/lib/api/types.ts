@@ -17,6 +17,9 @@ export interface GameInfo {
   display_order: number;
 }
 
+/** Сервер игрока (domain::region::ServerRegion). */
+export type ServerRegion = 'america' | 'europe' | 'asia' | 'china';
+
 /** Ошибка команды Rust (app-desktop error::CommandError). */
 export interface CommandError {
   code: string;
@@ -60,13 +63,17 @@ export interface PoolSummary {
   total_wishes: number;
   five_star: PityCounter;
   four_star: PityCounter;
-  /** null — правило 50/50 к пулу не применяется. */
+  /** Статус 50/50 для 5★; null — правило к пулу не применяется. */
   featured: FeaturedStatus | null;
+  /** Статус «4★ с баннера»; null — правило к пулу не применяется. */
+  four_star_featured: FeaturedStatus | null;
 }
 
 /** Статистика игры (application GameStatistics). */
 export interface GameStatistics {
   game_id: string;
+  /** Сервер игрока; null — не выбран (исход 50/50 не определяется). */
+  server_region: ServerRegion | null;
   total_wishes: number;
   primogems_spent: number;
   pools: PoolSummary[];
