@@ -9,11 +9,12 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    GameCatalog, ProfileService, ReferenceService, ReferenceUpdater, SettingsService,
+    GameCatalog, ImageService, ProfileService, ReferenceService, ReferenceUpdater, SettingsService,
     StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::database::{SharedConnection, open_database};
+use infrastructure::image_cache::FileImageCache;
 use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
 use infrastructure::profiles::SqliteProfileRepository;
@@ -25,6 +26,7 @@ use infrastructure::wishes::SqliteWishRepository;
 use crate::background;
 use crate::commands;
 use crate::error::StartupError;
+use crate::image_protocol::{self, IMAGE_SCHEME};
 use crate::state::AppState;
 use crate::window;
 
@@ -58,6 +60,10 @@ pub fn run() -> Result<(), StartupError> {
             background::spawn_reference_check(app.handle().clone(), updater);
             Ok(())
         })
+        // Картинки предметов: адреса wcimg://... обрабатывает Rust (см. image_protocol.rs).
+        .register_asynchronous_uri_scheme_protocol(IMAGE_SCHEME, |context, request, responder| {
+            image_protocol::handle_request(context.app_handle(), &request, responder);
+        })
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
@@ -85,6 +91,8 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
 
     let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
     let reference_cache = Arc::new(JsonReferenceCache::new(&paths.catalog_dir));
+    // Один загрузчик GitHub и для справочника, и для картинок (реализует оба порта).
+    let github = Arc::new(GitHubReferenceDownloader::new(HttpClient::new()));
     let reference_service = Arc::new(ReferenceService::new(
         &game_catalog,
         reference_cache.as_ref(),
@@ -93,7 +101,13 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
         Arc::clone(&game_catalog),
         Arc::clone(&reference_service),
         reference_cache,
-        Arc::new(GitHubReferenceDownloader::new(HttpClient::new())),
+        github.clone(),
+    ));
+    let image_service = Arc::new(ImageService::new(
+        Arc::clone(&game_catalog),
+        Arc::clone(&reference_service),
+        Arc::new(FileImageCache::new(&paths.images_dir)),
+        github,
     ));
 
     Ok(AppState {
@@ -105,6 +119,7 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
         ),
         profile_service: ProfileService::new(Arc::clone(&game_catalog), profile_repository),
         reference_updater,
+        image_service,
         game_catalog,
         settings_service: SettingsService::new(settings_repository),
     })

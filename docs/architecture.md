@@ -36,7 +36,7 @@
 | Крейт | Папка | Ответственность |
 |---|---|---|
 | `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`, `ServerRegion`; справочник (`ReferenceData`); правила гаранта (`PoolDefinition`, `PityRules`), расчёт (`PityTracker`), исход 50/50 по расписанию (`ScheduleFeaturedLookup`) |
-| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`, `ProfileRepository`, `ReferenceCache`, `ReferenceDownloader`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`, `ReferenceService`, `ReferenceUpdater`, `ProfileService`) |
+| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`, `ProfileRepository`, `ReferenceCache`, `ReferenceDownloader`, `ImageCache`, `ImageDownloader`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`, `ReferenceService`, `ReferenceUpdater`, `ImageService`, `ProfileService`) |
 | `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, база SQLite (`open_database`, миграции), `SqliteWishRepository`, `init_logging` |
 | `game-genshin` | `crates/games/genshin` | `GenshinModule`; коды баннеров и правила пулов (`pools.rs`) |
 | `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
@@ -86,9 +86,9 @@ wish-counter/
 │   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
 │   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository,
-│   │   │                   #   ReferenceCache, ReferenceDownloader, RepositoryError, DownloadError)
+│   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, RepositoryError, DownloadError)
 │   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
-│   │                       #   reference_updater/ (онлайн-обновление), profile_service/ (+ тесты)
+│   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
@@ -96,10 +96,11 @@ wish-counter/
 │   │   ├── database/       # mod.rs: DatabaseError; shared_connection.rs: SharedConnection (одно соединение на все хранилища)
 │   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
 │   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql, 0002_create_game_profiles.sql
-│   │   ├── json_file/      # read_json, write_json_atomically — общие для JSON-хранилищ + тесты
+│   │   ├── files/          # read_bytes/read_json, write_*_atomically, is_safe_file_stem — общие для файловых хранилищ + тесты
+│   │   ├── image_cache/    # file_image_cache/: FileImageCache (data/cache/images/<игра>/<предмет>.png) + тесты
 │   │   ├── reference_cache/ # json_reference_cache/: JsonReferenceCache (data/catalog/) + тесты
 │   │   ├── remote/         # http_client/ (HTTPS, белый список, лимиты), github/ (ревизия, файлы),
-│   │   │                   #   github_downloader.rs (GitHubReferenceDownloader) + тесты
+│   │   │                   #   github_downloader.rs (GitHubReferenceDownloader: справочник и картинки) + тесты
 │   │   ├── profiles/       # sqlite_profile_repository/: SqliteProfileRepository (сервер игрока) + тесты
 │   │   └── wishes/         # sqlite_wish_repository/: SqliteWishRepository + тесты
 │   ├── games/genshin/src/
@@ -124,6 +125,7 @@ wish-counter/
 │           ├── window.rs   # создание главного окна (папка данных WebView2 → data/webview)
 │           ├── background.rs # фоновая проверка обновлений справочников при запуске
 │           ├── events.rs   # события ядро → интерфейс (reference-updated)
+│           ├── image_protocol/ # протокол wcimg: картинки для <img> (разбор и проверка адреса) + тесты
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
 │           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region),
@@ -137,12 +139,14 @@ wish-counter/
 │       └── lib/
 │           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
 │           ├── reference/  # update-messages.ts: тексты результата обновления + тест
+│           ├── images/     # item-image.ts: адрес картинки (wcimg) + тест
 │           ├── i18n/       # локализация: index.svelte.ts, interpolate.ts ({параметры}), locales/ru.ts, en.ts
 │           ├── format/     # format.ts: числа и проценты по языку + format.test.ts
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
-│           └── components/ # Sidebar, RegionSelector, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView, ReferenceInfo
+│           └── components/ # Sidebar, RegionSelector, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView,
+│                           #   ReferenceInfo, ItemIcon (картинка предмета с заглушкой)
 └── docs/                   # документация
 ```
 
@@ -157,10 +161,10 @@ data/
 ├── wish-counter.sqlite   # база: история молитв (+ служебные -wal, -shm пока приложение запущено)
 ├── webview/              # служебные данные WebView2 (кэш движка окна)
 ├── catalog/              # genshin.json — скачанный справочник; genshin.state.json — время проверки
+├── cache/images/<игра>/  # картинки предметов (<id>.png), скачиваются при первом показе
 └── logs/                 # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
 ```
 
-С этапа 4c там же появится кэш картинок.
 
 ## Справочные данные
 
@@ -185,6 +189,18 @@ ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос
 ```
 Источник обновлений описывает игра (`GameModule::remote_reference` → `RemoteReference`), скачивание общее
 (`GitHubReferenceDownloader`). При ошибке справочник не меняется, время проверки не записывается.
+
+## Картинки предметов (этап 4c)
+
+```
+<img src="http://wcimg.localhost/genshin/hu_tao">          (ItemIcon.svelte, loading="lazy")
+  └► image_protocol::handle_request — проверка адреса (/<игра>/<предмет>, только a-z0-9_-)
+     └► spawn_blocking ─► ImageService::image
+          ├─ есть в data/cache/images ─► отдать
+          ├─ предмета нет в справочнике ─► 404 (произвольный путь скачать нельзя)
+          └─ RemoteReference::image_path ─► GitHub (ревизия справочника) ─► проверка PNG ─► кэш ─► отдать
+```
+Неудача (нет сети, нет файла) запоминается до конца сеанса — интерфейс показывает заглушку с буквой.
 
 ## Поток данных: статистика молитв
 

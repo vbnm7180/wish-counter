@@ -3,7 +3,7 @@
 use std::sync::Arc;
 
 use application::services::{
-    GameCatalog, ProfileService, ReferenceUpdater, SettingsService, StatisticsService,
+    GameCatalog, ImageService, ProfileService, ReferenceUpdater, SettingsService, StatisticsService,
 };
 
 /// Сервисы, которые нужны командам интерфейса.
@@ -18,6 +18,8 @@ pub struct AppState {
     pub settings_service: SettingsService,
     /// Обновление справочников из сети. В `Arc`, потому что работает и в фоновом потоке.
     pub reference_updater: Arc<ReferenceUpdater>,
+    /// Картинки предметов. В `Arc`, потому что работает в потоках протокола `wcimg`.
+    pub image_service: Arc<ImageService>,
     /// Сервис профилей игр (сервер игрока).
     pub profile_service: ProfileService,
     /// Сервис статистики молитв.

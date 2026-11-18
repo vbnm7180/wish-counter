@@ -1,8 +1,10 @@
 //! Онлайн-обновление справочника Genshin из репозитория Paimon.moe.
 
 use domain::reference::{
-    ReferenceBuildError, ReferenceSnapshot, ReferenceSourceSpec, RemoteReference, SourceFiles,
+    ItemInfo, ReferenceBuildError, ReferenceSnapshot, ReferenceSourceSpec, RemoteReference,
+    SourceFiles,
 };
+use domain::wish::ItemKind;
 
 use super::converter::{PaimonSources, convert};
 use super::{REPOSITORY_NAME, REPOSITORY_OWNER, source_files};
@@ -39,6 +41,15 @@ impl RemoteReference for PaimonRemoteReference {
         convert(&sources, revision, generated_at)
             .map(|conversion| conversion.snapshot)
             .map_err(|error| ReferenceBuildError(error.to_string()))
+    }
+
+    /// Картинки Paimon.moe: `static/images/characters/<id>.png` и `static/images/weapons/<id>.png`.
+    fn image_path(&self, item: &ItemInfo) -> Option<String> {
+        let folder = match item.kind {
+            ItemKind::Character => source_files::CHARACTER_IMAGES,
+            ItemKind::Weapon => source_files::WEAPON_IMAGES,
+        };
+        Some(format!("{folder}/{}.png", item.id))
     }
 }
 

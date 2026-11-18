@@ -6,7 +6,7 @@
 
 use domain::game::{GameInfo, GameModule};
 use domain::pity::rules::{PoolDefinition, PoolId};
-use domain::reference::{ItemInfo, LocalizedText, ReferenceSnapshot, ScheduleTime};
+use domain::reference::{BannerInfo, ItemInfo, LocalizedText, ReferenceSnapshot, ScheduleTime};
 use domain::wish::{ItemId, Rarity, WishTime};
 
 use super::*;
@@ -40,7 +40,7 @@ fn banner(short_name: &str, start: &str) -> BannerInfo {
         version: Some("7.2".into()),
         start: at(start),
         end: at("2030-01-01 00:00:00"),
-        featured: vec![],
+        featured: vec![ItemId::new(short_name.to_lowercase().replace(' ', "_"))],
         featured_rare: vec![],
     }
 }
@@ -108,4 +108,18 @@ fn unknown_game_is_reported() {
         service().summary(&GameId::new("missing")),
         Err(ReferenceError::UnknownGame(_))
     ));
+}
+
+/// Последний баннер содержит предметы 5★ с названиями из справочника.
+#[test]
+fn latest_banner_lists_featured_items_with_names() {
+    let latest = service()
+        .summary(&GameId::new("fake"))
+        .unwrap()
+        .latest_banner
+        .unwrap();
+
+    assert_eq!(latest.featured.len(), 1);
+    assert_eq!(latest.featured[0].id.as_str(), "mitya");
+    assert!(latest.featured[0].name.is_some());
 }

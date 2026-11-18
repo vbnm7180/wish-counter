@@ -1,12 +1,12 @@
-//! Загрузчик исходных данных справочника с GitHub.
+//! Загрузчик исходных данных справочника и картинок с GitHub.
 
-use application::ports::{DownloadError, ReferenceDownloader};
+use application::ports::{DownloadError, ImageDownloader, ReferenceDownloader};
 use domain::reference::{ReferenceSourceSpec, SourceFiles};
 
 use super::github::GitHubRepository;
 use super::http_client::HttpClient;
 
-/// Реализация [`ReferenceDownloader`] для публичных репозиториев GitHub.
+/// Реализация [`ReferenceDownloader`] и [`ImageDownloader`] для публичных репозиториев GitHub.
 pub struct GitHubReferenceDownloader {
     http: HttpClient,
 }
@@ -45,6 +45,20 @@ impl ReferenceDownloader for GitHubReferenceDownloader {
                 Ok((path.clone(), text))
             })
             .collect()
+    }
+}
+
+impl ImageDownloader for GitHubReferenceDownloader {
+    /// Скачивает картинку из репозитория источника.
+    fn download_image(
+        &self,
+        source: &ReferenceSourceSpec,
+        revision: &str,
+        path: &str,
+    ) -> Result<Vec<u8>, DownloadError> {
+        repository(source)
+            .fetch_bytes(&self.http, revision, path)
+            .map_err(|error| DownloadError(error.to_string()))
     }
 }
 

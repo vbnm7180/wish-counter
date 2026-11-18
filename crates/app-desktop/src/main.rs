@@ -11,6 +11,9 @@ mod bootstrap;
 mod commands;
 mod error;
 mod events;
+// Код модуля лежит в папке модуля вместе с тестами: image_protocol/image_protocol.rs
+#[path = "image_protocol/image_protocol.rs"]
+mod image_protocol;
 mod state;
 mod window;
 

@@ -86,7 +86,15 @@ export function demoReferenceSummary(gameId: string): ReferenceSummary {
     character_count: 128,
     weapon_count: 243,
     banner_count: 224,
-    latest_banner: { short_name: 'Mitya', version: '7.2', start: '2026-11-04 06:00:00' },
+    latest_banner: {
+      short_name: 'Mitya',
+      version: '7.2',
+      start: '2026-11-04 06:00:00',
+      featured: [
+        { id: 'mitya', name: { en: 'Mitya', ru: 'Митя' } },
+        { id: 'furina', name: { en: 'Furina', ru: 'Фурина' } },
+      ],
+    },
     last_checked_at: '2026-11-17 08:00:00',
   };
 }

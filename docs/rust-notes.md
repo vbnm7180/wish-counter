@@ -94,6 +94,15 @@
 - `T: DeserializeOwned` в `read_json` — обобщённая функция для любого типа, который serde умеет прочитать.
 - `#[ignore]` у теста — пропускается обычным `cargo test`, запускается с `-- --ignored`.
 
+## Приёмы из этапа 4c
+- **Собственный протокол Tauri** (`register_asynchronous_uri_scheme_protocol` в `bootstrap.rs`): замыкание получает
+  запрос и «ответчик» (`UriSchemeResponder`); ответить можно позже, из другого потока (`image_protocol.rs`).
+- `bool::then(|| ...)` — превращает условие в `Option`: `valid.then(|| значение)` (`parse_image_path`).
+- `starts_with(&PNG_SIGNATURE)` — проверка «магических байт» формата файла.
+- Одна структура реализует два трейта (`GitHubReferenceDownloader`: `ReferenceDownloader` и `ImageDownloader`),
+  а один `Arc` передаётся туда, где ожидается `Arc<dyn ...>` любого из них.
+- Сырые строки `r"a\b"` — обратная косая черта без экранирования (тест `safe_file_stems`).
+
 ## Тесты
 - Тесты подключаются из отдельного файла: `#[cfg(test)] #[path = "game.tests.rs"] mod tests;` в конце `game/game.rs`.
   Атрибут `#[cfg(test)]` означает, что модуль компилируется только при `cargo test`, поэтому в `.exe` тесты не попадают.

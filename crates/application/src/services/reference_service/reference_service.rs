@@ -4,8 +4,8 @@ use std::collections::HashMap;
 use std::sync::{Arc, PoisonError, RwLock};
 
 use domain::game::{GameId, GameModule};
-use domain::reference::{BannerInfo, ReferenceData, ReferenceSnapshot};
-use domain::wish::ItemKind;
+use domain::reference::{LocalizedText, ReferenceData, ReferenceSnapshot};
+use domain::wish::{ItemId, ItemKind};
 use serde::Serialize;
 use thiserror::Error;
 
@@ -29,6 +29,17 @@ pub struct LatestBanner {
     pub version: Option<String>,
     /// Начало баннера, `ГГГГ-ММ-ДД чч:мм:сс`.
     pub start: String,
+    /// Предметы 5★ с повышенным шансом (с названиями).
+    pub featured: Vec<FeaturedItem>,
+}
+
+/// Предмет баннера для отображения: идентификатор (для картинки) и название.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct FeaturedItem {
+    /// Идентификатор предмета.
+    pub id: ItemId,
+    /// Название на разных языках; `None`, если предмета нет в справочнике.
+    pub name: Option<LocalizedText>,
 }
 
 /// Сводка о справочнике для страницы настроек.
@@ -136,7 +147,7 @@ impl ReferenceService {
             character_count: count_items(&reference, ItemKind::Character),
             weapon_count: count_items(&reference, ItemKind::Weapon),
             banner_count: snapshot.banners.len(),
-            latest_banner: latest_banner(&snapshot.banners),
+            latest_banner: latest_banner(&reference),
         })
     }
 }
@@ -175,14 +186,24 @@ fn count_items(reference: &ReferenceData, kind: ItemKind) -> usize {
 }
 
 /// Находит баннер с самым поздним началом.
-fn latest_banner(banners: &[BannerInfo]) -> Option<LatestBanner> {
-    banners
+fn latest_banner(reference: &ReferenceData) -> Option<LatestBanner> {
+    reference
+        .snapshot()
+        .banners
         .iter()
         .max_by(|left, right| left.start.time.cmp(&right.start.time))
         .map(|banner| LatestBanner {
             short_name: banner.short_name.clone(),
             version: banner.version.clone(),
             start: banner.start.time.as_str().to_owned(),
+            featured: banner
+                .featured
+                .iter()
+                .map(|id| FeaturedItem {
+                    id: id.clone(),
+                    name: reference.item(id).map(|item| item.name.clone()),
+                })
+                .collect(),
         })
 }
 

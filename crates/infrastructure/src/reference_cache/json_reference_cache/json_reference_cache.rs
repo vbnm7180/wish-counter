@@ -12,7 +12,7 @@ use domain::game::GameId;
 use domain::reference::ReferenceSnapshot;
 use serde::{Deserialize, Serialize};
 
-use crate::json_file::{read_json, write_json_atomically};
+use crate::files::{is_safe_file_stem, read_json, unsafe_name_error, write_json_atomically};
 
 /// Формат времени в файле состояния.
 const TIMESTAMP_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
@@ -49,20 +49,10 @@ impl JsonReferenceCache {
     fn file_path(&self, game_id: &GameId, suffix: &str) -> Result<PathBuf, RepositoryError> {
         let id = game_id.as_str();
         if !is_safe_file_stem(id) {
-            return Err(RepositoryError::Io(format!(
-                "недопустимый идентификатор игры «{id}»"
-            )));
+            return Err(unsafe_name_error("игры", id));
         }
         Ok(self.directory.join(format!("{id}{suffix}")))
     }
-}
-
-/// Можно ли использовать строку как имя файла без риска выйти из папки.
-fn is_safe_file_stem(value: &str) -> bool {
-    !value.is_empty()
-        && value
-            .chars()
-            .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '_' | '-'))
 }
 
 impl ReferenceCache for JsonReferenceCache {

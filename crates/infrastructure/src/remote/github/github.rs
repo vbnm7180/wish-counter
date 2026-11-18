@@ -66,12 +66,27 @@ impl GitHubRepository {
         revision: &str,
         path: &str,
     ) -> Result<String, GitHubError> {
+        Ok(http.get_text(&self.raw_url(revision, path)?)?)
+    }
+
+    /// Скачивает двоичный файл `path` (картинку) в указанной ревизии.
+    pub fn fetch_bytes(
+        &self,
+        http: &HttpClient,
+        revision: &str,
+        path: &str,
+    ) -> Result<Vec<u8>, GitHubError> {
+        Ok(http.get_bytes(&self.raw_url(revision, path)?)?)
+    }
+
+    /// Адрес файла в «сыром» виде на raw.githubusercontent.com.
+    /// Ревизия проверяется: она подставляется в адрес.
+    fn raw_url(&self, revision: &str, path: &str) -> Result<String, GitHubError> {
         validate_revision(revision)?;
-        let url = format!(
+        Ok(format!(
             "https://raw.githubusercontent.com/{}/{}/{revision}/{path}",
             self.owner, self.name
-        );
-        Ok(http.get_text(&url)?)
+        ))
     }
 }
 

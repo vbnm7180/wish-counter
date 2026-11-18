@@ -4,7 +4,7 @@
 // 1. создать locales/<код>.ts по образцу en.ts;
 // 2. добавить его в DICTIONARIES и LANGUAGES ниже;
 // 3. добавить вариант в domain::settings::Language (Rust) и LanguageCode (api/types.ts).
-import type { LanguageCode } from '../api/types';
+import type { LanguageCode, LocalizedText } from '../api/types';
 import { en } from './locales/en';
 import { ru, type TranslationKey } from './locales/ru';
 import { interpolate, type TranslationParams } from './interpolate';
@@ -41,6 +41,9 @@ class I18n {
 
   /** Переводит название пула баннеров (ключ <игра>.banner.<пул>). */
   poolName = (gameId: string, poolId: string): string => this.lookup(`${gameId}.banner.${poolId}`, poolId);
+
+  /** Выбирает вариант текста из справочника (имена предметов) на текущем языке. */
+  localized = (text: LocalizedText): string => text[this.language];
 
   /** Ищет строку по ключу, собранному во время выполнения; если её нет — возвращает запасной текст. */
   private lookup(key: string, fallback: string): string {

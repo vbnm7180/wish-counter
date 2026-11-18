@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use application::ports::{RepositoryError, SettingsRepository};
 use domain::settings::AppSettings;
 
-use crate::json_file::{read_json, write_json_atomically};
+use crate::files::{read_json, write_json_atomically};
 
 /// Сохраняет настройки в человекочитаемый JSON-файл (`data/settings.json`).
 ///

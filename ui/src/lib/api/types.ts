@@ -79,12 +79,27 @@ export interface GameStatistics {
   pools: PoolSummary[];
 }
 
+/** Текст на языках интерфейса (domain::reference::LocalizedText). */
+export interface LocalizedText {
+  en: string;
+  ru: string;
+}
+
+/** Предмет баннера (application FeaturedItem). */
+export interface FeaturedItem {
+  id: string;
+  /** Название; null — предмета нет в справочнике. */
+  name: LocalizedText | null;
+}
+
 /** Самый новый баннер справочника (application LatestBanner). */
 export interface LatestBanner {
   short_name: string;
   version: string | null;
   /** Начало баннера, 'ГГГГ-ММ-ДД чч:мм:сс'. */
   start: string;
+  /** Предметы 5★ с повышенным шансом. */
+  featured: FeaturedItem[];
 }
 
 /** Сводка о справочнике игры (application ReferenceSummary). */

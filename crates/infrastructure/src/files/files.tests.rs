@@ -1,6 +1,6 @@
-//! Модульные тесты для `json_file.rs`.
+//! Модульные тесты для `files.rs`.
 //!
-//! Подключаются в `json_file.rs` строками `#[cfg(test)] #[path = "json_file.tests.rs"] mod tests;`.
+//! Подключаются в `files.rs` строками `#[cfg(test)] #[path = "files.tests.rs"] mod tests;`.
 //! Это дочерний модуль, поэтому через `use super::*` он видит и приватные элементы.
 
 use std::collections::BTreeMap;
@@ -56,4 +56,25 @@ fn invalid_json_is_reported_as_corrupted() {
     let result = read_json::<BTreeMap<String, u32>>(&path);
 
     assert!(matches!(result, Err(RepositoryError::Corrupted(_))));
+}
+
+#[test]
+fn bytes_are_written_and_read_back() {
+    let temp = tempfile::tempdir().unwrap();
+    let path = temp.path().join("image.png");
+
+    write_bytes_atomically(&path, &[1, 2, 3]).unwrap();
+
+    assert_eq!(read_bytes(&path).unwrap(), Some(vec![1, 2, 3]));
+    assert_eq!(read_bytes(&temp.path().join("none.png")).unwrap(), None);
+}
+
+#[test]
+fn safe_file_stems() {
+    for safe in ["genshin", "hu_tao", "primordial_jade_winged-spear", "a1"] {
+        assert!(is_safe_file_stem(safe), "{safe}");
+    }
+    for unsafe_name in ["", "../x", "a/b", r"a\b", "C:", "Hu_Tao", "a.png"] {
+        assert!(!is_safe_file_stem(unsafe_name), "{unsafe_name}");
+    }
 }

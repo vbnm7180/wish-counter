@@ -222,4 +222,25 @@ RAM ≈ 33 МБ.
 с 15.11), записан `data/catalog/genshin.state.json`; второй запуск в тот же день в сеть не ходил.
 Ветка «Updated» в живом приложении не наблюдалась (нет новой ревизии) — покрыта модульными тестами и онлайн-тестом сборки.
 
-**Следующий шаг:** 4c — кэш картинок (`data/cache/images`) и отдача их интерфейсу.
+### 2026-11-18 — Замечания владельца по интерфейсу (план) и этап 4c: картинки
+**Замечания (запланированы, ADR-027):** выбор сервера → выпадающий список + «i» с подсказкой на странице «Импорт» (этап 6),
+пустая история → сообщение «Импортируйте историю…» (этап 6), общие компоненты Select/InfoTooltip и выбор фона (этап 5).
+Заложено сейчас: CSS-переменная `--app-background-image` в `themes/base.css` (по умолчанию `none`).
+
+**Сделано (4c):**
+1. `RemoteReference::image_path` (по умолчанию `None`); Genshin: `static/images/{characters|weapons}/<id>.png`.
+2. `application`: порты `ImageCache`, `ImageDownloader`; `ImageService` (кэш → справочник → скачивание из ревизии справочника,
+   проверка PNG, запоминание неудач на сеанс). `ReferenceSummary.latest_banner.featured` (id + имена).
+3. `infrastructure`: `json_file` → `files` (+ `read_bytes`, `write_bytes_atomically`, `is_safe_file_stem`),
+   `FileImageCache`, `HttpClient::get_bytes` (≤ 2 МБ), `GitHubRepository::fetch_bytes`, `GitHubReferenceDownloader`
+   реализует и `ImageDownloader`, `AppPaths.images_dir` = `data/cache/images`.
+4. `app-desktop`: `image_protocol` (протокол `wcimg`, async, проверка пути), CSP `img-src` + `wcimg:`/`http://wcimg.localhost`.
+5. Интерфейс: `images/item-image.ts` (+ тест), `ItemIcon.svelte` (lazy, рамка по редкости, заглушка), иконки персонажей
+   последнего баннера в настройках, `i18n.localized`.
+
+**Проверено:** 183 Rust-теста + 3 онлайн-теста (`--ignored`: справочник, обновление, картинка Ху Тао скачана и закэширована),
+19 тестов UI; clippy 0; svelte-check 0. .exe 8,6 МБ (рост с 6,9 — HTTP/TLS из 4b), запуск в пустой папке
+(`target/portable-check-4c`): создан `data/cache/images`, ошибок в логе нет.
+**Не проверено вручную:** отображение картинок в окне (страница «Настройки» в окне не открывалась).
+
+**Следующий шаг:** этап 5 — интерфейс: таблица молитв с картинками, Select/InfoTooltip, выбор фона, тесты компонентов.

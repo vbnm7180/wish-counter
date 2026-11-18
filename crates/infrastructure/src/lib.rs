@@ -12,12 +12,14 @@
 //! - [`wishes`] — хранение истории молитв в SQLite;
 //! - [`profiles`] — профили игр (сервер игрока) в SQLite;
 //! - [`reference_cache`] — скачанные обновления справочников (`data/catalog/`);
+//! - [`image_cache`] — картинки предметов (`data/cache/images/`);
 //! - [`remote`] — скачивание данных: безопасный HTTP-клиент и GitHub.
 
 pub mod database;
-// Код модуля лежит в папке модуля вместе с тестами: json_file/json_file.rs
-#[path = "json_file/json_file.rs"]
-mod json_file;
+// Код модуля лежит в папке модуля вместе с тестами: files/files.rs
+#[path = "files/files.rs"]
+mod files;
+pub mod image_cache;
 pub mod logging;
 // Код модуля лежит в папке модуля вместе с тестами: paths/paths.rs
 #[path = "paths/paths.rs"]

@@ -28,4 +28,8 @@ pub mod source_files {
     pub const WEAPONS: &str = "src/data/weaponList.js";
     /// Русские названия предметов.
     pub const NAMES_RU: &str = "src/locales/items/ru.json";
+    /// Папка картинок персонажей (`<папка>/<id>.png`).
+    pub const CHARACTER_IMAGES: &str = "static/images/characters";
+    /// Папка картинок оружия (`<папка>/<id>.png`).
+    pub const WEAPON_IMAGES: &str = "static/images/weapons";
 }

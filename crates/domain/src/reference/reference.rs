@@ -177,6 +177,12 @@ pub trait RemoteReference: Send + Sync {
         revision: &str,
         generated_at: &str,
     ) -> Result<ReferenceSnapshot, ReferenceBuildError>;
+
+    /// Путь к картинке предмета внутри репозитория источника;
+    /// `None`, если картинок у источника нет (так по умолчанию).
+    fn image_path(&self, _item: &ItemInfo) -> Option<String> {
+        None
+    }
 }
 
 // Тесты лежат рядом, в файле `reference.tests.rs`.

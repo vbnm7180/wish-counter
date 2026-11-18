@@ -67,3 +67,36 @@ fn updater_checks_real_source() {
     );
     assert!(updater.status(&genshin).unwrap().last_checked_at.is_some());
 }
+
+/// Настоящая загрузка картинки: скачивается PNG и сохраняется в кэш на диске,
+/// повторный запрос отдаётся из кэша.
+#[test]
+#[ignore = "нужен интернет"]
+fn image_is_downloaded_and_cached() {
+    use application::ports::ImageCache;
+    use application::services::ImageService;
+    use domain::wish::ItemId;
+    use infrastructure::image_cache::FileImageCache;
+
+    let temp = tempfile::tempdir().unwrap();
+    let catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
+    let references = Arc::new(ReferenceService::from_catalog(&catalog));
+    let cache = Arc::new(FileImageCache::new(temp.path()));
+    let service = ImageService::new(
+        catalog,
+        references,
+        cache.clone(),
+        Arc::new(GitHubReferenceDownloader::new(HttpClient::new())),
+    );
+    let genshin = GameId::new(GENSHIN_GAME_ID);
+    let hu_tao = ItemId::new("hu_tao");
+
+    let image = service
+        .image(&genshin, &hu_tao)
+        .unwrap()
+        .expect("картинка Ху Тао");
+
+    assert!(image.starts_with(b"\x89PNG"));
+    assert_eq!(cache.load(&genshin, &hu_tao).unwrap(), Some(image));
+    assert!(temp.path().join("genshin").join("hu_tao.png").is_file());
+}

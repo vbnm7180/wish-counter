@@ -16,6 +16,8 @@ pub const ALLOWED_HOSTS: &[&str] = &["raw.githubusercontent.com", "api.github.co
 
 /// Максимальный размер текстового ответа (самый большой файл Paimon.moe ≈ 0,5 МБ).
 const MAX_TEXT_BYTES: u64 = 8 * 1024 * 1024;
+/// Максимальный размер картинки (картинки Paimon.moe — десятки килобайт).
+const MAX_IMAGE_BYTES: u64 = 2 * 1024 * 1024;
 /// Максимальное время на один запрос целиком.
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(30);
 /// Схема адреса, которая допускается.
@@ -67,17 +69,32 @@ impl HttpClient {
 
     /// Скачивает текст по адресу (не больше `MAX_TEXT_BYTES` = 8 МБ).
     pub fn get_text(&self, url: &str) -> Result<String, HttpError> {
-        check_url(url)?;
-        let mut response = self
-            .agent
-            .get(url)
-            .call()
-            .map_err(|error| to_http_error(url, error))?;
+        let mut response = self.get(url)?;
         response
             .body_mut()
             .with_config()
             .limit(MAX_TEXT_BYTES)
             .read_to_string()
+            .map_err(|error| to_http_error(url, error))
+    }
+
+    /// Скачивает двоичные данные (картинку) по адресу (не больше `MAX_IMAGE_BYTES` = 2 МБ).
+    pub fn get_bytes(&self, url: &str) -> Result<Vec<u8>, HttpError> {
+        let mut response = self.get(url)?;
+        response
+            .body_mut()
+            .with_config()
+            .limit(MAX_IMAGE_BYTES)
+            .read_to_vec()
+            .map_err(|error| to_http_error(url, error))
+    }
+
+    /// Проверяет адрес и выполняет GET-запрос; тело ответа читает вызывающий.
+    fn get(&self, url: &str) -> Result<ureq::http::Response<ureq::Body>, HttpError> {
+        check_url(url)?;
+        self.agent
+            .get(url)
+            .call()
             .map_err(|error| to_http_error(url, error))
     }
 }

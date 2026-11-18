@@ -65,3 +65,32 @@ fn broken_file_is_reported() {
 
     assert!(PaimonRemoteReference.build(&broken, "rev", "now").is_err());
 }
+
+#[test]
+fn image_paths_depend_on_item_kind() {
+    use domain::reference::{ItemInfo, LocalizedText};
+    use domain::wish::{ItemId, ItemKind, Rarity};
+
+    let item = |id: &str, kind| ItemInfo {
+        id: ItemId::new(id),
+        kind,
+        rarity: Rarity::Five,
+        name: LocalizedText {
+            en: id.into(),
+            ru: id.into(),
+        },
+    };
+
+    assert_eq!(
+        PaimonRemoteReference
+            .image_path(&item("hu_tao", ItemKind::Character))
+            .as_deref(),
+        Some("static/images/characters/hu_tao.png")
+    );
+    assert_eq!(
+        PaimonRemoteReference
+            .image_path(&item("staff_of_homa", ItemKind::Weapon))
+            .as_deref(),
+        Some("static/images/weapons/staff_of_homa.png")
+    );
+}

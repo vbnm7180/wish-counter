@@ -1,6 +1,6 @@
 <!--
   Сводка о справочнике одной игры: количество персонажей, оружия и баннеров,
-  последний баннер, версия данных Paimon.moe, время последней проверки
+  последний баннер с картинками персонажей, версия данных Paimon.moe, время последней проверки
   и кнопка «Обновить данные».
 -->
 <script lang="ts">
@@ -9,6 +9,7 @@
   import type { ReferenceSummary } from '../api/types';
   import { i18n, type TranslationKey } from '../i18n/index.svelte';
   import { errorMessageKey, outcomeMessageKey } from '../reference/update-messages';
+  import ItemIcon from './ItemIcon.svelte';
 
   /** Свойства компонента. */
   interface Props {
@@ -96,6 +97,16 @@
           start: dateOnly(summary.latest_banner.start),
         })}
       </p>
+      <div class="featured">
+        {#each summary.latest_banner.featured as item (item.id)}
+          <ItemIcon
+            {gameId}
+            itemId={item.id}
+            name={item.name ? i18n.localized(item.name) : item.id}
+            rarity={5}
+          />
+        {/each}
+      </div>
     {/if}
     <p class="muted">
       {i18n.t('reference.source', {
@@ -144,6 +155,12 @@
   .muted {
     color: var(--color-text-muted);
     font-size: 12px;
+  }
+
+  .featured {
+    display: flex;
+    gap: var(--space-2);
+    margin: var(--space-1) 0;
   }
 
   .actions {
