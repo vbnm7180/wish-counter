@@ -16,6 +16,12 @@
   --space-8: 32px;
   --sidebar-width: 232px;
   --transition-fast: 120ms ease;
+  /*
+   * Фоновая картинка приложения (задел под выбор фона, этап 5).
+   * Сейчас фона нет — виден цвет темы --color-bg. Чтобы включить фон, достаточно
+   * задать переменную, например: url('...'). Менять стили body не понадобится.
+   */
+  --app-background-image: none;
 }
 
 *,
@@ -30,7 +36,8 @@ body {
   height: 100%;
   font-family: var(--font-family);
   font-size: 14px;
-  background: var(--color-bg);
+  /* Картинка фона (если задана) поверх цвета темы; растягивается на всё окно. */
+  background: var(--app-background-image) center / cover no-repeat fixed var(--color-bg);
   color: var(--color-text);
   transition:
     background var(--transition-fast),
