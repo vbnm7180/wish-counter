@@ -6,9 +6,11 @@
 // В релизной сборке не открывать чёрное окно консоли рядом с окном программы.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod background;
 mod bootstrap;
 mod commands;
 mod error;
+mod events;
 mod state;
 mod window;
 

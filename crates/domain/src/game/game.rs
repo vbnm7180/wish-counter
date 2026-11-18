@@ -6,11 +6,12 @@
 //! (принцип открытости/закрытости, буква O в SOLID).
 
 use std::fmt;
+use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
 use crate::pity::rules::PoolDefinition;
-use crate::reference::ReferenceSnapshot;
+use crate::reference::{ReferenceSnapshot, RemoteReference};
 
 /// Уникальный идентификатор игры, например `"genshin"`.
 ///
@@ -76,6 +77,15 @@ pub trait GameModule: Send + Sync {
     /// Возвращает справочник, встроенный в программу (предметы и баннеры).
     /// Разбор может занимать миллисекунды — вызывать один раз при запуске.
     fn embedded_reference(&self) -> ReferenceSnapshot;
+
+    /// Возвращает описание онлайн-обновления справочника или `None`,
+    /// если игра его не поддерживает (так по умолчанию).
+    ///
+    /// Метод с телом в трейте — **реализация по умолчанию**: игре, которой
+    /// обновления не нужны, ничего писать не придётся.
+    fn remote_reference(&self) -> Option<Arc<dyn RemoteReference>> {
+        None
+    }
 }
 
 // Тесты лежат рядом, в файле `game.tests.rs`.

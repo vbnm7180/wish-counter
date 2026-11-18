@@ -3,6 +3,8 @@
 //! Подключаются в `json_settings_repository.rs` строками `#[cfg(test)] #[path = "json_settings_repository.tests.rs"] mod tests;`.
 //! Это дочерний модуль, поэтому через `use super::*` он видит и приватные элементы.
 
+use std::fs;
+
 use domain::settings::{Language, ThemeId};
 
 use super::*;

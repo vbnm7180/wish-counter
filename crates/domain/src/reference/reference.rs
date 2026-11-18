@@ -7,6 +7,7 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
 use crate::pity::rules::PoolId;
 use crate::settings::Language;
@@ -138,6 +139,44 @@ impl ReferenceData {
     pub fn snapshot(&self) -> &ReferenceSnapshot {
         &self.snapshot
     }
+}
+
+/// Откуда скачивать обновления справочника: публичный репозиторий GitHub
+/// и пути файлов внутри него.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ReferenceSourceSpec {
+    /// Владелец репозитория, например `"MadeBaruna"`.
+    pub owner: String,
+    /// Имя репозитория, например `"paimon-moe"`.
+    pub repository: String,
+    /// Пути нужных файлов внутри репозитория.
+    pub files: Vec<String>,
+}
+
+/// Скачанные файлы: путь → содержимое.
+pub type SourceFiles = HashMap<String, String>;
+
+/// Ошибка сборки справочника из скачанных файлов.
+#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[error("не удалось собрать справочник: {0}")]
+pub struct ReferenceBuildError(pub String);
+
+/// Онлайн-обновление справочника игры: где лежат исходные данные
+/// и как перевести их в [`ReferenceSnapshot`].
+///
+/// Скачивание делает инфраструктура (она одинакова для всех игр),
+/// а формат данных знает только модуль игры.
+pub trait RemoteReference: Send + Sync {
+    /// Откуда скачивать файлы.
+    fn source(&self) -> ReferenceSourceSpec;
+
+    /// Собирает справочник из скачанных файлов ревизии `revision`.
+    fn build(
+        &self,
+        files: &SourceFiles,
+        revision: &str,
+        generated_at: &str,
+    ) -> Result<ReferenceSnapshot, ReferenceBuildError>;
 }
 
 // Тесты лежат рядом, в файле `reference.tests.rs`.

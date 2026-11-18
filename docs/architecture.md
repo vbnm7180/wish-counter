@@ -36,7 +36,7 @@
 | Крейт | Папка | Ответственность |
 |---|---|---|
 | `domain` | `crates/domain` | Сущности: `GameId`, `GameModule`, `AppSettings`, `Wish`, `Rarity`, `ServerRegion`; справочник (`ReferenceData`); правила гаранта (`PoolDefinition`, `PityRules`), расчёт (`PityTracker`), исход 50/50 по расписанию (`ScheduleFeaturedLookup`) |
-| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`, `ProfileRepository`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`, `ReferenceService`, `ProfileService`) |
+| `application` | `crates/application` | Порты (`SettingsRepository`, `WishRepository`, `ProfileRepository`, `ReferenceCache`, `ReferenceDownloader`) и сервисы (`GameCatalog`, `SettingsService`, `StatisticsService`, `ReferenceService`, `ReferenceUpdater`, `ProfileService`) |
 | `infrastructure` | `crates/infrastructure` | `AppPaths` (portable/профиль), `JsonSettingsRepository`, база SQLite (`open_database`, миграции), `SqliteWishRepository`, `init_logging` |
 | `game-genshin` | `crates/games/genshin` | `GenshinModule`; коды баннеров и правила пулов (`pools.rs`) |
 | `wish-counter` | `crates/app-desktop` | Точка входа, сборка зависимостей (`bootstrap.rs`), команды Tauri |
@@ -85,8 +85,10 @@ wish-counter/
 │   │       ├── schedule_lookup/ # ScheduleFeaturedLookup: «с баннера ли предмет» по расписанию и серверу + тесты
 │   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
-│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository, RepositoryError)
-│   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/, profile_service/ (+ тесты)
+│   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository,
+│   │   │                   #   ReferenceCache, ReferenceDownloader, RepositoryError, DownloadError)
+│   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
+│   │                       #   reference_updater/ (онлайн-обновление), profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
@@ -94,7 +96,10 @@ wish-counter/
 │   │   ├── database/       # mod.rs: DatabaseError; shared_connection.rs: SharedConnection (одно соединение на все хранилища)
 │   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
 │   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql, 0002_create_game_profiles.sql
-│   │   ├── remote/         # http_client/ (HTTPS, белый список хостов, лимиты), github/ (ревизия, файлы) + тесты
+│   │   ├── json_file/      # read_json, write_json_atomically — общие для JSON-хранилищ + тесты
+│   │   ├── reference_cache/ # json_reference_cache/: JsonReferenceCache (data/catalog/) + тесты
+│   │   ├── remote/         # http_client/ (HTTPS, белый список, лимиты), github/ (ревизия, файлы),
+│   │   │                   #   github_downloader.rs (GitHubReferenceDownloader) + тесты
 │   │   ├── profiles/       # sqlite_profile_repository/: SqliteProfileRepository (сервер игрока) + тесты
 │   │   └── wishes/         # sqlite_wish_repository/: SqliteWishRepository + тесты
 │   ├── games/genshin/src/
@@ -103,7 +108,8 @@ wish-counter/
 │   │   ├── pools/          # pools.rs: коды баннеров (banner_codes), пулы и правила + pools.tests.rs
 │   │   ├── paimon/         # mod.rs: репозиторий и пути файлов Paimon.moe
 │   │   │   ├── js_literal/ # разборщик JS-литералов (без выполнения кода) + тесты
-│   │   │   └── converter/  # Paimon.moe → ReferenceSnapshot + тесты
+│   │   │   ├── converter/  # Paimon.moe → ReferenceSnapshot + тесты
+│   │   │   └── remote/     # PaimonRemoteReference: источник обновлений (RemoteReference) + тесты
 │   │   └── reference/      # встроенный снимок (include_str!) + тесты
 │   ├── games/genshin/data/reference.json   # снимок справочника (генерирует data-sync)
 │   ├── tools/data-sync/    # инструмент разработчика: скачать Paimon.moe → reference.json
@@ -111,14 +117,17 @@ wish-counter/
 │       ├── tauri.conf.json # окно, CSP, сборка, установщик
 │       ├── capabilities/   # права интерфейса (минимальные)
 │       ├── icons/          # сгенерированные иконки
-│       ├── tests/          # сквозные тесты: statistics_end_to_end.rs (SQLite → статистика)
+│       ├── tests/          # statistics_end_to_end.rs; reference_online.rs (#[ignore], нужен интернет)
 │       └── src/
 │           ├── main.rs     # точка входа
 │           ├── bootstrap.rs# composition root: создание и связывание объектов
 │           ├── window.rs   # создание главного окна (папка данных WebView2 → data/webview)
+│           ├── background.rs # фоновая проверка обновлений справочников при запуске
+│           ├── events.rs   # события ядро → интерфейс (reference-updated)
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
-│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region), reference.rs, settings.rs
+│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region),
+│                           #   reference.rs (get_reference_summary, update_reference — async), settings.rs
 ├── ui/
 │   ├── index.html
 │   └── src/
@@ -126,7 +135,8 @@ wish-counter/
 │       ├── App.svelte      # каркас: меню + текущая страница
 │       ├── pages/          # HomePage, GamePage, SettingsPage
 │       └── lib/
-│           ├── api/        # backend.ts (вызовы ядра), types.ts (типы ядра), demo-data.ts (данные для браузера)
+│           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
+│           ├── reference/  # update-messages.ts: тексты результата обновления + тест
 │           ├── i18n/       # локализация: index.svelte.ts, interpolate.ts ({параметры}), locales/ru.ts, en.ts
 │           ├── format/     # format.ts: числа и проценты по языку + format.test.ts
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
@@ -146,10 +156,11 @@ data/
 ├── settings.json         # тема и язык
 ├── wish-counter.sqlite   # база: история молитв (+ служебные -wal, -shm пока приложение запущено)
 ├── webview/              # служебные данные WebView2 (кэш движка окна)
+├── catalog/              # genshin.json — скачанный справочник; genshin.state.json — время проверки
 └── logs/                 # wish-counter.YYYY-MM-DD.log, хранятся последние 7 файлов
 ```
 
-С этапа 4 там же появится кэш справочников и картинок.
+С этапа 4c там же появится кэш картинок.
 
 ## Справочные данные
 
@@ -158,7 +169,22 @@ Paimon.moe (GitHub) ──data-sync──► crates/games/genshin/data/reference
                                      (разработчик запускает и коммитит)
 .exe ► GameModule::embedded_reference() ► ReferenceService (ReferenceData с индексом) ► команды / расчёт
 ```
-Справочник разбирается при запуске один раз (< 1 мс). На этапе 4b добавится скачанное обновление в `data/catalog/`.
+Справочник разбирается при запуске один раз (< 1 мс); если в `data/catalog/` есть скачанный справочник новее
+встроенного — используется он.
+
+### Онлайн-обновление (этап 4b)
+
+```
+запуск ─► background.rs (отдельный поток) ─► ReferenceUpdater::update_all_due
+кнопка ─► update_reference (async, spawn_blocking) ─► ReferenceUpdater::update(Force)
+
+ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос) ─► та же? ─► UpToDate
+                                                         └─ новая ─► download ─► RemoteReference::build
+                                                            ─► проверка ─► ReferenceCache::save ─► ReferenceService::replace
+                                                            ─► событие reference-updated ─► интерфейс перечитывает данные
+```
+Источник обновлений описывает игра (`GameModule::remote_reference` → `RemoteReference`), скачивание общее
+(`GitHubReferenceDownloader`). При ошибке справочник не меняется, время проверки не записывается.
 
 ## Поток данных: статистика молитв
 

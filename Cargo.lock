@@ -51,6 +51,7 @@ checksum = "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470"
 name = "application"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "domain",
  "serde",
  "serde_json",
@@ -510,6 +511,7 @@ dependencies = [
 name = "data-sync"
 version = "0.1.0"
 dependencies = [
+ "application",
  "chrono",
  "domain",
  "game-genshin",
@@ -1545,6 +1547,7 @@ name = "infrastructure"
 version = "0.1.0"
 dependencies = [
  "application",
+ "chrono",
  "domain",
  "rusqlite",
  "serde",
@@ -4635,6 +4638,7 @@ dependencies = [
  "serde",
  "tauri",
  "tauri-build",
+ "tempfile",
  "thiserror 2.0.21",
  "tracing",
 ]

@@ -6,17 +6,23 @@
 
 use std::sync::Arc;
 
+use tauri::Manager;
+
 use application::services::{
-    GameCatalog, ProfileService, ReferenceService, SettingsService, StatisticsService,
+    GameCatalog, ProfileService, ReferenceService, ReferenceUpdater, SettingsService,
+    StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::database::{SharedConnection, open_database};
 use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
 use infrastructure::profiles::SqliteProfileRepository;
+use infrastructure::reference_cache::JsonReferenceCache;
+use infrastructure::remote::{GitHubReferenceDownloader, HttpClient};
 use infrastructure::settings::JsonSettingsRepository;
 use infrastructure::wishes::SqliteWishRepository;
 
+use crate::background;
 use crate::commands;
 use crate::error::StartupError;
 use crate::state::AppState;
@@ -45,12 +51,19 @@ pub fn run() -> Result<(), StartupError> {
         .manage(state)
         // `setup` выполняется один раз после запуска Tauri, до показа окон.
         // `move` переносит `webview_dir` внутрь замыкания.
-        .setup(move |app| window::create_main_window(app, webview_dir))
+        .setup(move |app| {
+            window::create_main_window(app, webview_dir)?;
+            // `app.state::<AppState>()` достаёт состояние, переданное в `manage`.
+            let updater = Arc::clone(&app.state::<AppState>().reference_updater);
+            background::spawn_reference_check(app.handle().clone(), updater);
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
             commands::games::set_server_region,
             commands::reference::get_reference_summary,
+            commands::reference::update_reference,
             commands::settings::get_settings,
             commands::settings::update_settings,
         ])
@@ -71,7 +84,17 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
     let profile_repository = Arc::new(SqliteProfileRepository::new(database));
 
     let game_catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
-    let reference_service = Arc::new(ReferenceService::from_catalog(&game_catalog));
+    let reference_cache = Arc::new(JsonReferenceCache::new(&paths.catalog_dir));
+    let reference_service = Arc::new(ReferenceService::new(
+        &game_catalog,
+        reference_cache.as_ref(),
+    ));
+    let reference_updater = Arc::new(ReferenceUpdater::new(
+        Arc::clone(&game_catalog),
+        Arc::clone(&reference_service),
+        reference_cache,
+        Arc::new(GitHubReferenceDownloader::new(HttpClient::new())),
+    ));
 
     Ok(AppState {
         statistics_service: StatisticsService::new(
@@ -81,7 +104,7 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
             profile_repository.clone(),
         ),
         profile_service: ProfileService::new(Arc::clone(&game_catalog), profile_repository),
-        reference_service,
+        reference_updater,
         game_catalog,
         settings_service: SettingsService::new(settings_repository),
     })

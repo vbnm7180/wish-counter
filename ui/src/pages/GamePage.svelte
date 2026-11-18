@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
   import { backend } from '../lib/api/backend';
+  import { onReferenceUpdated } from '../lib/api/events';
   import type { GameStatistics, ServerRegion } from '../lib/api/types';
   import BannerCard from '../lib/components/BannerCard.svelte';
   import GameSummary from '../lib/components/GameSummary.svelte';
@@ -51,6 +52,15 @@
   // $effect перезапускается при смене gameId (переход на страницу другой игры).
   $effect(() => {
     void loadStatistics(gameId);
+  });
+
+  // Справочник обновился в фоне — исход 50/50 мог измениться, пересчитать статистику.
+  // Функция, которую возвращает $effect, вызывается при уходе со страницы: отписка.
+  $effect(() => {
+    const subscription = onReferenceUpdated((updatedGameId) => {
+      if (updatedGameId === gameId) void loadStatistics(gameId);
+    });
+    return () => void subscription.then((unsubscribe) => unsubscribe());
   });
 </script>
 

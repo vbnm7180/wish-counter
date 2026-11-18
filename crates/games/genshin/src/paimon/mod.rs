@@ -9,6 +9,9 @@ pub mod converter;
 // Код модуля лежит в папке модуля вместе с тестами: js_literal/js_literal.rs
 #[path = "js_literal/js_literal.rs"]
 pub mod js_literal;
+// Код модуля лежит в папке модуля вместе с тестами: remote/remote.rs
+#[path = "remote/remote.rs"]
+pub mod remote;
 
 /// Владелец репозитория Paimon.moe на GitHub.
 pub const REPOSITORY_OWNER: &str = "MadeBaruna";

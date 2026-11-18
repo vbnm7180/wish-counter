@@ -38,6 +38,8 @@ Wish Counter — portable-приложение для Windows, которое с
    изолированы внутри компонента). Глобальные стили и цвета тем — только в `ui/src/lib/themes/`.
 11. **Миграции БД:** выпущенные миграции не менять; изменения схемы — только новым файлом `sql/000N_*.sql`
    (docs/development.md). SQL — только с параметрами, без подстановки строк.
+12. **Коммиты — только с подтверждения владельца.** После шага: проверки, список изменённых файлов,
+   предложенное сообщение коммита — и ждать «да». Владелец просматривает изменения в IDE перед коммитом.
 
 ## Окружение и команды
 
@@ -193,4 +195,26 @@ RAM ≈ 33 МБ.
 **Проверено:** 141 Rust-тест, 11 тестов UI; clippy 0; svelte-check 0. Существующая база v1 обновилась до v2 при запуске
 (применена только миграция 2). RAM ≈ 32 МБ. Окно не проверялось вручную (нет истории для отображения до этапа 6).
 
-**Следующий шаг:** 4b — онлайн-обновление справочника в приложении (авто раз в сутки + кнопка).
+### 2026-11-17 — Этап 4b: онлайн-обновление справочника
+**Решение владельца:** коммиты — только после его подтверждения (правило 12).
+
+**Сделано:**
+1. `domain::reference`: `ReferenceSourceSpec`, `SourceFiles`, `ReferenceBuildError`, трейт `RemoteReference`;
+   `GameModule::remote_reference` (по умолчанию `None`). Genshin: `paimon::remote::PaimonRemoteReference`, `sources_from_files`.
+2. `application`: порты `ReferenceCache`, `ReferenceDownloader` (+ `DownloadError`); `ReferenceService` — `RwLock`,
+   `new(catalog, cache)` выбирает более новый из встроенного/скачанного, `replace`; `ReferenceUpdater`
+   (`UpdateMode::IfDue/Force`, `UpdateOutcome`, `UpdateError`, `ReferenceStatus` с `last_checked_at`, проверка данных).
+3. `infrastructure`: `json_file` (общая атомарная запись, настройки переведены на неё), `JsonReferenceCache`
+   (`data/catalog/<игра>.json` + `.state.json`, проверка имени файла), `GitHubReferenceDownloader`, `AppPaths.catalog_dir`.
+4. `app-desktop`: `background.rs` (проверка при запуске в отдельном потоке), `events.rs` (`reference-updated`),
+   команда `update_reference` (async + spawn_blocking), `get_reference_summary` возвращает `ReferenceStatus`.
+5. `data-sync` использует `GitHubReferenceDownloader` + `PaimonRemoteReference` (один список файлов).
+6. Интерфейс: кнопка «Обновить данные», время последней проверки, сообщения о результате (`reference/update-messages.ts` + тесты),
+   `api/events.ts`; `GamePage` и `ReferenceInfo` перечитывают данные по событию.
+
+**Проверено:** 166 Rust-тестов + 2 онлайн-теста (`--ignored`, с настоящим GitHub — прошли), 16 тестов UI; clippy 0; svelte-check 0.
+Запуск .exe в пустой папке (`target/portable-check-4b`): фоновая проверка → `UpToDate` (ревизия Paimon.moe не менялась
+с 15.11), записан `data/catalog/genshin.state.json`; второй запуск в тот же день в сеть не ходил.
+Ветка «Updated» в живом приложении не наблюдалась (нет новой ревизии) — покрыта модульными тестами и онлайн-тестом сборки.
+
+**Следующий шаг:** 4c — кэш картинок (`data/cache/images`) и отдача их интерфейсу.

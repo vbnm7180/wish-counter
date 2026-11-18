@@ -4,9 +4,13 @@
 //! настройки»), а инфраструктура решает, *как* это сделать.
 
 mod profile_repository;
+mod reference_cache;
+mod reference_downloader;
 mod settings_repository;
 mod wish_repository;
 
 pub use profile_repository::ProfileRepository;
+pub use reference_cache::ReferenceCache;
+pub use reference_downloader::{DownloadError, ReferenceDownloader};
 pub use settings_repository::{RepositoryError, SettingsRepository};
 pub use wish_repository::WishRepository;

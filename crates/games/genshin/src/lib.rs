@@ -10,7 +10,10 @@
 
 use domain::game::{GameId, GameInfo, GameModule};
 use domain::pity::rules::PoolDefinition;
-use domain::reference::ReferenceSnapshot;
+use std::sync::Arc;
+
+use domain::reference::{ReferenceSnapshot, RemoteReference};
+use paimon::remote::PaimonRemoteReference;
 
 // Код модуля лежит в папке модуля вместе с тестами: pools/pools.rs
 #[path = "pools/pools.rs"]
@@ -53,6 +56,11 @@ impl GameModule for GenshinModule {
     /// Разбирает встроенный снимок справочника (≈ миллисекунды; вызывать один раз).
     fn embedded_reference(&self) -> ReferenceSnapshot {
         reference::embedded_reference()
+    }
+
+    /// Обновления справочника берутся из репозитория Paimon.moe.
+    fn remote_reference(&self) -> Option<Arc<dyn RemoteReference>> {
+        Some(Arc::new(PaimonRemoteReference))
     }
 }
 

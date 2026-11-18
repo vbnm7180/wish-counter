@@ -1,7 +1,7 @@
 //! Ошибки уровня приложения: запуска и выполнения команд.
 
 use application::ports::RepositoryError;
-use application::services::{ProfileError, ReferenceError, StatisticsError};
+use application::services::{ProfileError, ReferenceError, StatisticsError, UpdateError};
 use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
@@ -93,6 +93,34 @@ impl From<ProfileError> for CommandError {
                     message: error.to_string(),
                 }
             }
+        }
+    }
+}
+
+impl From<UpdateError> for CommandError {
+    /// Преобразует ошибку обновления справочника в ошибку команды.
+    fn from(error: UpdateError) -> Self {
+        tracing::warn!(%error, "справочник не обновлён");
+        let code = match error {
+            UpdateError::UnknownGame(_) => "unknown_game",
+            UpdateError::Download(_) => "reference_download_failed",
+            UpdateError::InvalidData(_) => "reference_invalid",
+            UpdateError::Repository(_) => "storage_io",
+        };
+        Self {
+            code,
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<tauri::Error> for CommandError {
+    /// Внутренняя ошибка Tauri (например, сбой фонового потока).
+    fn from(error: tauri::Error) -> Self {
+        tracing::error!(%error, "внутренняя ошибка при выполнении команды");
+        Self {
+            code: "internal",
+            message: error.to_string(),
         }
     }
 }

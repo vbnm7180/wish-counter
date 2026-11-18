@@ -7,7 +7,14 @@
 // Компоненты зависят только от интерфейса Backend (принцип D из SOLID).
 import { invoke, isTauri } from '@tauri-apps/api/core';
 import { demoGameStatistics, demoReferenceSummary, setDemoServerRegion } from './demo-data';
-import type { AppSettings, GameInfo, GameStatistics, ReferenceSummary, ServerRegion } from './types';
+import type {
+  AppSettings,
+  GameInfo,
+  GameStatistics,
+  ReferenceSummary,
+  ServerRegion,
+  UpdateOutcome,
+} from './types';
 
 /** Операции, которые предоставляет Rust-ядро. */
 export interface Backend {
@@ -23,6 +30,8 @@ export interface Backend {
   getReferenceSummary(gameId: string): Promise<ReferenceSummary>;
   /** Сохраняет сервер игрока для игры. */
   setServerRegion(gameId: string, region: ServerRegion): Promise<void>;
+  /** Проверяет и скачивает обновление справочника прямо сейчас. */
+  updateReference(gameId: string): Promise<UpdateOutcome>;
 }
 
 /** Реализация через команды Tauri (см. crates/app-desktop/src/commands). */
@@ -49,6 +58,10 @@ class TauriBackend implements Backend {
 
   setServerRegion(gameId: string, region: ServerRegion): Promise<void> {
     return invoke<void>('set_server_region', { gameId, region });
+  }
+
+  updateReference(gameId: string): Promise<UpdateOutcome> {
+    return invoke<UpdateOutcome>('update_reference', { gameId });
   }
 }
 
@@ -81,6 +94,10 @@ class BrowserBackend implements Backend {
 
   async setServerRegion(_gameId: string, region: ServerRegion): Promise<void> {
     setDemoServerRegion(region);
+  }
+
+  async updateReference(_gameId: string): Promise<UpdateOutcome> {
+    return { status: 'up_to_date' };
   }
 }
 

@@ -1,11 +1,11 @@
 //! Хранилище настроек в JSON-файле.
 
-use std::fs;
-use std::io::{self, ErrorKind};
 use std::path::PathBuf;
 
 use application::ports::{RepositoryError, SettingsRepository};
 use domain::settings::AppSettings;
+
+use crate::json_file::{read_json, write_json_atomically};
 
 /// Сохраняет настройки в человекочитаемый JSON-файл (`data/settings.json`).
 ///
@@ -22,41 +22,20 @@ impl JsonSettingsRepository {
             file_path: file_path.into(),
         }
     }
-
-    /// Путь к временному файлу, используемому при безопасной записи.
-    fn temporary_file_path(&self) -> PathBuf {
-        self.file_path.with_extension("json.tmp")
-    }
 }
 
 impl SettingsRepository for JsonSettingsRepository {
     /// Читает файл настроек. Если файла нет — возвращает `None`.
     fn load(&self) -> Result<Option<AppSettings>, RepositoryError> {
-        let content = match fs::read_to_string(&self.file_path) {
-            Ok(content) => content,
-            Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
-            Err(error) => return Err(io_error(error)),
-        };
-        serde_json::from_str(&content)
-            .map(Some)
-            .map_err(|error| RepositoryError::Corrupted(error.to_string()))
+        read_json(&self.file_path)
     }
 
     /// Записывает настройки «атомарно»: сначала во временный файл,
     /// затем переименовывает его поверх основного. Если программа упадёт
     /// посреди записи, старый файл останется целым.
     fn save(&self, settings: &AppSettings) -> Result<(), RepositoryError> {
-        let json = serde_json::to_string_pretty(settings)
-            .map_err(|error| RepositoryError::Corrupted(error.to_string()))?;
-        let temporary_path = self.temporary_file_path();
-        fs::write(&temporary_path, json).map_err(io_error)?;
-        fs::rename(&temporary_path, &self.file_path).map_err(io_error)
+        write_json_atomically(&self.file_path, settings)
     }
-}
-
-/// Превращает ошибку ввода-вывода в ошибку хранилища.
-fn io_error(error: io::Error) -> RepositoryError {
-    RepositoryError::Io(error.to_string())
 }
 
 // Тесты лежат рядом, в файле `json_settings_repository.tests.rs`.

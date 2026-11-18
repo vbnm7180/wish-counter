@@ -87,5 +87,6 @@ export function demoReferenceSummary(gameId: string): ReferenceSummary {
     weapon_count: 243,
     banner_count: 224,
     latest_banner: { short_name: 'Mitya', version: '7.2', start: '2026-11-04 06:00:00' },
+    last_checked_at: '2026-11-17 08:00:00',
   };
 }

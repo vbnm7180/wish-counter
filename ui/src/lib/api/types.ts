@@ -98,4 +98,13 @@ export interface ReferenceSummary {
   weapon_count: number;
   banner_count: number;
   latest_banner: LatestBanner | null;
+  /** Когда последний раз проверялись обновления (UTC); null — ни разу. */
+  last_checked_at: string | null;
 }
+
+/** Результат обновления справочника (application UpdateOutcome). */
+export type UpdateOutcome =
+  | { status: 'updated'; revision: string }
+  | { status: 'up_to_date' }
+  | { status: 'not_due' }
+  | { status: 'unsupported' };

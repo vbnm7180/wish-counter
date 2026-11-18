@@ -16,9 +16,11 @@ use std::error::Error;
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-use game_genshin::paimon::converter::{Conversion, PaimonSources, convert};
-use game_genshin::paimon::{REPOSITORY_NAME, REPOSITORY_OWNER, source_files};
-use infrastructure::remote::{GitHubRepository, HttpClient};
+use application::ports::ReferenceDownloader;
+use domain::reference::RemoteReference;
+use game_genshin::paimon::converter::{Conversion, convert};
+use game_genshin::paimon::remote::{PaimonRemoteReference, sources_from_files};
+use infrastructure::remote::{GitHubReferenceDownloader, HttpClient};
 
 /// Формат отметки времени создания снимка.
 const TIMESTAMP_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
@@ -36,21 +38,15 @@ fn main() -> ExitCode {
 
 /// Скачивает, переводит и сохраняет справочник.
 fn run() -> Result<(), Box<dyn Error>> {
-    let http = HttpClient::new();
-    let repository = GitHubRepository::new(REPOSITORY_OWNER, REPOSITORY_NAME);
+    // Тот же загрузчик и тот же список файлов, что использует приложение.
+    let downloader = GitHubReferenceDownloader::new(HttpClient::new());
+    let source = PaimonRemoteReference.source();
 
-    let revision = repository.latest_revision(&http)?;
+    let revision = downloader.latest_revision(&source)?;
     println!("Ревизия Paimon.moe: {revision}");
-    let fetch = |path: &str| {
-        println!("  скачивание {path}");
-        repository.fetch_text(&http, &revision, path)
-    };
-    let sources = PaimonSources {
-        banners_js: fetch(source_files::BANNERS)?,
-        characters_js: fetch(source_files::CHARACTERS)?,
-        weapons_js: fetch(source_files::WEAPONS)?,
-        names_ru_json: fetch(source_files::NAMES_RU)?,
-    };
+    println!("Скачивание: {}", source.files.join(", "));
+    let files = downloader.download(&source, &revision)?;
+    let sources = sources_from_files(&files)?;
 
     let generated_at = chrono::Utc::now().format(TIMESTAMP_FORMAT).to_string();
     let conversion = convert(&sources, &revision, &generated_at)?;
