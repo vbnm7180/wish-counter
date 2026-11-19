@@ -9,6 +9,7 @@ import { invoke, isTauri } from '@tauri-apps/api/core';
 import {
   demoGameStatistics,
   demoImportSummary,
+  demoPoolHistory,
   demoReferenceSummary,
   demoServerRegion,
   setDemoServerRegion,
@@ -21,6 +22,7 @@ import type {
   GameStatistics,
   ImportFormat,
   ImportSummary,
+  PoolHistory,
   ReferenceSummary,
   ServerRegion,
   UpdateOutcome,
@@ -42,6 +44,8 @@ export interface Backend {
   getGameProfile(gameId: string): Promise<GameProfile>;
   /** Сохраняет UID игрока (проверяется в ядре). */
   setPlayerUid(gameId: string, uid: string): Promise<void>;
+  /** История молитв пула баннеров для таблицы (новые сверху). */
+  getPoolHistory(gameId: string, poolId: string): Promise<PoolHistory>;
   /** Экспортирует историю: ядро покажет диалог «Сохранить как». */
   exportHistory(gameId: string, format: ImportFormat): Promise<ExportResult>;
   /** Сохраняет сервер игрока для игры. */
@@ -84,6 +88,10 @@ class TauriBackend implements Backend {
 
   exportHistory(gameId: string, format: ImportFormat): Promise<ExportResult> {
     return invoke<ExportResult>('export_history', { gameId, format });
+  }
+
+  getPoolHistory(gameId: string, poolId: string): Promise<PoolHistory> {
+    return invoke<PoolHistory>('get_pool_history', { gameId, poolId });
   }
 
   setServerRegion(gameId: string, region: ServerRegion): Promise<void> {
@@ -131,6 +139,10 @@ class BrowserBackend implements Backend {
   }
 
   async setPlayerUid(_gameId: string, _uid: string): Promise<void> {}
+
+  async getPoolHistory(_gameId: string, poolId: string): Promise<PoolHistory> {
+    return demoPoolHistory(poolId);
+  }
 
   async exportHistory(_gameId: string, _format: ImportFormat): Promise<ExportResult> {
     return { path: 'C:/demo/paimon-moe-local-data.json', wish_count: 0 };

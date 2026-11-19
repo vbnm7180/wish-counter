@@ -6,10 +6,12 @@ import type {
   FeaturedStatus,
   GameStatistics,
   ImportSummary,
+  PoolHistory,
   PityCounter,
   PoolSummary,
   ReferenceSummary,
   ServerRegion,
+  WishRow,
 } from './types';
 
 /** Выбранный в демо-режиме сервер (в браузере хранится до перезагрузки страницы). */
@@ -123,4 +125,30 @@ export function demoImportSummary(content: string): ImportSummary {
     server_region: 'europe',
     uid: '700000000',
   };
+}
+
+/** Демо-история пула: 120 молитв, каждая 10-я — 4★, 80-я — 5★ с баннера. */
+export function demoPoolHistory(poolId: string): PoolHistory {
+  const rows: PoolHistory['rows'] = Array.from({ length: 120 }, (_, index): WishRow => {
+    const number = index + 1;
+    const isFive = number === 80;
+    const isFour = !isFive && number % 10 === 0;
+    const minute = String(number % 60).padStart(2, '0');
+    return {
+      id: String(number),
+      time: `2026-11-${String(5 + Math.floor(number / 60)).padStart(2, '0')} 12:${minute}:00`,
+      item_id: isFive ? 'mitya' : isFour ? 'the_flute' : 'cool_steel',
+      name: isFive
+        ? { en: 'Mitya', ru: 'Митя' }
+        : isFour
+          ? { en: 'The Flute', ru: 'Флейта' }
+          : { en: 'Cool Steel', ru: 'Холодное лезвие' },
+      item_kind: isFive ? 'character' : 'weapon',
+      rarity: isFive ? 5 : isFour ? 4 : 3,
+      pity: isFive ? 80 : isFour ? 10 : null,
+      outcome: isFive ? 'won' : isFour ? 'lost' : null,
+      banner_name: 'Mitya',
+    };
+  }).reverse();
+  return { pool_id: poolId, server_region: demoRegion, rows };
 }

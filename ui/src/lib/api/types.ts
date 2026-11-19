@@ -157,3 +157,31 @@ export interface ExportResult {
   /** Сколько молитв в файле. */
   wish_count: number;
 }
+
+/** Исход 50/50 для молитвы (domain FiftyFiftyOutcome). */
+export type FiftyFiftyOutcome = 'won' | 'lost' | 'guaranteed' | 'unknown';
+
+/** Строка таблицы молитв (application WishRow). */
+export interface WishRow {
+  id: string;
+  /** Время по серверу игры, 'ГГГГ-ММ-ДД чч:мм:сс'. */
+  time: string;
+  item_id: string;
+  /** Название; null — предмета нет в справочнике. */
+  name: LocalizedText | null;
+  item_kind: 'character' | 'weapon';
+  rarity: 3 | 4 | 5;
+  /** Номер молитвы по гаранту (только 4★/5★). */
+  pity: number | null;
+  /** Исход 50/50 (только 4★/5★ на баннерах с этим правилом). */
+  outcome: FiftyFiftyOutcome | null;
+  /** Баннер в момент молитвы (например, 'Mitya'); null — неизвестен. */
+  banner_name: string | null;
+}
+
+/** История пула баннеров (application PoolHistory). Строки — новые сверху. */
+export interface PoolHistory {
+  pool_id: string;
+  server_region: ServerRegion | null;
+  rows: WishRow[];
+}

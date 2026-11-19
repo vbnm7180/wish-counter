@@ -2,8 +2,8 @@
 
 use application::ports::RepositoryError;
 use application::services::{
-    ExportServiceError, ImportServiceError, ProfileError, ReferenceError, StatisticsError,
-    UpdateError,
+    ExportServiceError, HistoryError, ImportServiceError, ProfileError, ReferenceError,
+    StatisticsError, UpdateError,
 };
 use domain::import::ImportError;
 use domain::profile::PlayerUidError;
@@ -184,6 +184,22 @@ impl CommandError {
         Self {
             code: "export_write_failed",
             message: error.to_string(),
+        }
+    }
+}
+
+impl From<HistoryError> for CommandError {
+    /// Преобразует ошибку получения истории в ошибку команды.
+    fn from(error: HistoryError) -> Self {
+        match error {
+            HistoryError::Repository(repository_error) => repository_error.into(),
+            HistoryError::UnknownGame(_) | HistoryError::UnknownPool(_) => {
+                tracing::warn!(%error, "история не найдена");
+                Self {
+                    code: "unknown_pool",
+                    message: error.to_string(),
+                }
+            }
         }
     }
 }

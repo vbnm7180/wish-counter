@@ -9,6 +9,9 @@ mod export_service;
 // Код модуля лежит в папке модуля вместе с тестами: game_catalog/game_catalog.rs
 #[path = "game_catalog/game_catalog.rs"]
 mod game_catalog;
+// Код модуля лежит в папке модуля вместе с тестами: history_service/history_service.rs
+#[path = "history_service/history_service.rs"]
+mod history_service;
 // Код модуля лежит в папке модуля вместе с тестами: image_service/image_service.rs
 #[path = "image_service/image_service.rs"]
 mod image_service;
@@ -33,6 +36,7 @@ mod statistics_service;
 
 pub use export_service::{ExportService, ExportServiceError, ExportedFile};
 pub use game_catalog::GameCatalog;
+pub use history_service::{HistoryError, HistoryService, PoolHistory, WishRow};
 pub use image_service::{ImageError, ImageService};
 pub use import_service::{ImportService, ImportServiceError, ImportSummary, MAX_IMPORT_BYTES};
 pub use profile_service::{ProfileError, ProfileService};

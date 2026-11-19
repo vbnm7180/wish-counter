@@ -7,6 +7,7 @@ export type Page =
   | { kind: 'home' }
   | { kind: 'game'; gameId: string }
   | { kind: 'import'; gameId: string }
+  | { kind: 'history'; gameId: string; poolId: string }
   | { kind: 'settings' };
 
 class NavigationState {

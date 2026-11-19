@@ -201,3 +201,18 @@ fn unknown_banner_code_is_unknown() {
     let wish = wish(UNKNOWN_CODE, "2026-08-20 12:00:00", "odette", Rarity::Five);
     assert_eq!(lookup(ServerRegion::Asia).is_featured(&wish), None);
 }
+
+/// Название баннера, на котором сделана молитва.
+#[test]
+fn banner_name_is_found_for_wish() {
+    let lookup = lookup(ServerRegion::Asia);
+
+    assert_eq!(
+        lookup.banner_name(&five("2026-08-20 12:00:00", "odette")),
+        Some("Test")
+    );
+    assert_eq!(
+        lookup.banner_name(&five("2027-01-01 00:00:00", "odette")),
+        None
+    );
+}

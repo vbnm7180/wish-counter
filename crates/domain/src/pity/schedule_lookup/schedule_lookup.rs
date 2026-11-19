@@ -22,6 +22,8 @@ const END_GRACE: Duration = Duration::seconds(60);
 
 /// Баннер, подготовленный для быстрой проверки: время уже в поясе сервера.
 struct BannerWindow {
+    /// Короткое название баннера (обычно имя главного персонажа/оружия) — для таблицы молитв.
+    short_name: String,
     start: NaiveDateTime,
     end: NaiveDateTime,
     featured: HashSet<ItemId>,
@@ -32,6 +34,7 @@ impl BannerWindow {
     /// Готовит баннер для сервера `region`.
     fn new(banner: &BannerInfo, region: ServerRegion) -> Self {
         Self {
+            short_name: banner.short_name.clone(),
             start: to_server_time(&banner.start, region),
             end: to_server_time(&banner.end, region) + END_GRACE,
             featured: banner.featured.iter().cloned().collect(),
@@ -100,6 +103,13 @@ impl ScheduleFeaturedLookup {
             pool_by_code,
             windows_by_pool,
         }
+    }
+
+    /// Короткое название баннера, действовавшего в момент молитвы (например, `"Mitya"`);
+    /// `None`, если баннер не найден.
+    pub fn banner_name(&self, wish: &Wish) -> Option<&str> {
+        self.window_for(wish)
+            .map(|window| window.short_name.as_str())
     }
 
     /// Находит баннер пула молитвы, действовавший в момент молитвы.

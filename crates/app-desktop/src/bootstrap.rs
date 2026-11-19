@@ -9,8 +9,8 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    ExportService, GameCatalog, ImageService, ImportService, ProfileService, ReferenceService,
-    ReferenceUpdater, SettingsService, StatisticsService,
+    ExportService, GameCatalog, HistoryService, ImageService, ImportService, ProfileService,
+    ReferenceService, ReferenceUpdater, SettingsService, StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::database::{SharedConnection, open_database};
@@ -74,6 +74,7 @@ pub fn run() -> Result<(), StartupError> {
             commands::games::set_server_region,
             commands::history::import_history,
             commands::history::export_history,
+            commands::history::get_pool_history,
             commands::reference::get_reference_summary,
             commands::reference::update_reference,
             commands::settings::get_settings,
@@ -124,6 +125,12 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
             profile_repository.clone(),
         ),
         export_service: Arc::new(ExportService::new(
+            Arc::clone(&game_catalog),
+            Arc::clone(&reference_service),
+            wish_repository.clone(),
+            profile_repository.clone(),
+        )),
+        history_service: Arc::new(HistoryService::new(
             Arc::clone(&game_catalog),
             Arc::clone(&reference_service),
             wish_repository.clone(),

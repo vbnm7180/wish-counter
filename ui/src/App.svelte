@@ -13,6 +13,7 @@
   import GamePage from './pages/GamePage.svelte';
   import HomePage from './pages/HomePage.svelte';
   import ImportPage from './pages/ImportPage.svelte';
+  import WishHistoryPage from './pages/WishHistoryPage.svelte';
   import SettingsPage from './pages/SettingsPage.svelte';
 
   /** Список игр из ядра. */
@@ -49,6 +50,8 @@
       <GamePage gameId={navigation.current.gameId} />
     {:else if navigation.current.kind === 'import'}
       <ImportPage gameId={navigation.current.gameId} />
+    {:else if navigation.current.kind === 'history'}
+      <WishHistoryPage gameId={navigation.current.gameId} poolId={navigation.current.poolId} />
     {:else if navigation.current.kind === 'settings'}
       <SettingsPage {games} />
     {/if}

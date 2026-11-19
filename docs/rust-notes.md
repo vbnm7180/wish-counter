@@ -127,6 +127,13 @@
 - Расширение трейта плагина: `use tauri_plugin_dialog::DialogExt;` добавляет `AppHandle` метод `.dialog()`
   (трейт-расширение — способ «добавить методы» чужому типу).
 
+## Приёмы из этапа 5b
+- **Ссылка на трейт-объект из `match`** (`HistoryService::pool_history`):
+  `let lookup: &dyn FeaturedLookup = match &schedule { Some(s) => s, None => &NoFeaturedData };` —
+  без `Box` и без выделения памяти: обе ветки дают ссылку, а `NoFeaturedData` — пустая структура-константа.
+- `Iterator::zip` — проход по двум последовательностям парами (молитвы и их пометки).
+- `Vec::reverse` — разворот на месте (новые сверху).
+
 ## Тесты
 - Тесты подключаются из отдельного файла: `#[cfg(test)] #[path = "game.tests.rs"] mod tests;` в конце `game/game.rs`.
   Атрибут `#[cfg(test)]` означает, что модуль компилируется только при `cargo test`, поэтому в `.exe` тесты не попадают.

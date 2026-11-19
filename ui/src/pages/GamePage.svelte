@@ -75,6 +75,9 @@
             title={i18n.poolName(gameId, pool.pool_id)}
             {pool}
             serverChosen={statistics.server_region !== null}
+            onView={pool.total_wishes > 0
+              ? () => navigation.goTo({ kind: 'history', gameId, poolId: pool.pool_id })
+              : undefined}
           />
         {/each}
       </div>

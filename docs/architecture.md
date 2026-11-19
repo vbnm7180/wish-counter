@@ -91,7 +91,7 @@ wish-counter/
 │   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, RepositoryError, DownloadError)
 │   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
 │   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), import_service/ (импорт),
-│   │                       #   export_service/ (экспорт),
+│   │                       #   export_service/ (экспорт), history_service/ (строки таблицы молитв),
 │   │                       #   profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
@@ -139,14 +139,16 @@ wish-counter/
 │           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, get_game_profile,
 │                           #   set_server_region, set_player_uid),
 │                           #   reference.rs (get_reference_summary, update_reference — async), settings.rs,
-│                           #   history.rs (import_history, export_history — async; диалог «Сохранить как» из Rust)
+│                           #   history.rs (import_history, export_history, get_pool_history — async;
+│                           #   диалог «Сохранить как» из Rust)
 ├── ui/
 │   ├── index.html
 │   └── src/
 │       ├── main.ts         # точка входа интерфейса
 │       ├── test-setup.ts   # общая настройка тестов (очистка страницы после каждого теста)
 │       ├── App.svelte      # каркас: меню + текущая страница
-│       ├── pages/          # HomePage, GamePage (пустое состояние → «Импорт»), ImportPage (профиль, импорт, экспорт), SettingsPage
+│       ├── pages/          # HomePage, GamePage (пустое состояние → «Импорт»), ImportPage (профиль, импорт, экспорт),
+│       │                   #   WishHistoryPage (таблица молитв), SettingsPage
 │       └── lib/
 │           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
 │           ├── reference/  # update-messages.ts: тексты результата обновления + тест
@@ -158,6 +160,7 @@ wish-counter/
 │           ├── state/      # реактивное состояние: settings, navigation
 │           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView,
 │                           #   ReferenceInfo, IconImage, ItemIcon, Select, InfoTooltip (+ *.test.ts)
+│           ├── history/    # table.ts: фильтры и постраничный вывод таблицы молитв + тест
 │           ├── import/     # import-messages.ts (тексты результата импорта) + тест; regions.ts (список серверов)
 └── docs/                   # документация
 ```
@@ -233,6 +236,16 @@ ImportPage: <input type="file"> → file.text() → invoke('import_history', { g
 ImportPage «Сохранить файл…» → invoke('export_history', { gameId, format })
   └► spawn_blocking ─► ExportService::export → GameModule::history_exporters() → PaimonBackupExporter
   └► spawn_blocking ─► tauri-plugin-dialog: blocking_save_file (диалог из Rust) → std::fs::write
+```
+
+## Таблица молитв (этап 5b)
+
+```
+BannerCard «Посмотреть» → WishHistoryPage → invoke('get_pool_history', { gameId, poolId })
+  └► HistoryService::pool_history: молитвы пула → annotate_wishes (гарант, 50/50)
+     + ScheduleFeaturedLookup::banner_name (баннер в момент молитвы) + названия из справочника
+     → строки от новых к старым
+  └► интерфейс: filterRows (редкость, тип, поиск) → pageRows (по 50) → строки с ItemIcon (lazy)
 ```
 
 ## Поток данных: статистика молитв

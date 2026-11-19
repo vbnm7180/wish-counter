@@ -2,9 +2,10 @@
 
 use std::sync::Arc;
 
-use application::services::{ExportedFile, ImportSummary};
+use application::services::{ExportedFile, ImportSummary, PoolHistory};
 use domain::game::GameId;
 use domain::import::HistoryFormatId;
+use domain::pity::rules::PoolId;
 use serde::Serialize;
 use tauri::{AppHandle, State};
 use tauri_plugin_dialog::DialogExt;
@@ -100,4 +101,20 @@ fn save_with_dialog(app: &AppHandle, file: &ExportedFile) -> Result<Option<Strin
     std::fs::write(&path, &file.content).map_err(CommandError::export_write)?;
     tracing::info!("файл экспорта сохранён");
     Ok(Some(path.display().to_string()))
+}
+
+/// Возвращает историю молитв пула баннеров для таблицы (новые сверху).
+///
+/// Вызов из интерфейса: `invoke('get_pool_history', { gameId: 'genshin', poolId: 'character' })`.
+#[tauri::command]
+pub async fn get_pool_history(
+    state: State<'_, AppState>,
+    game_id: GameId,
+    pool_id: PoolId,
+) -> Result<PoolHistory, CommandError> {
+    let service = Arc::clone(&state.history_service);
+    Ok(
+        tauri::async_runtime::spawn_blocking(move || service.pool_history(&game_id, &pool_id))
+            .await??,
+    )
 }

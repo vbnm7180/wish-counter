@@ -271,3 +271,59 @@ fn real_export_roundtrip_matches_original() {
     println!("повторов в исходном файле: {}", summary.duplicates_skipped);
     assert_eq!(unexplained, 0);
 }
+
+/// Таблица молитв на настоящей истории: у каждой 4★/5★ баннеров персонажа и оружия
+/// найден баннер, на котором она выпала, и есть исход 50/50 / «с баннера».
+#[test]
+#[ignore = "нужен личный файл экспорта Paimon.moe (WISH_COUNTER_PAIMON_EXPORT)"]
+fn real_history_rows_have_banners() {
+    use application::services::HistoryService;
+    use domain::pity::rules::PoolId;
+
+    let path = std::env::var(EXPORT_PATH_VARIABLE).expect("задайте WISH_COUNTER_PAIMON_EXPORT");
+    let content = std::fs::read_to_string(path).unwrap();
+    let genshin = GameId::new(GENSHIN_GAME_ID);
+    let database = SharedConnection::new(open_in_memory_database().unwrap());
+    let wishes = Arc::new(SqliteWishRepository::new(database.clone()));
+    let profiles = Arc::new(SqliteProfileRepository::new(database));
+    let catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
+    let references = Arc::new(ReferenceService::from_catalog(&catalog));
+    let format = HistoryFormatId::new(PAIMON_FORMAT_ID);
+    ImportService::new(
+        catalog.clone(),
+        references.clone(),
+        wishes.clone(),
+        profiles.clone(),
+    )
+    .import(&genshin, &format, &content)
+    .unwrap();
+    let history = HistoryService::new(catalog, references, wishes, profiles);
+
+    for pool in [pool_ids::CHARACTER, pool_ids::WEAPON] {
+        let rows = history
+            .pool_history(&genshin, &PoolId::new(pool))
+            .unwrap()
+            .rows;
+        let rare: Vec<_> = rows
+            .iter()
+            .filter(|row| row.rarity != Rarity::Three)
+            .collect();
+        let without_banner = rare.iter().filter(|row| row.banner_name.is_none()).count();
+        let unknown_outcome = rare
+            .iter()
+            .filter(|row| row.outcome == Some(FiftyFiftyOutcome::Unknown))
+            .count();
+        println!(
+            "{pool}: строк {}, 4★/5★ {}, без баннера {without_banner}, исход неизвестен {unknown_outcome}; верхняя строка {}",
+            rows.len(),
+            rare.len(),
+            rows[0].time.as_str()
+        );
+        assert_eq!(without_banner, 0);
+        assert_eq!(unknown_outcome, 0);
+        assert!(
+            rows.windows(2).all(|pair| pair[0].time >= pair[1].time),
+            "новые сверху"
+        );
+    }
+}
