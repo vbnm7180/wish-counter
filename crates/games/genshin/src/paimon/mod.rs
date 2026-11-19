@@ -3,6 +3,9 @@
 //! Источник: <https://github.com/MadeBaruna/paimon-moe> (лицензия MIT).
 //! Автор Paimon.moe обновляет эти файлы вручную в день выхода новых баннеров.
 
+// Код модуля лежит в папке модуля вместе с тестами: backup/backup.rs
+#[path = "backup/backup.rs"]
+pub mod backup;
 // Код модуля лежит в папке модуля вместе с тестами: converter/converter.rs
 #[path = "converter/converter.rs"]
 pub mod converter;

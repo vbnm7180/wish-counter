@@ -28,6 +28,11 @@
   function gamePage(gameId: string): Page {
     return { kind: 'game', gameId };
   }
+
+  /** Создаёт описание страницы импорта игры. */
+  function importPage(gameId: string): Page {
+    return { kind: 'import', gameId };
+  }
 </script>
 
 <nav class="sidebar">
@@ -46,6 +51,13 @@
     >
       <IconImage src={gameIconUrl(game.id)} name={i18n.gameName(game.id)} size={GAME_ICON_SIZE} />
       <span>{i18n.gameName(game.id)}</span>
+    </button>
+    <button
+      class="item sub-item"
+      class:active={navigation.isActive(importPage(game.id))}
+      onclick={() => navigation.goTo(importPage(game.id))}
+    >
+      {i18n.t('nav.import')}
     </button>
   {/each}
 
@@ -94,6 +106,12 @@
     border-radius: var(--radius-small);
     cursor: pointer;
     transition: background var(--transition-fast);
+  }
+
+  /* Вложенный пункт под игрой: отступ на ширину иконки игры. */
+  .sub-item {
+    padding-left: calc(var(--space-3) + 24px + var(--space-2));
+    font-size: 13px;
   }
 
   .item:hover {

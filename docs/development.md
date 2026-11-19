@@ -35,6 +35,7 @@
 | `cargo fmt --all` | Автоформатирование Rust-кода |
 | `cargo run -p data-sync` | Обновить встроенный справочник из Paimon.moe (нужен интернет) |
 | `cargo test -p wish-counter --test reference_online -- --ignored` | Проверить настоящее скачивание с GitHub (нужен интернет) |
+| `WISH_COUNTER_PAIMON_EXPORT=<абсолютный путь> cargo test -p wish-counter --test paimon_export_real -- --ignored --nocapture` | Сверить импорт, гарант и 50/50 с Paimon.moe на своём файле экспорта |
 
 ## Версии Tauri
 

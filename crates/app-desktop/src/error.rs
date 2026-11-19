@@ -1,7 +1,10 @@
 //! Ошибки уровня приложения: запуска и выполнения команд.
 
 use application::ports::RepositoryError;
-use application::services::{ProfileError, ReferenceError, StatisticsError, UpdateError};
+use application::services::{
+    ImportServiceError, ProfileError, ReferenceError, StatisticsError, UpdateError,
+};
+use domain::import::ImportError;
 use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
@@ -120,6 +123,25 @@ impl From<tauri::Error> for CommandError {
         tracing::error!(%error, "внутренняя ошибка при выполнении команды");
         Self {
             code: "internal",
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<ImportServiceError> for CommandError {
+    /// Преобразует ошибку импорта в ошибку команды (код выбирает текст в интерфейсе).
+    fn from(error: ImportServiceError) -> Self {
+        tracing::warn!(%error, "история не импортирована");
+        let code = match &error {
+            ImportServiceError::UnknownGame(_) => "unknown_game",
+            ImportServiceError::UnsupportedFormat(_) => "import_unsupported_format",
+            ImportServiceError::FileTooLarge => "import_file_too_large",
+            ImportServiceError::Parse(ImportError::InvalidFile { .. }) => "import_invalid_file",
+            ImportServiceError::Parse(ImportError::UnknownItems(_)) => "import_unknown_items",
+            ImportServiceError::Repository(_) => "storage_io",
+        };
+        Self {
+            code,
             message: error.to_string(),
         }
     }

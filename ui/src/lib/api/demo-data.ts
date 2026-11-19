@@ -2,14 +2,27 @@
 // Показывают разные состояния карточек, чтобы было удобно верстать:
 // гарант после проигрыша, неизвестный статус, пустой баннер.
 // В настоящем приложении (Tauri) не используются.
-import type { FeaturedStatus, GameStatistics, PityCounter, PoolSummary, ReferenceSummary, ServerRegion } from './types';
+import type {
+  FeaturedStatus,
+  GameStatistics,
+  ImportSummary,
+  PityCounter,
+  PoolSummary,
+  ReferenceSummary,
+  ServerRegion,
+} from './types';
 
 /** Выбранный в демо-режиме сервер (в браузере хранится до перезагрузки страницы). */
-let demoServerRegion: ServerRegion | null = null;
+let demoRegion: ServerRegion | null = null;
+
+/** Сервер, выбранный в демо-режиме. */
+export function demoServerRegion(): ServerRegion | null {
+  return demoRegion;
+}
 
 /** Запоминает сервер, выбранный в демо-режиме. */
 export function setDemoServerRegion(region: ServerRegion): void {
-  demoServerRegion = region;
+  demoRegion = region;
 }
 
 /** Статус «4★ с баннера» для демо-карточек. */
@@ -70,7 +83,7 @@ export function demoGameStatistics(gameId: string): GameStatistics {
   ];
   return {
     game_id: gameId,
-    server_region: demoServerRegion,
+    server_region: demoRegion,
     total_wishes: pools.reduce((sum, item) => sum + item.total_wishes, 0),
     primogems_spent: pools.reduce((sum, item) => sum + item.primogems_spent, 0),
     pools,
@@ -97,4 +110,10 @@ export function demoReferenceSummary(gameId: string): ReferenceSummary {
     },
     last_checked_at: '2026-11-17 08:00:00',
   };
+}
+
+/** Демо-итог импорта: «добавлены» все строки файла (в браузере ничего не сохраняется). */
+export function demoImportSummary(content: string): ImportSummary {
+  const total = content.split('\n').length;
+  return { total_in_file: total, added: total, already_present: 0, duplicates_skipped: 0, server_region: 'europe' };
 }

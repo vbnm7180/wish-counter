@@ -75,6 +75,7 @@ wish-counter/
 │   │   ├── wish/
 │   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
 │   │   │   └── wish.tests.rs
+│   │   ├── import/         # import.rs: HistoryParser, ParsedHistory, ImportFormatId, ImportError
 │   │   ├── region/         # region.rs: ServerRegion (смещения часовых поясов как в Paimon.moe) + тесты
 │   │   ├── reference/      # reference.rs: ItemInfo, BannerInfo, ScheduleTime, LocalizedText, ReferenceSnapshot, ReferenceData + тесты
 │   │   └── pity/
@@ -88,7 +89,8 @@ wish-counter/
 │   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository,
 │   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, RepositoryError, DownloadError)
 │   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
-│   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), profile_service/ (+ тесты)
+│   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), import_service/ (импорт),
+│   │                       #   profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
@@ -109,6 +111,7 @@ wish-counter/
 │   │   ├── pools/          # pools.rs: коды баннеров (banner_codes), пулы и правила + pools.tests.rs
 │   │   ├── paimon/         # mod.rs: репозиторий и пути файлов Paimon.moe
 │   │   │   ├── js_literal/ # разборщик JS-литералов (без выполнения кода) + тесты
+│   │   │   ├── backup/     # PaimonBackupParser: импорт paimon-moe-local-data.json (повторы, искусственные id) + тесты
 │   │   │   ├── converter/  # Paimon.moe → ReferenceSnapshot + тесты
 │   │   │   └── remote/     # PaimonRemoteReference: источник обновлений (RemoteReference) + тесты
 │   │   └── reference/      # встроенный снимок (include_str!) + тесты
@@ -118,7 +121,8 @@ wish-counter/
 │       ├── tauri.conf.json # окно, CSP, сборка, установщик
 │       ├── capabilities/   # права интерфейса (минимальные)
 │       ├── icons/          # сгенерированные иконки
-│       ├── tests/          # statistics_end_to_end.rs; reference_online.rs (#[ignore], нужен интернет)
+│       ├── tests/          # statistics_end_to_end.rs; reference_online.rs (#[ignore], интернет);
+│       │                   #   paimon_export_real.rs (#[ignore], сверка с Paimon.moe на личном файле)
 │       └── src/
 │           ├── main.rs     # точка входа
 │           ├── bootstrap.rs# composition root: создание и связывание объектов
@@ -129,14 +133,15 @@ wish-counter/
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
 │           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region),
-│                           #   reference.rs (get_reference_summary, update_reference — async), settings.rs
+│                           #   reference.rs (get_reference_summary, update_reference — async), settings.rs,
+│                           #   import.rs (import_history — async; событие history-updated; докачка картинок)
 ├── ui/
 │   ├── index.html
 │   └── src/
 │       ├── main.ts         # точка входа интерфейса
 │       ├── test-setup.ts   # общая настройка тестов (очистка страницы после каждого теста)
 │       ├── App.svelte      # каркас: меню + текущая страница
-│       ├── pages/          # HomePage, GamePage, SettingsPage
+│       ├── pages/          # HomePage, GamePage (пустое состояние → «Импорт»), ImportPage, SettingsPage
 │       └── lib/
 │           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
 │           ├── reference/  # update-messages.ts: тексты результата обновления + тест
@@ -146,8 +151,9 @@ wish-counter/
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
-│           └── components/ # Sidebar, RegionSelector, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView,
-│                           #   ReferenceInfo, IconImage (картинка с заглушкой), ItemIcon, Select, InfoTooltip (+ *.test.ts)
+│           └── components/ # Sidebar, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView,
+│                           #   ReferenceInfo, IconImage, ItemIcon, Select, InfoTooltip (+ *.test.ts)
+│           ├── import/     # import-messages.ts (тексты результата импорта) + тест; regions.ts (список серверов)
 └── docs/                   # документация
 ```
 
@@ -203,6 +209,18 @@ ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос
 ```
 Неудача (нет сети, нет файла) запоминается до конца сеанса — интерфейс показывает заглушку с буквой.
 Иконка игры (`/games/<игра>/icon`) не скачивается: её байты встроены в модуль игры (`GameModule::icon_png`).
+
+## Импорт истории (этап 6a)
+
+```
+ImportPage: <input type="file"> → file.text() → invoke('import_history', { gameId, format, content })
+  └► spawn_blocking ─► ImportService::import
+        ├─ GameModule::history_parsers() → PaimonBackupParser::parse (редкость — из справочника)
+        ├─ WishRepository::add_wishes (уже сохранённые пропускаются)
+        └─ ProfileRepository::set_server_region (если сервер есть в файле)
+  └► событие history-updated → GamePage перечитывает статистику
+  └► background::spawn_image_prefetch → ImageService::prefetch (картинки для офлайна)
+```
 
 ## Поток данных: статистика молитв
 

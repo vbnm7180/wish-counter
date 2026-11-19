@@ -3,7 +3,11 @@
 // просто реактивная переменная.
 
 /** Описание страницы. Новая страница = новый вариант в этом типе. */
-export type Page = { kind: 'home' } | { kind: 'game'; gameId: string } | { kind: 'settings' };
+export type Page =
+  | { kind: 'home' }
+  | { kind: 'game'; gameId: string }
+  | { kind: 'import'; gameId: string }
+  | { kind: 'settings' };
 
 class NavigationState {
   /** Текущая открытая страница. */
@@ -18,7 +22,7 @@ class NavigationState {
   isActive(page: Page): boolean {
     const current = this.current;
     if (current.kind !== page.kind) return false;
-    if (current.kind === 'game' && page.kind === 'game') return current.gameId === page.gameId;
+    if ('gameId' in current && 'gameId' in page) return current.gameId === page.gameId;
     return true;
   }
 }

@@ -6,11 +6,19 @@
 //   (`npm run dev`), чтобы верстать без сборки Rust.
 // Компоненты зависят только от интерфейса Backend (принцип D из SOLID).
 import { invoke, isTauri } from '@tauri-apps/api/core';
-import { demoGameStatistics, demoReferenceSummary, setDemoServerRegion } from './demo-data';
+import {
+  demoGameStatistics,
+  demoImportSummary,
+  demoReferenceSummary,
+  demoServerRegion,
+  setDemoServerRegion,
+} from './demo-data';
 import type {
   AppSettings,
   GameInfo,
   GameStatistics,
+  ImportFormat,
+  ImportSummary,
   ReferenceSummary,
   ServerRegion,
   UpdateOutcome,
@@ -28,8 +36,12 @@ export interface Backend {
   getGameStatistics(gameId: string): Promise<GameStatistics>;
   /** Сводка о справочнике игры (версия данных, количество предметов и баннеров). */
   getReferenceSummary(gameId: string): Promise<ReferenceSummary>;
+  /** Сервер игрока для игры; null — не выбран. */
+  getServerRegion(gameId: string): Promise<ServerRegion | null>;
   /** Сохраняет сервер игрока для игры. */
   setServerRegion(gameId: string, region: ServerRegion): Promise<void>;
+  /** Импортирует историю молитв из текста файла. */
+  importHistory(gameId: string, format: ImportFormat, content: string): Promise<ImportSummary>;
   /** Проверяет и скачивает обновление справочника прямо сейчас. */
   updateReference(gameId: string): Promise<UpdateOutcome>;
 }
@@ -56,8 +68,16 @@ class TauriBackend implements Backend {
     return invoke<ReferenceSummary>('get_reference_summary', { gameId });
   }
 
+  getServerRegion(gameId: string): Promise<ServerRegion | null> {
+    return invoke<ServerRegion | null>('get_server_region', { gameId });
+  }
+
   setServerRegion(gameId: string, region: ServerRegion): Promise<void> {
     return invoke<void>('set_server_region', { gameId, region });
+  }
+
+  importHistory(gameId: string, format: ImportFormat, content: string): Promise<ImportSummary> {
+    return invoke<ImportSummary>('import_history', { gameId, format, content });
   }
 
   updateReference(gameId: string): Promise<UpdateOutcome> {
@@ -92,8 +112,16 @@ class BrowserBackend implements Backend {
     return demoReferenceSummary(gameId);
   }
 
+  async getServerRegion(_gameId: string): Promise<ServerRegion | null> {
+    return demoServerRegion();
+  }
+
   async setServerRegion(_gameId: string, region: ServerRegion): Promise<void> {
     setDemoServerRegion(region);
+  }
+
+  async importHistory(_gameId: string, _format: ImportFormat, content: string): Promise<ImportSummary> {
+    return demoImportSummary(content);
   }
 
   async updateReference(_gameId: string): Promise<UpdateOutcome> {

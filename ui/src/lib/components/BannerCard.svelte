@@ -1,9 +1,9 @@
 <!--
-  Карточка баннера: всего молитв, потраченные примогемы, сколько осталось
-  до гарантов 5★ и 4★, статус 50/50, шанс 4★ с баннера и кнопка «Посмотреть» (таблица — этап 5).
+  Карточка баннера: всего молитв, потраченные примогемы, текущие молитвы
+  и сколько осталось до гарантов 5★ и 4★, статус 50/50, шанс 4★ с баннера и кнопка «Посмотреть» (таблица — этап 5).
 -->
 <script lang="ts">
-  import type { PityCounter, PoolSummary } from '../api/types';
+  import type { PoolSummary } from '../api/types';
   import { formatNumber } from '../format/format';
   import { i18n } from '../i18n/index.svelte';
   import FeaturedStatusView from './FeaturedStatusView.svelte';
@@ -22,11 +22,6 @@
   }
 
   let { title, pool, serverChosen, onView }: Props = $props();
-
-  /** Подпись «счётчик 34 / 90» под числом «до гаранта». */
-  function progress(counter: PityCounter): string {
-    return i18n.t('game.pity_progress', { current: counter.current, hard: counter.hard_pity });
-  }
 </script>
 
 <article class="card">
@@ -38,16 +33,14 @@
     <dt>{i18n.t('game.primogems')}</dt>
     <dd class="primogems">{formatNumber(pool.primogems_spent, i18n.language)}</dd>
 
-    <dt>
-      {i18n.t('game.pity_5')}
-      <span class="hint">{progress(pool.five_star)}</span>
-    </dt>
+    <dt>{i18n.t('game.current_5')}</dt>
+    <dd class="rarity-5">{pool.five_star.current}</dd>
+    <dt>{i18n.t('game.pity_5')}</dt>
     <dd class="rarity-5">{pool.five_star.remaining}</dd>
 
-    <dt>
-      {i18n.t('game.pity_4')}
-      <span class="hint">{progress(pool.four_star)}</span>
-    </dt>
+    <dt>{i18n.t('game.current_4')}</dt>
+    <dd class="rarity-4">{pool.four_star.current}</dd>
+    <dt>{i18n.t('game.pity_4')}</dt>
     <dd class="rarity-4">{pool.four_star.remaining}</dd>
   </dl>
 
@@ -88,14 +81,7 @@
   }
 
   dt {
-    display: flex;
-    flex-direction: column;
     color: var(--color-text-muted);
-  }
-
-  .hint {
-    font-size: 11px;
-    opacity: 0.8;
   }
 
   dd {

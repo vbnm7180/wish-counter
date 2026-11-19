@@ -12,7 +12,9 @@ use domain::game::{GameId, GameInfo, GameModule};
 use domain::pity::rules::PoolDefinition;
 use std::sync::Arc;
 
+use domain::import::HistoryParser;
 use domain::reference::{ReferenceSnapshot, RemoteReference};
+use paimon::backup::PaimonBackupParser;
 use paimon::remote::PaimonRemoteReference;
 
 // Код модуля лежит в папке модуля вместе с тестами: pools/pools.rs
@@ -70,6 +72,11 @@ impl GameModule for GenshinModule {
     /// Встроенная иконка игры.
     fn icon_png(&self) -> Option<&'static [u8]> {
         Some(ICON_PNG)
+    }
+
+    /// Поддерживаемые форматы импорта: резервная копия Paimon.moe (UIGF — этап 6b).
+    fn history_parsers(&self) -> Vec<Arc<dyn HistoryParser>> {
+        vec![Arc::new(PaimonBackupParser)]
     }
 }
 

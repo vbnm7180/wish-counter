@@ -279,3 +279,17 @@ fn game_icon_comes_from_game_module() {
     ));
     assert_eq!(requests(&setup), 0, "иконка игры не скачивается");
 }
+
+/// Докачка: известный предмет скачивается, неизвестный пропускается без ошибки.
+#[test]
+fn prefetch_downloads_known_items() {
+    let setup = setup(FakeDownloader::answering(Ok(png())));
+
+    let cached = setup.service.prefetch(
+        &fake(),
+        &[ItemId::new(KNOWN_ITEM), ItemId::new("unknown_item")],
+    );
+
+    assert_eq!(cached, 1);
+    assert_eq!(requests(&setup), 1);
+}

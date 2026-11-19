@@ -31,7 +31,7 @@ class I18n {
 
   /**
    * Возвращает строку на текущем языке (или сам ключ, если строки нет).
-   * Параметры подставляются вместо {имя}: t('game.pity_progress', { current: 5, hard: 90 }).
+   * Параметры подставляются вместо {имя}: t('import.result_added', { added: 5, total: 10 }).
    */
   t = (key: TranslationKey, params?: TranslationParams): string =>
     interpolate(DICTIONARIES[this.language][key] ?? key, params);

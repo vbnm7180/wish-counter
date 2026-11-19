@@ -9,8 +9,8 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    GameCatalog, ImageService, ProfileService, ReferenceService, ReferenceUpdater, SettingsService,
-    StatisticsService,
+    GameCatalog, ImageService, ImportService, ProfileService, ReferenceService, ReferenceUpdater,
+    SettingsService, StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::database::{SharedConnection, open_database};
@@ -67,7 +67,9 @@ pub fn run() -> Result<(), StartupError> {
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
+            commands::games::get_server_region,
             commands::games::set_server_region,
+            commands::import::import_history,
             commands::reference::get_reference_summary,
             commands::reference::update_reference,
             commands::settings::get_settings,
@@ -113,10 +115,16 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
     Ok(AppState {
         statistics_service: StatisticsService::new(
             Arc::clone(&game_catalog),
-            wish_repository,
+            wish_repository.clone(),
             Arc::clone(&reference_service),
             profile_repository.clone(),
         ),
+        import_service: Arc::new(ImportService::new(
+            Arc::clone(&game_catalog),
+            Arc::clone(&reference_service),
+            wish_repository.clone(),
+            profile_repository.clone(),
+        )),
         profile_service: ProfileService::new(Arc::clone(&game_catalog), profile_repository),
         reference_updater,
         image_service,

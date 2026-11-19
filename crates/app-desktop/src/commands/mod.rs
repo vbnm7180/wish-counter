@@ -4,5 +4,6 @@
 //! и вызывают его. Вся логика находится в слое `application`.
 
 pub mod games;
+pub mod import;
 pub mod reference;
 pub mod settings;

@@ -12,6 +12,7 @@
   import { settingsState } from './lib/state/settings.svelte';
   import GamePage from './pages/GamePage.svelte';
   import HomePage from './pages/HomePage.svelte';
+  import ImportPage from './pages/ImportPage.svelte';
   import SettingsPage from './pages/SettingsPage.svelte';
 
   /** Список игр из ядра. */
@@ -46,6 +47,8 @@
       <HomePage />
     {:else if navigation.current.kind === 'game'}
       <GamePage gameId={navigation.current.gameId} />
+    {:else if navigation.current.kind === 'import'}
+      <ImportPage gameId={navigation.current.gameId} />
     {:else if navigation.current.kind === 'settings'}
       <SettingsPage {games} />
     {/if}

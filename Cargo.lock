@@ -939,6 +939,7 @@ name = "game-genshin"
 version = "0.1.0"
 dependencies = [
  "domain",
+ "serde",
  "serde_json",
  "thiserror 2.0.21",
 ]
@@ -4636,6 +4637,7 @@ dependencies = [
  "game-genshin",
  "infrastructure",
  "serde",
+ "serde_json",
  "tauri",
  "tauri-build",
  "tempfile",

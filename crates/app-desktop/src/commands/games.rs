@@ -40,3 +40,14 @@ pub fn set_server_region(
 ) -> Result<(), CommandError> {
     Ok(state.profile_service.set_server_region(&game_id, region)?)
 }
+
+/// Возвращает сервер игрока для игры (`null` — не выбран).
+///
+/// Вызов из интерфейса: `invoke('get_server_region', { gameId: 'genshin' })`.
+#[tauri::command]
+pub fn get_server_region(
+    state: State<'_, AppState>,
+    game_id: GameId,
+) -> Result<Option<ServerRegion>, CommandError> {
+    Ok(state.profile_service.server_region(&game_id)?)
+}

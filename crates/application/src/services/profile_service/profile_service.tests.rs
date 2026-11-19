@@ -90,3 +90,20 @@ fn rejects_unknown_game() {
         None
     );
 }
+
+#[test]
+fn reads_saved_region() {
+    let (service, _profiles) = service();
+    let fake = GameId::new("fake");
+
+    assert_eq!(service.server_region(&fake).unwrap(), None);
+    service
+        .set_server_region(&fake, ServerRegion::America)
+        .unwrap();
+
+    assert_eq!(
+        service.server_region(&fake).unwrap(),
+        Some(ServerRegion::America)
+    );
+    assert!(service.server_region(&GameId::new("missing")).is_err());
+}

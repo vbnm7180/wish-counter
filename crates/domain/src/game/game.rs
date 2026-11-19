@@ -10,6 +10,7 @@ use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
+use crate::import::HistoryParser;
 use crate::pity::rules::PoolDefinition;
 use crate::reference::{ReferenceSnapshot, RemoteReference};
 
@@ -94,6 +95,12 @@ pub trait GameModule: Send + Sync {
     /// (их встраивает `include_bytes!` при компиляции).
     fn icon_png(&self) -> Option<&'static [u8]> {
         None
+    }
+
+    /// Форматы файлов истории, которые игра умеет импортировать
+    /// (по умолчанию — никаких).
+    fn history_parsers(&self) -> Vec<Arc<dyn HistoryParser>> {
+        Vec::new()
     }
 }
 

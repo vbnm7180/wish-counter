@@ -35,6 +35,12 @@ impl ProfileService {
         }
     }
 
+    /// Возвращает сервер игрока; `None`, если ещё не выбран.
+    pub fn server_region(&self, game_id: &GameId) -> Result<Option<ServerRegion>, ProfileError> {
+        self.ensure_known(game_id)?;
+        Ok(self.profile_repository.server_region(game_id)?)
+    }
+
     /// Сохраняет сервер игрока. Проверяет, что игра существует,
     /// чтобы в базу не попадали профили несуществующих игр.
     pub fn set_server_region(
@@ -42,10 +48,16 @@ impl ProfileService {
         game_id: &GameId,
         region: ServerRegion,
     ) -> Result<(), ProfileError> {
-        if self.catalog.find(game_id).is_none() {
-            return Err(ProfileError::UnknownGame(game_id.clone()));
-        }
+        self.ensure_known(game_id)?;
         Ok(self.profile_repository.set_server_region(game_id, region)?)
+    }
+
+    /// Проверяет, что игра зарегистрирована.
+    fn ensure_known(&self, game_id: &GameId) -> Result<(), ProfileError> {
+        match self.catalog.find(game_id) {
+            Some(_) => Ok(()),
+            None => Err(ProfileError::UnknownGame(game_id.clone())),
+        }
     }
 }
 

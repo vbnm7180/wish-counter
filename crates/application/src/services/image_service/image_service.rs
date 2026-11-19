@@ -83,6 +83,17 @@ impl ImageService {
         }
     }
 
+    /// Скачивает в кэш картинки указанных предметов, которых там ещё нет
+    /// (после импорта истории — чтобы потом всё показывалось без интернета).
+    /// Возвращает, сколько картинок теперь есть в кэше. Ошибки отдельных
+    /// картинок не прерывают докачку остальных.
+    pub fn prefetch(&self, game_id: &GameId, item_ids: &[ItemId]) -> usize {
+        item_ids
+            .iter()
+            .filter(|item_id| matches!(self.image(game_id, item_id), Ok(Some(_))))
+            .count()
+    }
+
     /// Возвращает иконку игры (встроенную в модуль игры); `None`, если её нет.
     pub fn game_icon(&self, game_id: &GameId) -> Result<Option<Vec<u8>>, ImageError> {
         let module = self

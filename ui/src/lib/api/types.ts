@@ -123,3 +123,20 @@ export type UpdateOutcome =
   | { status: 'up_to_date' }
   | { status: 'not_due' }
   | { status: 'unsupported' };
+
+/** Формат файла истории для импорта (domain::import::ImportFormatId). */
+export type ImportFormat = 'paimon-moe';
+
+/** Итог импорта (application ImportSummary). */
+export interface ImportSummary {
+  /** Сколько молитв прочитано из файла (без пропущенных повторов). */
+  total_in_file: number;
+  /** Сколько добавлено. */
+  added: number;
+  /** Сколько уже было сохранено раньше. */
+  already_present: number;
+  /** Сколько повторно записанных молитв пропущено (ошибка в самом файле). */
+  duplicates_skipped: number;
+  /** Сервер из файла (сохранён), если был указан. */
+  server_region: ServerRegion | null;
+}
