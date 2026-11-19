@@ -2,9 +2,11 @@
 
 use application::ports::RepositoryError;
 use application::services::{
-    ImportServiceError, ProfileError, ReferenceError, StatisticsError, UpdateError,
+    ExportServiceError, ImportServiceError, ProfileError, ReferenceError, StatisticsError,
+    UpdateError,
 };
 use domain::import::ImportError;
+use domain::profile::PlayerUidError;
 use infrastructure::database::DatabaseError;
 use infrastructure::logging::LoggingError;
 use infrastructure::paths::PathsError;
@@ -142,6 +144,45 @@ impl From<ImportServiceError> for CommandError {
         };
         Self {
             code,
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<ExportServiceError> for CommandError {
+    /// Преобразует ошибку экспорта в ошибку команды.
+    fn from(error: ExportServiceError) -> Self {
+        tracing::warn!(%error, "история не экспортирована");
+        let code = match &error {
+            ExportServiceError::UnknownGame(_) => "unknown_game",
+            ExportServiceError::UnsupportedFormat(_) => "export_unsupported_format",
+            ExportServiceError::EmptyHistory => "export_empty_history",
+            ExportServiceError::Export(_) => "export_failed",
+            ExportServiceError::Repository(_) => "storage_io",
+        };
+        Self {
+            code,
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<PlayerUidError> for CommandError {
+    /// Некорректный UID, введённый пользователем.
+    fn from(error: PlayerUidError) -> Self {
+        Self {
+            code: "invalid_uid",
+            message: error.to_string(),
+        }
+    }
+}
+
+impl CommandError {
+    /// Ошибка записи файла экспорта (путь в лог не пишется — он может содержать имя пользователя).
+    pub fn export_write(error: impl std::fmt::Display) -> Self {
+        tracing::warn!(%error, "не удалось записать файл экспорта");
+        Self {
+            code: "export_write_failed",
             message: error.to_string(),
         }
     }

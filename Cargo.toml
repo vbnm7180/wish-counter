@@ -47,6 +47,9 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing-appender = "0.2"
 # Tauri: десктопное окно с веб-интерфейсом.
 tauri = { version = "2", features = [] }
+# Системные диалоги (сохранение файла экспорта). Вызываются только из Rust —
+# интерфейсу права на диалоги не выдаются.
+tauri-plugin-dialog = "2"
 tauri-build = { version = "2", features = [] }
 # SQLite: встраиваемая база данных. `bundled` компилирует SQLite из исходников
 # прямо в .exe — ничего не нужно устанавливать отдельно.

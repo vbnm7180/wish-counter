@@ -55,3 +55,33 @@ fn newer_schema_is_rejected() {
 
     assert!(matches!(result, Err(DatabaseError::NewerSchema { .. })));
 }
+
+/// Профиль, сохранённый до миграции 0003, переживает пересоздание таблицы.
+#[test]
+fn migration_3_keeps_existing_profiles() {
+    let mut connection = empty_database();
+    // Применяем только миграции 1–2, как в старой версии приложения.
+    for (index, script) in MIGRATIONS.iter().take(2).enumerate() {
+        connection.execute_batch(script).unwrap();
+        connection
+            .pragma_update(None, "user_version", index as u32 + 1)
+            .unwrap();
+    }
+    connection
+        .execute(
+            "INSERT INTO game_profiles (game_id, server_region) VALUES ('genshin', 'europe')",
+            [],
+        )
+        .unwrap();
+
+    apply_migrations(&mut connection).unwrap();
+
+    let region: String = connection
+        .query_row(
+            "SELECT server_region FROM game_profiles WHERE game_id = 'genshin'",
+            [],
+            |row| row.get(0),
+        )
+        .unwrap();
+    assert_eq!(region, "europe");
+}

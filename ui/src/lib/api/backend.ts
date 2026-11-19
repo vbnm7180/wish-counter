@@ -15,7 +15,9 @@ import {
 } from './demo-data';
 import type {
   AppSettings,
+  ExportResult,
   GameInfo,
+  GameProfile,
   GameStatistics,
   ImportFormat,
   ImportSummary,
@@ -36,8 +38,12 @@ export interface Backend {
   getGameStatistics(gameId: string): Promise<GameStatistics>;
   /** Сводка о справочнике игры (версия данных, количество предметов и баннеров). */
   getReferenceSummary(gameId: string): Promise<ReferenceSummary>;
-  /** Сервер игрока для игры; null — не выбран. */
-  getServerRegion(gameId: string): Promise<ServerRegion | null>;
+  /** Профиль игрока в игре: сервер и UID. */
+  getGameProfile(gameId: string): Promise<GameProfile>;
+  /** Сохраняет UID игрока (проверяется в ядре). */
+  setPlayerUid(gameId: string, uid: string): Promise<void>;
+  /** Экспортирует историю: ядро покажет диалог «Сохранить как». */
+  exportHistory(gameId: string, format: ImportFormat): Promise<ExportResult>;
   /** Сохраняет сервер игрока для игры. */
   setServerRegion(gameId: string, region: ServerRegion): Promise<void>;
   /** Импортирует историю молитв из текста файла. */
@@ -68,8 +74,16 @@ class TauriBackend implements Backend {
     return invoke<ReferenceSummary>('get_reference_summary', { gameId });
   }
 
-  getServerRegion(gameId: string): Promise<ServerRegion | null> {
-    return invoke<ServerRegion | null>('get_server_region', { gameId });
+  getGameProfile(gameId: string): Promise<GameProfile> {
+    return invoke<GameProfile>('get_game_profile', { gameId });
+  }
+
+  setPlayerUid(gameId: string, uid: string): Promise<void> {
+    return invoke<void>('set_player_uid', { gameId, uid });
+  }
+
+  exportHistory(gameId: string, format: ImportFormat): Promise<ExportResult> {
+    return invoke<ExportResult>('export_history', { gameId, format });
   }
 
   setServerRegion(gameId: string, region: ServerRegion): Promise<void> {
@@ -112,8 +126,14 @@ class BrowserBackend implements Backend {
     return demoReferenceSummary(gameId);
   }
 
-  async getServerRegion(_gameId: string): Promise<ServerRegion | null> {
-    return demoServerRegion();
+  async getGameProfile(_gameId: string): Promise<GameProfile> {
+    return { server_region: demoServerRegion(), uid: null };
+  }
+
+  async setPlayerUid(_gameId: string, _uid: string): Promise<void> {}
+
+  async exportHistory(_gameId: string, _format: ImportFormat): Promise<ExportResult> {
+    return { path: 'C:/demo/paimon-moe-local-data.json', wish_count: 0 };
   }
 
   async setServerRegion(_gameId: string, region: ServerRegion): Promise<void> {

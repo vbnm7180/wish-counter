@@ -1,6 +1,7 @@
-//! Интерфейс хранилища профилей игр (настройки аккаунта в конкретной игре).
+//! Интерфейс хранилища профилей игр (сервер и UID игрока в конкретной игре).
 
 use domain::game::GameId;
+use domain::profile::PlayerUid;
 use domain::region::ServerRegion;
 
 use super::RepositoryError;
@@ -17,4 +18,10 @@ pub trait ProfileRepository: Send + Sync {
         game_id: &GameId,
         region: ServerRegion,
     ) -> Result<(), RepositoryError>;
+
+    /// Возвращает UID игрока; `None`, если неизвестен.
+    fn uid(&self, game_id: &GameId) -> Result<Option<PlayerUid>, RepositoryError>;
+
+    /// Сохраняет UID игрока (заменяя прежний).
+    fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), RepositoryError>;
 }

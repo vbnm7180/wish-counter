@@ -4,6 +4,7 @@
 //! ```json
 //! {
 //!   "server": "Europe",
+//!   "wish-uid": "700000000",
 //!   "wish-counter-character-event": { "pulls": [
 //!     { "type": "character", "code": "301", "id": "hu_tao", "time": "2026-11-04 18:00:00", "pity": 76, "rate": 1 }
 //!   ] },
@@ -22,7 +23,8 @@
 
 use std::collections::HashMap;
 
-use domain::import::{HistoryParser, ImportError, ImportFormatId, ParsedHistory};
+use domain::import::{HistoryFormatId, HistoryParser, ImportError, ParsedHistory};
+use domain::profile::PlayerUid;
 use domain::reference::ReferenceData;
 use domain::region::ServerRegion;
 use domain::wish::{BannerCode, ItemId, ItemKind, Wish, WishId, WishTime};
@@ -54,6 +56,8 @@ const TYPE_WEAPON: &str = "weapon";
 #[derive(Deserialize)]
 struct PaimonBackup {
     server: Option<String>,
+    #[serde(rename = "wish-uid")]
+    uid: Option<String>,
     #[serde(flatten)]
     sections: HashMap<String, serde_json::Value>,
 }
@@ -85,8 +89,8 @@ pub struct PaimonBackupParser;
 
 impl HistoryParser for PaimonBackupParser {
     /// `paimon-moe`.
-    fn format_id(&self) -> ImportFormatId {
-        ImportFormatId::new(PAIMON_FORMAT_ID)
+    fn format_id(&self) -> HistoryFormatId {
+        HistoryFormatId::new(PAIMON_FORMAT_ID)
     }
 
     /// Разбирает файл целиком; при неизвестных предметах — ошибка (ничего не импортируется).
@@ -121,6 +125,11 @@ impl HistoryParser for PaimonBackupParser {
         Ok(ParsedHistory {
             wishes,
             server_region: backup.server.as_deref().and_then(ServerRegion::parse),
+            // Некорректный UID не мешает импорту истории — он просто не сохраняется.
+            uid: backup
+                .uid
+                .as_deref()
+                .and_then(|uid| PlayerUid::parse(uid).ok()),
             duplicates_skipped,
         })
     }

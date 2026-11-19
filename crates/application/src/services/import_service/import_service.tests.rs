@@ -13,6 +13,8 @@ use domain::pity::rules::PoolDefinition;
 use domain::reference::{ReferenceData, ReferenceSnapshot};
 use domain::wish::{BannerCode, ItemKind, Rarity, Wish, WishId, WishTime};
 
+use domain::profile::PlayerUid;
+
 use super::*;
 
 /// Формат тестового разборщика.
@@ -20,13 +22,13 @@ const FAKE_FORMAT: &str = "fake-format";
 
 /// Тестовый разборщик. Содержимое файла:
 /// - `"<число>"` — столько молитв (предметы `item_0`, `item_1`, `item_0`, ...);
-/// - `"<число>!"` — то же и сервер «Европа»;
+/// - `"<число>!"` — то же, сервер «Европа» и UID 700000000;
 /// - `"bad"` — ошибка разбора.
 struct FakeParser;
 
 impl HistoryParser for FakeParser {
-    fn format_id(&self) -> ImportFormatId {
-        ImportFormatId::new(FAKE_FORMAT)
+    fn format_id(&self) -> HistoryFormatId {
+        HistoryFormatId::new(FAKE_FORMAT)
     }
 
     fn parse(
@@ -46,6 +48,7 @@ impl HistoryParser for FakeParser {
         Ok(ParsedHistory {
             wishes: (0..count).map(wish).collect(),
             server_region: with_region.then_some(ServerRegion::Europe),
+            uid: with_region.then(|| PlayerUid::parse("700000000").unwrap()),
             duplicates_skipped: 1,
         })
     }
@@ -116,7 +119,11 @@ impl WishRepository for InMemoryWishes {
 
 /// Профили в памяти.
 #[derive(Default)]
-struct InMemoryProfiles(Mutex<HashMap<GameId, ServerRegion>>);
+/// Второе поле — UID игроков.
+struct InMemoryProfiles(
+    Mutex<HashMap<GameId, ServerRegion>>,
+    Mutex<HashMap<GameId, PlayerUid>>,
+);
 
 impl ProfileRepository for InMemoryProfiles {
     fn server_region(&self, game_id: &GameId) -> Result<Option<ServerRegion>, RepositoryError> {
@@ -129,6 +136,15 @@ impl ProfileRepository for InMemoryProfiles {
         region: ServerRegion,
     ) -> Result<(), RepositoryError> {
         self.0.lock().unwrap().insert(game_id.clone(), region);
+        Ok(())
+    }
+
+    fn uid(&self, game_id: &GameId) -> Result<Option<PlayerUid>, RepositoryError> {
+        Ok(self.1.lock().unwrap().get(game_id).cloned())
+    }
+
+    fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), RepositoryError> {
+        self.1.lock().unwrap().insert(game_id.clone(), uid.clone());
         Ok(())
     }
 }
@@ -157,7 +173,7 @@ fn setup() -> Setup {
 fn import(setup: &Setup, content: &str) -> Result<ImportSummary, ImportServiceError> {
     setup.service.import(
         &GameId::new("fake"),
-        &ImportFormatId::new(FAKE_FORMAT),
+        &HistoryFormatId::new(FAKE_FORMAT),
         content,
     )
 }
@@ -197,6 +213,15 @@ fn server_region_from_file_is_saved() {
         setup.profiles.server_region(&GameId::new("fake")).unwrap(),
         Some(ServerRegion::Europe)
     );
+    assert_eq!(
+        setup
+            .profiles
+            .uid(&GameId::new("fake"))
+            .unwrap()
+            .unwrap()
+            .as_str(),
+        "700000000"
+    );
 }
 
 /// Без сервера в файле выбранный ранее сервер не сбрасывается.
@@ -234,13 +259,13 @@ fn errors_are_reported() {
     assert!(matches!(
         setup
             .service
-            .import(&GameId::new("fake"), &ImportFormatId::new("uigf"), "1"),
+            .import(&GameId::new("fake"), &HistoryFormatId::new("uigf"), "1"),
         Err(ImportServiceError::UnsupportedFormat(_))
     ));
     assert!(matches!(
         setup.service.import(
             &GameId::new("missing"),
-            &ImportFormatId::new(FAKE_FORMAT),
+            &HistoryFormatId::new(FAKE_FORMAT),
             "1"
         ),
         Err(ImportServiceError::UnknownGame(_))

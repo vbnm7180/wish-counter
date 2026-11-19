@@ -3,6 +3,9 @@
 //! Каждый сервис отвечает за одну область (принцип единственной
 //! ответственности, буква S в SOLID).
 
+// Код модуля лежит в папке модуля вместе с тестами: export_service/export_service.rs
+#[path = "export_service/export_service.rs"]
+mod export_service;
 // Код модуля лежит в папке модуля вместе с тестами: game_catalog/game_catalog.rs
 #[path = "game_catalog/game_catalog.rs"]
 mod game_catalog;
@@ -28,6 +31,7 @@ mod settings_service;
 #[path = "statistics_service/statistics_service.rs"]
 mod statistics_service;
 
+pub use export_service::{ExportService, ExportServiceError, ExportedFile};
 pub use game_catalog::GameCatalog;
 pub use image_service::{ImageError, ImageService};
 pub use import_service::{ImportService, ImportServiceError, ImportSummary, MAX_IMPORT_BYTES};

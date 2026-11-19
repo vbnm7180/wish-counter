@@ -18,7 +18,7 @@ use std::sync::Arc;
 use application::ports::WishRepository;
 use application::services::{GameCatalog, ImportService, ReferenceService};
 use domain::game::GameId;
-use domain::import::ImportFormatId;
+use domain::import::HistoryFormatId;
 use domain::pity::rules::PoolDefinition;
 use domain::pity::schedule_lookup::ScheduleFeaturedLookup;
 use domain::pity::statistics::FiftyFiftyOutcome;
@@ -148,7 +148,7 @@ fn real_export_matches_paimon_moe() {
     let catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
     let references = Arc::new(ReferenceService::from_catalog(&catalog));
     let import = ImportService::new(catalog, references.clone(), wishes.clone(), profiles);
-    let format = ImportFormatId::new(PAIMON_FORMAT_ID);
+    let format = HistoryFormatId::new(PAIMON_FORMAT_ID);
 
     let summary = import.import(&genshin, &format, &content).unwrap();
     println!("импорт: {summary:?}");
@@ -180,4 +180,94 @@ fn real_export_matches_paimon_moe() {
             .iter()
             .any(|pool| pool.id.as_str() == pool_ids::CHARACTER)
     );
+}
+
+/// Сравнивает одно поле раздела нашего экспорта с исходным файлом и печатает расхождение.
+fn same(section: &str, field: &str, ours: &Value, original: &Value) -> bool {
+    let equal = ours == original;
+    if !equal {
+        println!("{section}.{field}: наш {ours} / в исходном {original}");
+    }
+    equal
+}
+
+/// Экспорт после импорта совпадает с исходным файлом Paimon.moe
+/// (кроме следствий повторно записанных молитв).
+#[test]
+#[ignore = "нужен личный файл экспорта Paimon.moe (WISH_COUNTER_PAIMON_EXPORT)"]
+fn real_export_roundtrip_matches_original() {
+    use application::services::ExportService;
+
+    let path = std::env::var(EXPORT_PATH_VARIABLE).expect("задайте WISH_COUNTER_PAIMON_EXPORT");
+    let content = std::fs::read_to_string(path).unwrap();
+    let genshin = GameId::new(GENSHIN_GAME_ID);
+    let database = SharedConnection::new(open_in_memory_database().unwrap());
+    let wishes = Arc::new(SqliteWishRepository::new(database.clone()));
+    let profiles = Arc::new(SqliteProfileRepository::new(database));
+    let catalog = Arc::new(GameCatalog::new().with_module(Arc::new(GenshinModule)));
+    let references = Arc::new(ReferenceService::from_catalog(&catalog));
+    let format = HistoryFormatId::new(PAIMON_FORMAT_ID);
+    let import = ImportService::new(
+        catalog.clone(),
+        references.clone(),
+        wishes.clone(),
+        profiles.clone(),
+    );
+    let summary = import.import(&genshin, &format, &content).unwrap();
+    let export = ExportService::new(catalog, references, wishes, profiles);
+
+    let exported: Value =
+        serde_json::from_str(&export.export(&genshin, &format).unwrap().content).unwrap();
+    let original: Value = serde_json::from_str(&content).unwrap();
+
+    assert!(same("", "server", &exported["server"], &original["server"]));
+    assert!(same(
+        "",
+        "wish-uid",
+        &exported["wish-uid"],
+        &original["wish-uid"]
+    ));
+    let mut unexplained = 0;
+    for (key, ours) in exported
+        .as_object()
+        .unwrap()
+        .iter()
+        .filter(|(key, _)| key.starts_with("wish-counter-"))
+    {
+        let theirs = &original[key];
+        let has_repeats = ours["total"].as_u64() != theirs["total"].as_u64();
+        for field in ["total", "legendary", "rare", "guaranteed", "rateoff"] {
+            if !same(key, field, &ours[field], &theirs[field]) && !has_repeats {
+                unexplained += 1;
+            }
+        }
+        // Отметки по молитвам: сопоставление по (время, предмет) по порядку появления.
+        let marks = paimon_marks(&format!("{{\"{key}\": {theirs}}}"));
+        let mut used: HashMap<(String, String), usize> = HashMap::new();
+        for pull in ours["pulls"].as_array().unwrap() {
+            let id = (
+                pull["time"].as_str().unwrap().to_owned(),
+                pull["id"].as_str().unwrap().to_owned(),
+            );
+            let occurrence = used.entry(id.clone()).or_insert(0);
+            let (pity, rate) = marks[&id][*occurrence];
+            *occurrence += 1;
+            if pull["pity"].as_u64() != pity || pull["rate"].as_u64() != rate {
+                println!(
+                    "{key} {:?}: наш pity {} rate {} / в исходном {pity:?} {rate:?}",
+                    id, pull["pity"], pull["rate"]
+                );
+                let explained = has_repeats && pull["rate"].as_u64() == rate;
+                if !explained {
+                    unexplained += 1;
+                }
+            }
+        }
+        println!(
+            "{key}: молитв {} (в исходном {})",
+            ours["total"], theirs["total"]
+        );
+    }
+    println!("повторов в исходном файле: {}", summary.duplicates_skipped);
+    assert_eq!(unexplained, 0);
 }

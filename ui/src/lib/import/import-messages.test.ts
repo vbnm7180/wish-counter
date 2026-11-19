@@ -1,11 +1,19 @@
 // Тесты сообщений о результате импорта (запуск: npm test).
 import { describe, expect, it } from 'vitest';
 import type { ImportSummary } from '../api/types';
-import { importErrorKey, summaryLines } from './import-messages';
+import { exportErrorKey, importErrorKey, summaryLines } from './import-messages';
 
 /** Итог импорта с переопределёнными полями. */
 function summary(overrides: Partial<ImportSummary> = {}): ImportSummary {
-  return { total_in_file: 10, added: 10, already_present: 0, duplicates_skipped: 0, server_region: null, ...overrides };
+  return {
+    total_in_file: 10,
+    added: 10,
+    already_present: 0,
+    duplicates_skipped: 0,
+    server_region: null,
+    uid: null,
+    ...overrides,
+  };
 }
 
 describe('summaryLines', () => {
@@ -39,5 +47,20 @@ describe('importErrorKey', () => {
   it('для остальных — общий текст', () => {
     expect(importErrorKey({ code: 'storage_io', message: '' })).toBe('import.error_failed');
     expect(importErrorKey('boom')).toBe('import.error_failed');
+  });
+});
+
+describe('summaryLines — UID', () => {
+  it('добавляет строку с UID из файла', () => {
+    const lines = summaryLines(summary({ uid: '700000000' }), String);
+    expect(lines.at(-1)).toEqual({ key: 'import.result_uid', params: { uid: '700000000' } });
+  });
+});
+
+describe('exportErrorKey', () => {
+  it('различает пустую историю и ошибку записи', () => {
+    expect(exportErrorKey({ code: 'export_empty_history', message: '' })).toBe('export.error_empty');
+    expect(exportErrorKey({ code: 'export_write_failed', message: '' })).toBe('export.error_write');
+    expect(exportErrorKey(new Error('x'))).toBe('export.error_failed');
   });
 });

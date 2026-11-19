@@ -118,6 +118,15 @@
 - `#[serde(skip)]` (`ImportSummary::item_ids`) — поле есть в Rust, но не передаётся в интерфейс.
 - `fold` — свёртка итератора в одно значение (словарь отметок в `paimon_export_real.rs`).
 
+## Приёмы из этапа 6b
+- `#[serde(skip_serializing_if = "Option::is_none")]` — поле не пишется в JSON, если значения нет
+  (`rate` у 3★ в экспорте Paimon.moe).
+- `bool::then_some(значение)` / `bool::then(|| ...)` — «если условие, то `Some`, иначе `None`» (`guaranteed`, `rateoff`).
+- `Option<Option<String>>` + `.flatten()` (`SqliteProfileRepository::read_text`): внешний `Option` — «есть ли строка
+  в таблице», внутренний — «не NULL ли значение»; `flatten` сводит оба случая «нет» к одному `None`.
+- Расширение трейта плагина: `use tauri_plugin_dialog::DialogExt;` добавляет `AppHandle` метод `.dialog()`
+  (трейт-расширение — способ «добавить методы» чужому типу).
+
 ## Тесты
 - Тесты подключаются из отдельного файла: `#[cfg(test)] #[path = "game.tests.rs"] mod tests;` в конце `game/game.rs`.
   Атрибут `#[cfg(test)]` означает, что модуль компилируется только при `cargo test`, поэтому в `.exe` тесты не попадают.

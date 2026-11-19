@@ -2,6 +2,7 @@
 
 use application::services::GameStatistics;
 use domain::game::{GameId, GameInfo};
+use domain::profile::{GameProfile, PlayerUid};
 use domain::region::ServerRegion;
 use tauri::State;
 
@@ -41,13 +42,26 @@ pub fn set_server_region(
     Ok(state.profile_service.set_server_region(&game_id, region)?)
 }
 
-/// Возвращает сервер игрока для игры (`null` — не выбран).
+/// Возвращает профиль игрока: сервер и UID (`null` — не заданы).
 ///
-/// Вызов из интерфейса: `invoke('get_server_region', { gameId: 'genshin' })`.
+/// Вызов из интерфейса: `invoke('get_game_profile', { gameId: 'genshin' })`.
 #[tauri::command]
-pub fn get_server_region(
+pub fn get_game_profile(
     state: State<'_, AppState>,
     game_id: GameId,
-) -> Result<Option<ServerRegion>, CommandError> {
-    Ok(state.profile_service.server_region(&game_id)?)
+) -> Result<GameProfile, CommandError> {
+    Ok(state.profile_service.profile(&game_id)?)
+}
+
+/// Сохраняет UID игрока. Строка проверяется: только цифры, 6–12 знаков.
+///
+/// Вызов из интерфейса: `invoke('set_player_uid', { gameId: 'genshin', uid: '700000000' })`.
+#[tauri::command]
+pub fn set_player_uid(
+    state: State<'_, AppState>,
+    game_id: GameId,
+    uid: String,
+) -> Result<(), CommandError> {
+    let uid = PlayerUid::parse(&uid)?;
+    Ok(state.profile_service.set_uid(&game_id, &uid)?)
 }

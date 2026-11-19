@@ -27,7 +27,28 @@ export function summaryLines(summary: ImportSummary, regionName: (region: Server
   if (summary.server_region) {
     lines.push({ key: 'import.result_region', params: { region: regionName(summary.server_region) } });
   }
+  if (summary.uid) {
+    lines.push({ key: 'import.result_uid', params: { uid: summary.uid } });
+  }
   return lines;
+}
+
+/** Коды ошибок экспорта, для которых есть отдельные сообщения. */
+const EXPORT_ERROR_MESSAGES: Record<string, TranslationKey> = {
+  export_empty_history: 'export.error_empty',
+  export_write_failed: 'export.error_write',
+};
+
+/** Сообщение об ошибке экспорта по коду ошибки ядра. */
+export function exportErrorKey(error: unknown): TranslationKey {
+  return EXPORT_ERROR_MESSAGES[errorCode(error)] ?? 'export.error_failed';
+}
+
+/** Код ошибки команды Rust (`{ code, message }`); пустая строка — не ошибка команды. */
+function errorCode(error: unknown): string {
+  return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string'
+    ? error.code
+    : '';
 }
 
 /** Коды ошибок ядра, для которых есть отдельные сообщения. */
@@ -39,7 +60,5 @@ const ERROR_MESSAGES: Record<string, TranslationKey> = {
 
 /** Сообщение об ошибке импорта по коду ошибки ядра. */
 export function importErrorKey(error: unknown): TranslationKey {
-  const code =
-    typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : '';
-  return ERROR_MESSAGES[code] ?? 'import.error_failed';
+  return ERROR_MESSAGES[errorCode(error)] ?? 'import.error_failed';
 }

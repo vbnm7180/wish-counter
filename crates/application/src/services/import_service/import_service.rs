@@ -4,13 +4,14 @@
 //! 2. разобрать файл (редкость предметов берётся из справочника);
 //! 3. сохранить молитвы — уже сохранённые пропускаются, поэтому повторный
 //!    импорт того же или дополненного файла безопасен;
-//! 4. если в файле указан сервер — сохранить его в профиль игры.
+//! 4. если в файле указаны сервер и UID — сохранить их в профиль игры.
 
 use std::collections::BTreeSet;
 use std::sync::Arc;
 
 use domain::game::GameId;
-use domain::import::{ImportError, ImportFormatId};
+use domain::import::{HistoryFormatId, ImportError};
+use domain::profile::PlayerUid;
 use domain::region::ServerRegion;
 use domain::wish::ItemId;
 use serde::Serialize;
@@ -31,7 +32,7 @@ pub enum ImportServiceError {
     UnknownGame(GameId),
     /// Игра не умеет читать такой формат.
     #[error("формат «{}» не поддерживается", .0.as_str())]
-    UnsupportedFormat(ImportFormatId),
+    UnsupportedFormat(HistoryFormatId),
     /// Файл больше [`MAX_IMPORT_BYTES`].
     #[error("файл слишком большой")]
     FileTooLarge,
@@ -56,6 +57,8 @@ pub struct ImportSummary {
     pub duplicates_skipped: usize,
     /// Сервер из файла (сохранён в профиль), если он был указан.
     pub server_region: Option<ServerRegion>,
+    /// UID из файла (сохранён в профиль), если он был указан.
+    pub uid: Option<PlayerUid>,
     /// Предметы из истории — для докачки их картинок. В JSON не передаётся.
     #[serde(skip)]
     pub item_ids: Vec<ItemId>,
@@ -89,7 +92,7 @@ impl ImportService {
     pub fn import(
         &self,
         game_id: &GameId,
-        format: &ImportFormatId,
+        format: &HistoryFormatId,
         content: &str,
     ) -> Result<ImportSummary, ImportServiceError> {
         if content.len() > MAX_IMPORT_BYTES {
@@ -114,12 +117,16 @@ impl ImportService {
         if let Some(region) = history.server_region {
             self.profile_repository.set_server_region(game_id, region)?;
         }
+        if let Some(uid) = &history.uid {
+            self.profile_repository.set_uid(game_id, uid)?;
+        }
         let summary = ImportSummary {
             total_in_file: history.wishes.len(),
             added,
             already_present: history.wishes.len() - added,
             duplicates_skipped: history.duplicates_skipped,
             server_region: history.server_region,
+            uid: history.uid.clone(),
             item_ids: unique_items(&history.wishes),
         };
         tracing::info!(

@@ -50,11 +50,10 @@ fn reads_wishes_with_rarity_from_reference() {
 }
 
 #[test]
-fn reads_server_region() {
-    assert_eq!(
-        parse(BACKUP).unwrap().server_region,
-        Some(ServerRegion::Europe)
-    );
+fn reads_server_region_and_uid() {
+    let history = parse(BACKUP).unwrap();
+    assert_eq!(history.server_region, Some(ServerRegion::Europe));
+    assert_eq!(history.uid.unwrap().as_str(), "700000000");
 }
 
 /// Молитвы всех разделов возвращаются в хронологическом порядке.

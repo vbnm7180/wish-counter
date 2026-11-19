@@ -9,8 +9,8 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    GameCatalog, ImageService, ImportService, ProfileService, ReferenceService, ReferenceUpdater,
-    SettingsService, StatisticsService,
+    ExportService, GameCatalog, ImageService, ImportService, ProfileService, ReferenceService,
+    ReferenceUpdater, SettingsService, StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::database::{SharedConnection, open_database};
@@ -51,6 +51,8 @@ pub fn run() -> Result<(), StartupError> {
 
     tauri::Builder::default()
         .manage(state)
+        // Плагин системных диалогов; используется только из Rust (команда экспорта).
+        .plugin(tauri_plugin_dialog::init())
         // `setup` выполняется один раз после запуска Tauri, до показа окон.
         // `move` переносит `webview_dir` внутрь замыкания.
         .setup(move |app| {
@@ -67,9 +69,11 @@ pub fn run() -> Result<(), StartupError> {
         .invoke_handler(tauri::generate_handler![
             commands::games::list_games,
             commands::games::get_game_statistics,
-            commands::games::get_server_region,
+            commands::games::get_game_profile,
+            commands::games::set_player_uid,
             commands::games::set_server_region,
-            commands::import::import_history,
+            commands::history::import_history,
+            commands::history::export_history,
             commands::reference::get_reference_summary,
             commands::reference::update_reference,
             commands::settings::get_settings,
@@ -119,6 +123,12 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
             Arc::clone(&reference_service),
             profile_repository.clone(),
         ),
+        export_service: Arc::new(ExportService::new(
+            Arc::clone(&game_catalog),
+            Arc::clone(&reference_service),
+            wish_repository.clone(),
+            profile_repository.clone(),
+        )),
         import_service: Arc::new(ImportService::new(
             Arc::clone(&game_catalog),
             Arc::clone(&reference_service),

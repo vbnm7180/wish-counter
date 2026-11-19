@@ -75,3 +75,34 @@ fn database_rejects_unknown_region_values() {
     );
     assert!(result.is_err());
 }
+
+/// UID и сервер хранятся независимо: можно сохранить UID без сервера и наоборот.
+#[test]
+fn uid_and_region_are_independent() {
+    let repository = repository();
+    let uid = PlayerUid::parse("700000000").unwrap();
+
+    repository.set_uid(&genshin(), &uid).unwrap();
+    assert_eq!(repository.uid(&genshin()).unwrap(), Some(uid.clone()));
+    assert_eq!(repository.server_region(&genshin()).unwrap(), None);
+
+    repository
+        .set_server_region(&genshin(), ServerRegion::Europe)
+        .unwrap();
+    assert_eq!(repository.uid(&genshin()).unwrap(), Some(uid));
+    assert_eq!(
+        repository.server_region(&genshin()).unwrap(),
+        Some(ServerRegion::Europe)
+    );
+}
+
+/// База не принимает UID с буквами (ограничение CHECK в миграции 0003).
+#[test]
+fn database_rejects_invalid_uid() {
+    let repository = repository();
+    let result = repository.connection.lock().unwrap().execute(
+        "INSERT INTO game_profiles (game_id, uid) VALUES ('genshin', '7000000ab')",
+        [],
+    );
+    assert!(result.is_err());
+}

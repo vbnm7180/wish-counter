@@ -22,6 +22,7 @@ use super::DatabaseError;
 const MIGRATIONS: &[&str] = &[
     include_str!("sql/0001_create_wishes.sql"),
     include_str!("sql/0002_create_game_profiles.sql"),
+    include_str!("sql/0003_profile_uid.sql"),
 ];
 
 /// Применяет к базе все недостающие миграции.

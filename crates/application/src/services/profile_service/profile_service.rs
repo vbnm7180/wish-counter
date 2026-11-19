@@ -3,6 +3,7 @@
 use std::sync::Arc;
 
 use domain::game::GameId;
+use domain::profile::{GameProfile, PlayerUid};
 use domain::region::ServerRegion;
 use thiserror::Error;
 
@@ -20,7 +21,7 @@ pub enum ProfileError {
     Repository(#[from] RepositoryError),
 }
 
-/// Сохраняет настройки аккаунта в игре (пока — сервер игрока).
+/// Читает и сохраняет профиль игрока в игре: сервер и UID.
 pub struct ProfileService {
     catalog: Arc<GameCatalog>,
     profile_repository: Arc<dyn ProfileRepository>,
@@ -39,6 +40,21 @@ impl ProfileService {
     pub fn server_region(&self, game_id: &GameId) -> Result<Option<ServerRegion>, ProfileError> {
         self.ensure_known(game_id)?;
         Ok(self.profile_repository.server_region(game_id)?)
+    }
+
+    /// Возвращает профиль игрока целиком.
+    pub fn profile(&self, game_id: &GameId) -> Result<GameProfile, ProfileError> {
+        self.ensure_known(game_id)?;
+        Ok(GameProfile {
+            server_region: self.profile_repository.server_region(game_id)?,
+            uid: self.profile_repository.uid(game_id)?,
+        })
+    }
+
+    /// Сохраняет UID игрока.
+    pub fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), ProfileError> {
+        self.ensure_known(game_id)?;
+        Ok(self.profile_repository.set_uid(game_id, uid)?)
     }
 
     /// Сохраняет сервер игрока. Проверяет, что игра существует,

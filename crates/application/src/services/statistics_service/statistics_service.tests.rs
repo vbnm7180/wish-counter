@@ -12,6 +12,8 @@ use domain::pity::statistics::FeaturedStatus;
 use domain::reference::{BannerInfo, ReferenceSnapshot, ScheduleTime};
 use domain::wish::{BannerCode, ItemId, ItemKind, Rarity, WishId, WishTime};
 
+use domain::profile::PlayerUid;
+
 use super::*;
 
 /// Код «баннера персонажа» в тестовой игре.
@@ -125,6 +127,14 @@ impl ProfileRepository for FixedRegion {
         region: ServerRegion,
     ) -> Result<(), RepositoryError> {
         *self.0.lock().unwrap() = Some(region);
+        Ok(())
+    }
+
+    fn uid(&self, _game_id: &GameId) -> Result<Option<PlayerUid>, RepositoryError> {
+        Ok(None)
+    }
+
+    fn set_uid(&self, _game_id: &GameId, _uid: &PlayerUid) -> Result<(), RepositoryError> {
         Ok(())
     }
 }

@@ -115,5 +115,12 @@ export function demoReferenceSummary(gameId: string): ReferenceSummary {
 /** Демо-итог импорта: «добавлены» все строки файла (в браузере ничего не сохраняется). */
 export function demoImportSummary(content: string): ImportSummary {
   const total = content.split('\n').length;
-  return { total_in_file: total, added: total, already_present: 0, duplicates_skipped: 0, server_region: 'europe' };
+  return {
+    total_in_file: total,
+    added: total,
+    already_present: 0,
+    duplicates_skipped: 0,
+    server_region: 'europe',
+    uid: '700000000',
+  };
 }

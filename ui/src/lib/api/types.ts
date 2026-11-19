@@ -139,4 +139,21 @@ export interface ImportSummary {
   duplicates_skipped: number;
   /** Сервер из файла (сохранён), если был указан. */
   server_region: ServerRegion | null;
+  /** UID из файла (сохранён), если был указан. */
+  uid: string | null;
+}
+
+/** Профиль игрока в игре (domain::profile::GameProfile). */
+export interface GameProfile {
+  server_region: ServerRegion | null;
+  /** UID игрока; null — неизвестен. */
+  uid: string | null;
+}
+
+/** Результат экспорта (app-desktop ExportResult). */
+export interface ExportResult {
+  /** Путь к сохранённому файлу; null — пользователь отменил сохранение. */
+  path: string | null;
+  /** Сколько молитв в файле. */
+  wish_count: number;
 }

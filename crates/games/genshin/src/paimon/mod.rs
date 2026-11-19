@@ -6,6 +6,9 @@
 // Код модуля лежит в папке модуля вместе с тестами: backup/backup.rs
 #[path = "backup/backup.rs"]
 pub mod backup;
+// Код модуля лежит в папке модуля вместе с тестами: backup_export/backup_export.rs
+#[path = "backup_export/backup_export.rs"]
+pub mod backup_export;
 // Код модуля лежит в папке модуля вместе с тестами: converter/converter.rs
 #[path = "converter/converter.rs"]
 pub mod converter;

@@ -75,7 +75,8 @@ wish-counter/
 │   │   ├── wish/
 │   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
 │   │   │   └── wish.tests.rs
-│   │   ├── import/         # import.rs: HistoryParser, ParsedHistory, ImportFormatId, ImportError
+│   │   ├── import/         # import.rs: HistoryParser, HistoryExporter, ParsedHistory, ExportInput, HistoryFormatId
+│   │   ├── profile/        # profile.rs: PlayerUid (проверка), GameProfile (сервер + UID) + тесты
 │   │   ├── region/         # region.rs: ServerRegion (смещения часовых поясов как в Paimon.moe) + тесты
 │   │   ├── reference/      # reference.rs: ItemInfo, BannerInfo, ScheduleTime, LocalizedText, ReferenceSnapshot, ReferenceData + тесты
 │   │   └── pity/
@@ -90,6 +91,7 @@ wish-counter/
 │   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, RepositoryError, DownloadError)
 │   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
 │   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), import_service/ (импорт),
+│   │                       #   export_service/ (экспорт),
 │   │                       #   profile_service/ (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
@@ -97,7 +99,8 @@ wish-counter/
 │   │   ├── settings/       # json_settings_repository/: JsonSettingsRepository (атомарная запись) + тесты
 │   │   ├── database/       # mod.rs: DatabaseError; shared_connection.rs: SharedConnection (одно соединение на все хранилища)
 │   │   │   ├── connection/ # connection.rs: open_database (WAL, настройки) + тесты
-│   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты; sql/0001_create_wishes.sql, 0002_create_game_profiles.sql
+│   │   │   └── migrations/ # migrations.rs: apply_migrations (PRAGMA user_version) + тесты;
+│   │   │                   #   sql/0001_create_wishes.sql, 0002_create_game_profiles.sql, 0003_profile_uid.sql
 │   │   ├── files/          # read_bytes/read_json, write_*_atomically, is_safe_file_stem — общие для файловых хранилищ + тесты
 │   │   ├── image_cache/    # file_image_cache/: FileImageCache (data/cache/images/<игра>/<предмет>.png) + тесты
 │   │   ├── reference_cache/ # json_reference_cache/: JsonReferenceCache (data/catalog/) + тесты
@@ -112,6 +115,7 @@ wish-counter/
 │   │   ├── paimon/         # mod.rs: репозиторий и пути файлов Paimon.moe
 │   │   │   ├── js_literal/ # разборщик JS-литералов (без выполнения кода) + тесты
 │   │   │   ├── backup/     # PaimonBackupParser: импорт paimon-moe-local-data.json (повторы, искусственные id) + тесты
+│   │   │   ├── backup_export/ # PaimonBackupExporter: экспорт в тот же формат (pity, rate, rateoff — как у Paimon.moe) + тесты
 │   │   │   ├── converter/  # Paimon.moe → ReferenceSnapshot + тесты
 │   │   │   └── remote/     # PaimonRemoteReference: источник обновлений (RemoteReference) + тесты
 │   │   └── reference/      # встроенный снимок (include_str!) + тесты
@@ -132,16 +136,17 @@ wish-counter/
 │           ├── image_protocol/ # протокол wcimg: картинки для <img> (разбор и проверка адреса) + тесты
 │           ├── state.rs    # AppState: сервисы, доступные командам
 │           ├── error.rs    # StartupError, CommandError (ошибка для UI)
-│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, set_server_region),
+│           └── commands/   # команды Tauri: games.rs (list_games, get_game_statistics, get_game_profile,
+│                           #   set_server_region, set_player_uid),
 │                           #   reference.rs (get_reference_summary, update_reference — async), settings.rs,
-│                           #   import.rs (import_history — async; событие history-updated; докачка картинок)
+│                           #   history.rs (import_history, export_history — async; диалог «Сохранить как» из Rust)
 ├── ui/
 │   ├── index.html
 │   └── src/
 │       ├── main.ts         # точка входа интерфейса
 │       ├── test-setup.ts   # общая настройка тестов (очистка страницы после каждого теста)
 │       ├── App.svelte      # каркас: меню + текущая страница
-│       ├── pages/          # HomePage, GamePage (пустое состояние → «Импорт»), ImportPage, SettingsPage
+│       ├── pages/          # HomePage, GamePage (пустое состояние → «Импорт»), ImportPage (профиль, импорт, экспорт), SettingsPage
 │       └── lib/
 │           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
 │           ├── reference/  # update-messages.ts: тексты результата обновления + тест
@@ -220,6 +225,14 @@ ImportPage: <input type="file"> → file.text() → invoke('import_history', { g
         └─ ProfileRepository::set_server_region (если сервер есть в файле)
   └► событие history-updated → GamePage перечитывает статистику
   └► background::spawn_image_prefetch → ImageService::prefetch (картинки для офлайна)
+```
+
+## Экспорт истории (этап 6b)
+
+```
+ImportPage «Сохранить файл…» → invoke('export_history', { gameId, format })
+  └► spawn_blocking ─► ExportService::export → GameModule::history_exporters() → PaimonBackupExporter
+  └► spawn_blocking ─► tauri-plugin-dialog: blocking_save_file (диалог из Rust) → std::fs::write
 ```
 
 ## Поток данных: статистика молитв

@@ -12,7 +12,8 @@
 //! - [`pity`] — правила гаранта, расчёт счётчиков и статуса 50/50;
 //! - [`reference`](mod@reference) — справочник: предметы с названиями и расписание баннеров;
 //! - [`region`] — сервер игрока и его часовой пояс;
-//! - [`import`] — импорт истории молитв из файлов других сервисов.
+//! - [`import`] — импорт истории молитв из файлов других сервисов;
+//! - [`profile`] — профиль игрока в игре (сервер, UID).
 
 // Код модуля лежит в папке модуля вместе с тестами: game/game.rs
 #[path = "game/game.rs"]
@@ -21,6 +22,9 @@ pub mod game;
 #[path = "import/import.rs"]
 pub mod import;
 pub mod pity;
+// Код модуля лежит в папке модуля вместе с тестами: profile/profile.rs
+#[path = "profile/profile.rs"]
+pub mod profile;
 // Код модуля лежит в папке модуля вместе с тестами: reference/reference.rs
 #[path = "reference/reference.rs"]
 pub mod reference;

@@ -11,6 +11,8 @@ use domain::game::{GameInfo, GameModule};
 use domain::pity::rules::PoolDefinition;
 use domain::reference::ReferenceSnapshot;
 
+use domain::profile::PlayerUid;
+
 use super::*;
 
 /// Тестовая игра «fake».
@@ -40,7 +42,11 @@ impl GameModule for FakeGame {
 
 /// Хранилище профилей в памяти.
 #[derive(Default)]
-struct InMemoryProfiles(Mutex<HashMap<GameId, ServerRegion>>);
+/// Второе поле — UID игроков.
+struct InMemoryProfiles(
+    Mutex<HashMap<GameId, ServerRegion>>,
+    Mutex<HashMap<GameId, PlayerUid>>,
+);
 
 impl ProfileRepository for InMemoryProfiles {
     fn server_region(&self, game_id: &GameId) -> Result<Option<ServerRegion>, RepositoryError> {
@@ -53,6 +59,15 @@ impl ProfileRepository for InMemoryProfiles {
         region: ServerRegion,
     ) -> Result<(), RepositoryError> {
         self.0.lock().unwrap().insert(game_id.clone(), region);
+        Ok(())
+    }
+
+    fn uid(&self, game_id: &GameId) -> Result<Option<PlayerUid>, RepositoryError> {
+        Ok(self.1.lock().unwrap().get(game_id).cloned())
+    }
+
+    fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), RepositoryError> {
+        self.1.lock().unwrap().insert(game_id.clone(), uid.clone());
         Ok(())
     }
 }
@@ -106,4 +121,20 @@ fn reads_saved_region() {
         Some(ServerRegion::America)
     );
     assert!(service.server_region(&GameId::new("missing")).is_err());
+}
+
+#[test]
+fn profile_contains_region_and_uid() {
+    let (service, _profiles) = service();
+    let fake = GameId::new("fake");
+    let uid = PlayerUid::parse("700000000").unwrap();
+
+    service
+        .set_server_region(&fake, ServerRegion::Asia)
+        .unwrap();
+    service.set_uid(&fake, &uid).unwrap();
+
+    let profile = service.profile(&fake).unwrap();
+    assert_eq!(profile.server_region, Some(ServerRegion::Asia));
+    assert_eq!(profile.uid, Some(uid));
 }
