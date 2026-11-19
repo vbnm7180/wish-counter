@@ -28,7 +28,7 @@
 | `npm run app:build` | Portable-сборка → `target/release/wish-counter.exe` |
 | `npm run app:build:installer` | Сборка установщиков NSIS/MSI (задел на будущее) |
 | `npm run check` | Проверка типов TypeScript/Svelte |
-| `npm test` | Unit-тесты интерфейса (Vitest) |
+| `npm test` | Тесты интерфейса: логика и компоненты (Vitest + @testing-library/svelte, jsdom) |
 | `npm run test:watch` | Тесты интерфейса с перезапуском при изменениях |
 | `cargo test --workspace` | Все тесты Rust |
 | `cargo clippy --workspace --all-targets` | Анализатор кода Rust |

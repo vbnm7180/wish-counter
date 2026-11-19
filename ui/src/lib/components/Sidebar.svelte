@@ -6,7 +6,9 @@
 <script lang="ts">
   import type { GameInfo } from '../api/types';
   import { i18n } from '../i18n/index.svelte';
+  import { gameIconUrl } from '../images/item-image';
   import { navigation, type Page } from '../state/navigation.svelte';
+  import IconImage from './IconImage.svelte';
 
   /** Свойства компонента. */
   interface Props {
@@ -15,6 +17,9 @@
   }
 
   let { games }: Props = $props();
+
+  /** Размер иконки игры в меню (пиксели). */
+  const GAME_ICON_SIZE = 24;
 
   const homePage: Page = { kind: 'home' };
   const settingsPage: Page = { kind: 'settings' };
@@ -39,7 +44,8 @@
       class:active={navigation.isActive(gamePage(game.id))}
       onclick={() => navigation.goTo(gamePage(game.id))}
     >
-      {i18n.gameName(game.id)}
+      <IconImage src={gameIconUrl(game.id)} name={i18n.gameName(game.id)} size={GAME_ICON_SIZE} />
+      <span>{i18n.gameName(game.id)}</span>
     </button>
   {/each}
 
@@ -78,6 +84,9 @@
   }
 
   .item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     padding: var(--space-2) var(--space-3);
     text-align: left;
     background: transparent;

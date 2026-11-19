@@ -134,19 +134,20 @@ wish-counter/
 │   ├── index.html
 │   └── src/
 │       ├── main.ts         # точка входа интерфейса
+│       ├── test-setup.ts   # общая настройка тестов (очистка страницы после каждого теста)
 │       ├── App.svelte      # каркас: меню + текущая страница
 │       ├── pages/          # HomePage, GamePage, SettingsPage
 │       └── lib/
 │           ├── api/        # backend.ts (вызовы ядра), events.ts (события ядра), types.ts, demo-data.ts
 │           ├── reference/  # update-messages.ts: тексты результата обновления + тест
-│           ├── images/     # item-image.ts: адрес картинки (wcimg) + тест
+│           ├── images/     # item-image.ts: адреса картинок и иконок игр (wcimg) + тест
 │           ├── i18n/       # локализация: index.svelte.ts, interpolate.ts ({параметры}), locales/ru.ts, en.ts
 │           ├── format/     # format.ts: числа и проценты по языку + format.test.ts
 │           ├── stats/      # featured.ts: что показать в блоке 50/50 + featured.test.ts
 │           ├── themes/     # registry.ts, base.css, dark.css, light.css
 │           ├── state/      # реактивное состояние: settings, navigation
 │           └── components/ # Sidebar, RegionSelector, GameSummary, BannerCard, FeaturedStatusView, FourStarFeaturedView,
-│                           #   ReferenceInfo, ItemIcon (картинка предмета с заглушкой)
+│                           #   ReferenceInfo, IconImage (картинка с заглушкой), ItemIcon, Select, InfoTooltip (+ *.test.ts)
 └── docs/                   # документация
 ```
 
@@ -193,14 +194,15 @@ ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос
 ## Картинки предметов (этап 4c)
 
 ```
-<img src="http://wcimg.localhost/genshin/hu_tao">          (ItemIcon.svelte, loading="lazy")
-  └► image_protocol::handle_request — проверка адреса (/<игра>/<предмет>, только a-z0-9_-)
+<img src="http://wcimg.localhost/items/genshin/hu_tao">    (ItemIcon → IconImage, loading="lazy")
+  └► image_protocol::handle_request — проверка адреса (/items/<игра>/<предмет> или /games/<игра>/icon)
      └► spawn_blocking ─► ImageService::image
           ├─ есть в data/cache/images ─► отдать
           ├─ предмета нет в справочнике ─► 404 (произвольный путь скачать нельзя)
           └─ RemoteReference::image_path ─► GitHub (ревизия справочника) ─► проверка PNG ─► кэш ─► отдать
 ```
 Неудача (нет сети, нет файла) запоминается до конца сеанса — интерфейс показывает заглушку с буквой.
+Иконка игры (`/games/<игра>/icon`) не скачивается: её байты встроены в модуль игры (`GameModule::icon_png`).
 
 ## Поток данных: статистика молитв
 

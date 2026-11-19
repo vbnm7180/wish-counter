@@ -86,6 +86,15 @@ pub trait GameModule: Send + Sync {
     fn remote_reference(&self) -> Option<Arc<dyn RemoteReference>> {
         None
     }
+
+    /// Иконка игры для меню (PNG, встроена в программу); `None` — иконки нет,
+    /// интерфейс покажет первую букву названия.
+    ///
+    /// `&'static [u8]` — ссылка на байты, которые живут всё время работы программы
+    /// (их встраивает `include_bytes!` при компиляции).
+    fn icon_png(&self) -> Option<&'static [u8]> {
+        None
+    }
 }
 
 // Тесты лежат рядом, в файле `game.tests.rs`.

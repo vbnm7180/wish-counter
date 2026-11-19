@@ -89,6 +89,10 @@ impl GameModule for FakeGame {
     fn remote_reference(&self) -> Option<Arc<dyn RemoteReference>> {
         Some(Arc::new(FakeRemote))
     }
+
+    fn icon_png(&self) -> Option<&'static [u8]> {
+        Some(b"icon")
+    }
 }
 
 /// Загрузчик: отдаёт заданный ответ и считает запросы, запоминает последний путь.
@@ -259,4 +263,19 @@ fn unknown_game_is_reported() {
         .image(&GameId::new("missing"), &ItemId::new(KNOWN_ITEM));
 
     assert!(matches!(result, Err(ImageError::UnknownGame(_))));
+}
+
+#[test]
+fn game_icon_comes_from_game_module() {
+    let setup = setup(FakeDownloader::answering(Ok(png())));
+
+    assert_eq!(
+        setup.service.game_icon(&fake()).unwrap(),
+        Some(b"icon".to_vec())
+    );
+    assert!(matches!(
+        setup.service.game_icon(&GameId::new("missing")),
+        Err(ImageError::UnknownGame(_))
+    ));
+    assert_eq!(requests(&setup), 0, "иконка игры не скачивается");
 }

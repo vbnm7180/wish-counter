@@ -29,6 +29,10 @@ pub use pools::{banner_codes, pool_ids};
 /// Идентификатор Genshin Impact внутри приложения.
 pub const GENSHIN_GAME_ID: &str = "genshin";
 
+/// Иконка игры для меню (PNG 128×128, предоставлена владельцем проекта).
+/// `include_bytes!` встраивает файл в программу при компиляции.
+const ICON_PNG: &[u8] = include_bytes!("../assets/icon.png");
+
 /// Порядок Genshin Impact в меню игр (первая игра).
 const GENSHIN_DISPLAY_ORDER: u32 = 10;
 
@@ -61,6 +65,11 @@ impl GameModule for GenshinModule {
     /// Обновления справочника берутся из репозитория Paimon.moe.
     fn remote_reference(&self) -> Option<Arc<dyn RemoteReference>> {
         Some(Arc::new(PaimonRemoteReference))
+    }
+
+    /// Встроенная иконка игры.
+    fn icon_png(&self) -> Option<&'static [u8]> {
+        Some(ICON_PNG)
     }
 }
 

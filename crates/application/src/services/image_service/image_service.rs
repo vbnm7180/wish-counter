@@ -83,6 +83,15 @@ impl ImageService {
         }
     }
 
+    /// Возвращает иконку игры (встроенную в модуль игры); `None`, если её нет.
+    pub fn game_icon(&self, game_id: &GameId) -> Result<Option<Vec<u8>>, ImageError> {
+        let module = self
+            .catalog
+            .find(game_id)
+            .ok_or_else(|| ImageError::UnknownGame(game_id.clone()))?;
+        Ok(module.icon_png().map(<[u8]>::to_vec))
+    }
+
     /// Скачивает картинку известного предмета. `None` — скачать не удалось
     /// или это не PNG (причина пишется в лог).
     fn download(&self, game_id: &GameId, item_id: &ItemId) -> Result<Option<Vec<u8>>, ImageError> {

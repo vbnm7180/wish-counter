@@ -7,15 +7,29 @@
 use super::*;
 
 #[test]
-fn parses_game_and_item() {
-    let (game, item) = parse_image_path("/genshin/hu_tao").unwrap();
-    assert_eq!(game.as_str(), "genshin");
-    assert_eq!(item.as_str(), "hu_tao");
+fn parses_item_request() {
+    assert_eq!(
+        parse_image_path("/items/genshin/hu_tao"),
+        Some(ImageRequest::Item {
+            game_id: GameId::new("genshin"),
+            item_id: ItemId::new("hu_tao"),
+        })
+    );
+}
+
+#[test]
+fn parses_game_icon_request() {
+    assert_eq!(
+        parse_image_path("/games/genshin/icon"),
+        Some(ImageRequest::GameIcon {
+            game_id: GameId::new("genshin"),
+        })
+    );
 }
 
 #[test]
 fn accepts_dash_in_item_id() {
-    assert!(parse_image_path("/genshin/primordial_jade_winged-spear").is_some());
+    assert!(parse_image_path("/items/genshin/primordial_jade_winged-spear").is_some());
 }
 
 #[test]
@@ -23,13 +37,17 @@ fn rejects_malformed_paths() {
     for path in [
         "",
         "/",
-        "/genshin",
-        "/genshin/",
-        "/genshin/hu_tao/extra",
-        "/genshin/../secret",
-        "/genshin/%2e%2e",
-        "/Genshin/hu_tao",
-        "/genshin/hu tao",
+        "/genshin/hu_tao",
+        "/items/genshin",
+        "/items/genshin/",
+        "/items/genshin/hu_tao/extra",
+        "/items/genshin/..",
+        "/items/genshin/%2e%2e",
+        "/items/Genshin/hu_tao",
+        "/items/genshin/hu tao",
+        "/games/genshin",
+        "/games/genshin/logo",
+        "/games/../icon",
     ] {
         assert!(parse_image_path(path).is_none(), "{path}");
     }
