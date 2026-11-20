@@ -4,6 +4,8 @@
   --color-bg: #f3f4f8;
   --color-surface: #ffffff;
   --color-surface-hover: #eceef4;
+  /* Полупрозрачный вариант --color-surface: плашки и BackgroundPicker поверх фоновой картинки. */
+  --color-surface-glass: rgb(255 255 255 / 88%);
   --color-border: #dcdfe8;
   --color-text: #1d2030;
   --color-text-muted: #5f6578;
@@ -13,5 +15,8 @@
   --color-rarity-4: #8255c9;
   --color-rarity-3: #3a78bd;
   --color-danger: #c93c47;
+  /* Цвет номера по гаранту: светлая тема — насыщенность та же, яркость меньше чтобы читалось. */
+  --pity-saturation: 90%;
+  --pity-lightness: 38%;
   --shadow-card: 0 2px 8px rgb(20 24 40 / 8%);
 }

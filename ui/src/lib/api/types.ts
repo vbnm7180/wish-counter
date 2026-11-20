@@ -9,6 +9,17 @@ export interface AppSettings {
   /** Идентификатор темы: a-z, 0-9, '-'. */
   theme: string;
   language: LanguageCode;
+  /** Выбранный фон (идентификатор картинки) или null — без фона. */
+  background: string | null;
+}
+
+/** Формат картинки фона (domain::background::ImageFormat). */
+export type ImageFormat = 'png' | 'jpeg' | 'webp';
+
+/** Картинка фона, добавленная пользователем (domain::background::BackgroundImage). */
+export interface BackgroundImage {
+  id: string;
+  format: ImageFormat;
 }
 
 /** Описание игры (domain::game::GameInfo). */

@@ -16,6 +16,7 @@ import {
 } from './demo-data';
 import type {
   AppSettings,
+  BackgroundImage,
   ExportResult,
   GameInfo,
   GameProfile,
@@ -32,6 +33,12 @@ import type {
 export interface Backend {
   /** Список поддерживаемых игр. */
   listGames(): Promise<GameInfo[]>;
+  /** Добавленные картинки фона. */
+  listBackgrounds(): Promise<BackgroundImage[]>;
+  /** Добавляет картинку фона: ядро покажет диалог выбора файла; null — пользователь отменил выбор. */
+  addBackground(): Promise<BackgroundImage | null>;
+  /** Удаляет картинку фона и возвращает настройки (выбор сбрасывается, если удалён выбранный фон). */
+  removeBackground(id: string): Promise<AppSettings>;
   /** Текущие настройки. */
   getSettings(): Promise<AppSettings>;
   /** Сохраняет настройки и возвращает сохранённое значение. */
@@ -60,6 +67,18 @@ export interface Backend {
 class TauriBackend implements Backend {
   listGames(): Promise<GameInfo[]> {
     return invoke<GameInfo[]>('list_games');
+  }
+
+  listBackgrounds(): Promise<BackgroundImage[]> {
+    return invoke<BackgroundImage[]>('list_backgrounds');
+  }
+
+  addBackground(): Promise<BackgroundImage | null> {
+    return invoke<BackgroundImage | null>('add_background');
+  }
+
+  removeBackground(id: string): Promise<AppSettings> {
+    return invoke<AppSettings>('remove_background', { id });
   }
 
   getSettings(): Promise<AppSettings> {
@@ -118,12 +137,26 @@ class BrowserBackend implements Backend {
 
   async getSettings(): Promise<AppSettings> {
     const saved = localStorage.getItem(BROWSER_SETTINGS_KEY);
-    return saved ? (JSON.parse(saved) as AppSettings) : { theme: 'dark', language: 'ru' };
+    const defaults: AppSettings = { theme: 'dark', language: 'ru', background: null };
+    return saved ? { ...defaults, ...(JSON.parse(saved) as Partial<AppSettings>) } : defaults;
   }
 
   async updateSettings(settings: AppSettings): Promise<AppSettings> {
     localStorage.setItem(BROWSER_SETTINGS_KEY, JSON.stringify(settings));
     return settings;
+  }
+
+  // В браузере нет диалога выбора файла и протокола картинок — фонов нет.
+  async listBackgrounds(): Promise<BackgroundImage[]> {
+    return [];
+  }
+
+  async addBackground(): Promise<BackgroundImage | null> {
+    return null;
+  }
+
+  async removeBackground(_id: string): Promise<AppSettings> {
+    return this.updateSettings({ ...(await this.getSettings()), background: null });
   }
 
   async getGameStatistics(gameId: string): Promise<GameStatistics> {

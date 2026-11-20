@@ -5,6 +5,35 @@ import type { WishRow } from '../api/types';
 /** Сколько строк показывать на одной странице. */
 export const PAGE_SIZE = 50;
 
+/**
+ * Жёсткий гарант 5★ по пулу — шкала для окраски (как в Paimon.moe).
+ * Оружейный баннер — 80, остальные — 90.
+ */
+export const HARD_PITY_5: Record<string, number> = {
+  character:  90,
+  chronicled: 90,
+  standard:   90,
+  beginner:   90,
+  weapon:     80,
+};
+
+/**
+ * Оттенок цвета номера по гаранту (HSL hue, 0–120).
+ * Формула как в Paimon.moe: линейная от красного (0) к зелёному (120).
+ * hardPity — жёсткий гарант пула (90 или 80 для оружия), для 4★ = 10.
+ * null — не окрашивать (нет номера или 3★).
+ */
+export function pityHue(
+  pity: number | null,
+  rarity: 3 | 4 | 5,
+  hardPity?: number,
+): number | null {
+  if (pity === null || rarity === 3) return null;
+  const scale = hardPity ?? (rarity === 5 ? 90 : 10);
+  const share = Math.min(Math.max((scale - pity) / scale, 0), 1);
+  return Math.round(share * 120);
+}
+
 /** Тип предмета для фильтра: все, только персонажи или только оружие. */
 export type KindFilter = 'all' | 'character' | 'weapon';
 

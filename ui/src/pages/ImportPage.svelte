@@ -137,7 +137,7 @@
 {/snippet}
 
 <section class="page">
-  <h1>{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
+  <h1 class="page-heading">{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
 
   <div class="card">
     <div class="row">

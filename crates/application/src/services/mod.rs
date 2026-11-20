@@ -3,6 +3,9 @@
 //! Каждый сервис отвечает за одну область (принцип единственной
 //! ответственности, буква S в SOLID).
 
+// Код модуля лежит в папке модуля вместе с тестами: background_service/background_service.rs
+#[path = "background_service/background_service.rs"]
+mod background_service;
 // Код модуля лежит в папке модуля вместе с тестами: export_service/export_service.rs
 #[path = "export_service/export_service.rs"]
 mod export_service;
@@ -34,6 +37,7 @@ mod settings_service;
 #[path = "statistics_service/statistics_service.rs"]
 mod statistics_service;
 
+pub use background_service::{BackgroundError, BackgroundService, MAX_BACKGROUND_BYTES};
 pub use export_service::{ExportService, ExportServiceError, ExportedFile};
 pub use game_catalog::GameCatalog;
 pub use history_service::{HistoryError, HistoryService, PoolHistory, WishRow};

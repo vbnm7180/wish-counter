@@ -17,9 +17,8 @@
   --sidebar-width: 232px;
   --transition-fast: 120ms ease;
   /*
-   * Фоновая картинка приложения (задел под выбор фона, этап 5).
-   * Сейчас фона нет — виден цвет темы --color-bg. Чтобы включить фон, достаточно
-   * задать переменную, например: url('...'). Менять стили body не понадобится.
+   * Фоновая картинка приложения. По умолчанию фона нет — виден цвет темы --color-bg.
+   * Выбранный фон задаёт lib/backgrounds/background.ts: url("...").
    */
   --app-background-image: none;
 }
@@ -36,7 +35,7 @@ body {
   height: 100%;
   font-family: var(--font-family);
   font-size: 14px;
-  /* Картинка фона (если задана) поверх цвета темы; растягивается на всё окно. */
+  /* Картинка фона (если задана) поверх цвета темы, как есть; растягивается на всё окно. */
   background: var(--app-background-image) center / cover no-repeat fixed var(--color-bg);
   color: var(--color-text);
   transition:
@@ -58,4 +57,38 @@ h2,
 h3 {
   margin: 0;
   font-weight: 600;
+}
+
+/*
+ * Когда выбран фон (data-background="on" у <html>), полупрозрачным становится только боковое меню.
+ * Карточки и таблицы остаются непрозрачными — иначе текст в них плохо виден.
+ * Селектор с [data-theme] сильнее селекторов тем, поэтому переопределяет их цвета.
+ */
+/*
+ * .page-heading — крупный заголовок, который лежит прямо на фоне страницы (вне карточки).
+ * Без фона обводка прозрачна. При выбранном фоне появляется обводка цветом фона,
+ * чтобы буквы читались на любой картинке.
+ */
+.page-heading {
+  -webkit-text-stroke: 0px transparent;
+  paint-order: stroke fill;
+}
+
+:root[data-background='on'] .page-heading {
+  -webkit-text-stroke: 6px var(--color-bg);
+  paint-order: stroke fill;
+}
+
+/*
+ * .text-stroke — то же самое для обычного текста (подзаголовки, подписи вне карточек).
+ * Обводка тоньше, чем у заголовков.
+ */
+.text-stroke {
+  -webkit-text-stroke: 0px transparent;
+  paint-order: stroke fill;
+}
+
+:root[data-background='on'] .text-stroke {
+  -webkit-text-stroke: 4px var(--color-bg);
+  paint-order: stroke fill;
 }

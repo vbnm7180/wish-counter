@@ -52,6 +52,7 @@ fn custom_settings() -> AppSettings {
     AppSettings {
         theme: ThemeId::parse("light").unwrap(),
         language: Language::English,
+        background: None,
     }
 }
 

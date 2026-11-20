@@ -23,6 +23,8 @@ const LOGS_DIR_NAME: &str = "logs";
 const SETTINGS_FILE_NAME: &str = "settings.json";
 /// Путь к кэшу картинок внутри папки данных.
 const IMAGES_DIR: [&str; 2] = ["cache", "images"];
+/// Имя папки картинок фона (добавленных пользователем) внутри папки данных.
+const BACKGROUNDS_DIR_NAME: &str = "backgrounds";
 /// Имя папки скачанных справочников внутри папки данных.
 const CATALOG_DIR_NAME: &str = "catalog";
 /// Имя папки служебных данных WebView2 (кэш движка окна) внутри папки данных.
@@ -68,6 +70,8 @@ pub struct AppPaths {
     pub catalog_dir: PathBuf,
     /// Папка кэша картинок предметов (`data/cache/images`).
     pub images_dir: PathBuf,
+    /// Картинки фона, добавленные пользователем.
+    pub backgrounds_dir: PathBuf,
     /// Папка служебных данных WebView2. Без явного указания WebView2 пишет
     /// в `%LOCALAPPDATA%`, а portable-приложение не должно оставлять следов вне своей папки.
     pub webview_dir: PathBuf,
@@ -93,6 +97,7 @@ impl AppPaths {
             settings_file: data_dir.join(SETTINGS_FILE_NAME),
             database_file: data_dir.join(DATABASE_FILE_NAME),
             catalog_dir: data_dir.join(CATALOG_DIR_NAME),
+            backgrounds_dir: data_dir.join(BACKGROUNDS_DIR_NAME),
             images_dir: IMAGES_DIR
                 .iter()
                 .fold(data_dir.clone(), |path, part| path.join(part)),
@@ -107,6 +112,7 @@ impl AppPaths {
         std::fs::create_dir_all(&self.logs_dir)?;
         std::fs::create_dir_all(&self.catalog_dir)?;
         std::fs::create_dir_all(&self.images_dir)?;
+        std::fs::create_dir_all(&self.backgrounds_dir)?;
         Ok(())
     }
 }

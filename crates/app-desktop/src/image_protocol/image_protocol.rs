@@ -3,16 +3,18 @@
 //! Интерфейс указывает картинку обычным тегом `<img src="...">`. Адреса:
 //! - `wcimg://localhost/items/<игра>/<предмет>` — картинка предмета
 //!   (из кэша или скачивается при первом запросе);
-//! - `wcimg://localhost/games/<игра>/icon` — иконка игры (встроена в программу).
+//! - `wcimg://localhost/games/<игра>/icon` — иконка игры (встроена в программу);
+//! - `wcimg://localhost/backgrounds/<фон>` — картинка фона, добавленная пользователем.
 //!
 //! В Windows WebView2 те же адреса выглядят как `http://wcimg.localhost/...`.
 //!
 //! Так у интерфейса нет доступа ни к файлам, ни к сети: он может получить
-//! только картинку известного предмета известной игры.
+//! только картинку известного предмета известной игры или добавленный фон.
 
 use std::sync::Arc;
 
-use application::services::ImageService;
+use application::services::{BackgroundService, ImageService};
+use domain::background::{BackgroundId, ImageFormat};
 use domain::game::GameId;
 use domain::wish::ItemId;
 use tauri::http::{Request, Response, StatusCode, header};
@@ -22,14 +24,14 @@ use crate::state::AppState;
 
 /// Имя протокола (схемы адреса).
 pub const IMAGE_SCHEME: &str = "wcimg";
-/// Тип содержимого ответа.
-const PNG_CONTENT_TYPE: &str = "image/png";
 /// Сколько секунд WebView может хранить картинку у себя, не спрашивая снова (сутки).
 const BROWSER_CACHE_SECONDS: u32 = 86_400;
 /// Первая часть пути для картинок предметов.
 const ITEMS_ROUTE: &str = "items";
 /// Первая часть пути для иконок игр.
 const GAMES_ROUTE: &str = "games";
+/// Первая часть пути для картинок фона.
+const BACKGROUNDS_ROUTE: &str = "backgrounds";
 /// Последняя часть пути иконки игры.
 const ICON_NAME: &str = "icon";
 
@@ -48,6 +50,25 @@ pub enum ImageRequest {
         /// Игра.
         game_id: GameId,
     },
+    /// Картинка фона: `/backgrounds/<фон>`.
+    Background {
+        /// Фон.
+        id: BackgroundId,
+    },
+}
+
+/// Результат получения картинки: формат и байты, `None` — картинки нет.
+///
+/// `Box<dyn Error>` — «любая ошибка»: у сервисов разные типы ошибок, а здесь
+/// нужен только текст для лога.
+type LoadResult = Result<Option<(ImageFormat, Vec<u8>)>, Box<dyn std::error::Error>>;
+
+/// Сервисы, из которых протокол берёт картинки (копии `Arc` для фонового потока).
+struct ImageSources {
+    /// Картинки предметов и иконки игр.
+    items: Arc<ImageService>,
+    /// Картинки фона.
+    backgrounds: Arc<BackgroundService>,
 }
 
 /// Обрабатывает запрос картинки. Вызывается Tauri для каждого адреса `wcimg://...`.
@@ -59,20 +80,20 @@ pub fn handle_request(app: &AppHandle, request: &Request<Vec<u8>>, responder: Ur
         responder.respond(empty_response(StatusCode::BAD_REQUEST));
         return;
     };
-    let service: Arc<ImageService> = Arc::clone(&app.state::<AppState>().image_service);
+    let state = app.state::<AppState>();
+    let sources = ImageSources {
+        items: Arc::clone(&state.image_service),
+        backgrounds: Arc::clone(&state.background_service),
+    };
     tauri::async_runtime::spawn_blocking(move || {
-        responder.respond(image_response(&service, &image_request));
+        responder.respond(image_response(&sources, &image_request));
     });
 }
 
 /// Получает картинку и превращает результат в HTTP-ответ.
-fn image_response(service: &ImageService, request: &ImageRequest) -> Response<Vec<u8>> {
-    let result = match request {
-        ImageRequest::Item { game_id, item_id } => service.image(game_id, item_id),
-        ImageRequest::GameIcon { game_id } => service.game_icon(game_id),
-    };
-    match result {
-        Ok(Some(bytes)) => png_response(bytes),
+fn image_response(sources: &ImageSources, request: &ImageRequest) -> Response<Vec<u8>> {
+    match load_image(sources, request) {
+        Ok(Some((format, bytes))) => image_ok_response(format, bytes),
         Ok(None) => empty_response(StatusCode::NOT_FOUND),
         Err(error) => {
             tracing::warn!(%error, "картинка не получена");
@@ -81,8 +102,19 @@ fn image_response(service: &ImageService, request: &ImageRequest) -> Response<Ve
     }
 }
 
-/// Разбирает путь запроса. Допустимы только `/items/<игра>/<предмет>`
-/// и `/games/<игра>/icon`; идентификаторы — только `a-z`, `0-9`, `_`, `-`.
+/// Получает картинку и её формат. Картинки предметов и иконки игр — всегда PNG.
+fn load_image(sources: &ImageSources, request: &ImageRequest) -> LoadResult {
+    let png = |bytes: Option<Vec<u8>>| bytes.map(|bytes| (ImageFormat::Png, bytes));
+    Ok(match request {
+        ImageRequest::Item { game_id, item_id } => png(sources.items.image(game_id, item_id)?),
+        ImageRequest::GameIcon { game_id } => png(sources.items.game_icon(game_id)?),
+        ImageRequest::Background { id } => sources.backgrounds.image(id)?,
+    })
+}
+
+/// Разбирает путь запроса. Допустимы только `/items/<игра>/<предмет>`,
+/// `/games/<игра>/icon` и `/backgrounds/<фон>`; идентификаторы — только `a-z`, `0-9`, `_`, `-`
+/// (у фона — без `_`, проверяет [`BackgroundId::parse`]).
 pub fn parse_image_path(path: &str) -> Option<ImageRequest> {
     let parts: Vec<&str> = path.trim_start_matches('/').split('/').collect();
     match parts.as_slice() {
@@ -95,6 +127,9 @@ pub fn parse_image_path(path: &str) -> Option<ImageRequest> {
         [GAMES_ROUTE, game, ICON_NAME] if is_safe_segment(game) => Some(ImageRequest::GameIcon {
             game_id: GameId::new(*game),
         }),
+        [BACKGROUNDS_ROUTE, id] => BackgroundId::parse(*id)
+            .ok()
+            .map(|id| ImageRequest::Background { id }),
         _ => None,
     }
 }
@@ -107,11 +142,11 @@ fn is_safe_segment(value: &str) -> bool {
             .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '_' | '-'))
 }
 
-/// Ответ с картинкой PNG.
-fn png_response(bytes: Vec<u8>) -> Response<Vec<u8>> {
+/// Ответ с картинкой в указанном формате.
+fn image_ok_response(format: ImageFormat, bytes: Vec<u8>) -> Response<Vec<u8>> {
     Response::builder()
         .status(StatusCode::OK)
-        .header(header::CONTENT_TYPE, PNG_CONTENT_TYPE)
+        .header(header::CONTENT_TYPE, format.mime_type())
         .header(
             header::CACHE_CONTROL,
             format!("max-age={BROWSER_CACHE_SECONDS}"),

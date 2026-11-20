@@ -35,12 +35,16 @@ fn settings_roundtrip_through_json() {
     let settings = AppSettings {
         theme: ThemeId::parse("light").unwrap(),
         language: Language::English,
+        background: Some(BackgroundId::parse("abc123").unwrap()),
     };
 
     let json = serde_json::to_string(&settings).unwrap();
     let restored: AppSettings = serde_json::from_str(&json).unwrap();
 
-    assert_eq!(json, r#"{"theme":"light","language":"en"}"#);
+    assert_eq!(
+        json,
+        r#"{"theme":"light","language":"en","background":"abc123"}"#
+    );
     assert_eq!(restored, settings);
 }
 
@@ -55,5 +59,20 @@ fn missing_fields_use_defaults() {
 #[test]
 fn invalid_theme_in_json_is_rejected() {
     let result = serde_json::from_str::<AppSettings>(r#"{"theme":"<bad>"}"#);
+    assert!(result.is_err());
+}
+
+/// Файл настроек до этапа 5c (без поля `background`) читается: фона нет.
+#[test]
+fn settings_without_background_have_no_background() {
+    let restored: AppSettings =
+        serde_json::from_str(r#"{"theme":"dark","language":"ru"}"#).unwrap();
+    assert_eq!(restored.background, None);
+}
+
+/// Небезопасный идентификатор фона в JSON отклоняется.
+#[test]
+fn invalid_background_in_json_is_rejected() {
+    let result = serde_json::from_str::<AppSettings>(r#"{"background":"../x"}"#);
     assert!(result.is_err());
 }

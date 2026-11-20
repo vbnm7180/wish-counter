@@ -13,8 +13,10 @@
 //! - [`profiles`] — профили игр (сервер игрока) в SQLite;
 //! - [`reference_cache`] — скачанные обновления справочников (`data/catalog/`);
 //! - [`image_cache`] — картинки предметов (`data/cache/images/`);
+//! - [`backgrounds`] — картинки фона, добавленные пользователем (`data/backgrounds/`);
 //! - [`remote`] — скачивание данных: безопасный HTTP-клиент и GitHub.
 
+pub mod backgrounds;
 pub mod database;
 // Код модуля лежит в папке модуля вместе с тестами: files/files.rs
 #[path = "files/files.rs"]

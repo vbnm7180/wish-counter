@@ -9,10 +9,11 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    ExportService, GameCatalog, HistoryService, ImageService, ImportService, ProfileService,
-    ReferenceService, ReferenceUpdater, SettingsService, StatisticsService,
+    BackgroundService, ExportService, GameCatalog, HistoryService, ImageService, ImportService,
+    ProfileService, ReferenceService, ReferenceUpdater, SettingsService, StatisticsService,
 };
 use game_genshin::GenshinModule;
+use infrastructure::backgrounds::FileBackgroundStore;
 use infrastructure::database::{SharedConnection, open_database};
 use infrastructure::image_cache::FileImageCache;
 use infrastructure::logging::init_logging;
@@ -51,7 +52,7 @@ pub fn run() -> Result<(), StartupError> {
 
     tauri::Builder::default()
         .manage(state)
-        // Плагин системных диалогов; используется только из Rust (команда экспорта).
+        // Плагин системных диалогов; используется только из Rust (экспорт, выбор фона).
         .plugin(tauri_plugin_dialog::init())
         // `setup` выполняется один раз после запуска Tauri, до показа окон.
         // `move` переносит `webview_dir` внутрь замыкания.
@@ -62,11 +63,14 @@ pub fn run() -> Result<(), StartupError> {
             background::spawn_reference_check(app.handle().clone(), updater);
             Ok(())
         })
-        // Картинки предметов: адреса wcimg://... обрабатывает Rust (см. image_protocol.rs).
+        // Картинки предметов и фонов: адреса wcimg://... обрабатывает Rust (см. image_protocol.rs).
         .register_asynchronous_uri_scheme_protocol(IMAGE_SCHEME, |context, request, responder| {
             image_protocol::handle_request(context.app_handle(), &request, responder);
         })
         .invoke_handler(tauri::generate_handler![
+            commands::backgrounds::list_backgrounds,
+            commands::backgrounds::add_background,
+            commands::backgrounds::remove_background,
             commands::games::list_games,
             commands::games::get_game_statistics,
             commands::games::get_game_profile,
@@ -90,7 +94,13 @@ pub fn run() -> Result<(), StartupError> {
 ///
 /// Возвращает ошибку, если не удалось открыть базу данных.
 fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
-    let settings_repository = Arc::new(JsonSettingsRepository::new(&paths.settings_file));
+    let settings_service = Arc::new(SettingsService::new(Arc::new(JsonSettingsRepository::new(
+        &paths.settings_file,
+    ))));
+    let background_service = Arc::new(BackgroundService::new(
+        Arc::new(FileBackgroundStore::new(&paths.backgrounds_dir)),
+        Arc::clone(&settings_service),
+    ));
     // Одно соединение с базой на все хранилища.
     let database = SharedConnection::new(open_database(&paths.database_file)?);
     let wish_repository = Arc::new(SqliteWishRepository::new(database.clone()));
@@ -146,6 +156,7 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
         reference_updater,
         image_service,
         game_catalog,
-        settings_service: SettingsService::new(settings_repository),
+        settings_service,
+        background_service,
     })
 }

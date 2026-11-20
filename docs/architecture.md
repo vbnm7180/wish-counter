@@ -69,8 +69,9 @@ wish-counter/
 │   │   ├── game/
 │   │   │   ├── game.rs         # GameId, GameInfo, трейт GameModule
 │   │   │   └── game.tests.rs   # тесты game.rs (так устроены все модули с тестами)
+│   │   ├── background/     # background.rs: BackgroundId (из содержимого, FNV-1a), ImageFormat (по сигнатуре), BackgroundImage + тесты
 │   │   ├── settings/
-│   │   │   ├── settings.rs     # AppSettings, ThemeId (с проверкой), Language
+│   │   │   ├── settings.rs     # AppSettings (тема, язык, фон), ThemeId (с проверкой), Language
 │   │   │   └── settings.tests.rs
 │   │   ├── wish/
 │   │   │   ├── wish.rs         # Wish, WishId, ItemId, BannerCode, ItemKind, Rarity, WishTime
@@ -88,11 +89,12 @@ wish-counter/
 │   │       └── tracker/        # tracker.rs: PityTracker, calculate_pool_statistics, annotate_wishes + тесты
 │   ├── application/src/
 │   │   ├── ports/          # трейты для внешнего мира (SettingsRepository, WishRepository, ProfileRepository,
-│   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, RepositoryError, DownloadError)
+│   │   │                   #   ReferenceCache, ReferenceDownloader, ImageCache, ImageDownloader, BackgroundStore,
+│   │   │                   #   RepositoryError, DownloadError)
 │   │   └── services/       # game_catalog/, settings_service/, statistics_service/, reference_service/,
 │   │                       #   reference_updater/ (онлайн-обновление), image_service/ (картинки), import_service/ (импорт),
 │   │                       #   export_service/ (экспорт), history_service/ (строки таблицы молитв),
-│   │                       #   profile_service/ (+ тесты)
+│   │                       #   profile_service/, background_service/ (свои фоны) (+ тесты)
 │   ├── infrastructure/src/
 │   │   ├── paths/          # paths.rs: AppPaths, StorageMode (Portable / UserProfile) + paths.tests.rs
 │   │   ├── logging.rs      # init_logging: файл + консоль, ротация логов
@@ -103,6 +105,8 @@ wish-counter/
 │   │   │                   #   sql/0001_create_wishes.sql, 0002_create_game_profiles.sql, 0003_profile_uid.sql
 │   │   ├── files/          # read_bytes/read_json, write_*_atomically, is_safe_file_stem — общие для файловых хранилищ + тесты
 │   │   ├── image_cache/    # file_image_cache/: FileImageCache (data/cache/images/<игра>/<предмет>.png) + тесты
+│   │   ├── backgrounds/    # file_background_store/: FileBackgroundStore (data/backgrounds/<id>.<ext> + backgrounds.json,
+│   │   │                   #   без перебора папки — ADR-036) + тесты
 │   │   ├── reference_cache/ # json_reference_cache/: JsonReferenceCache (data/catalog/) + тесты
 │   │   ├── remote/         # http_client/ (HTTPS, белый список, лимиты), github/ (ревизия, файлы),
 │   │   │                   #   github_downloader.rs (GitHubReferenceDownloader: справочник и картинки) + тесты
@@ -209,7 +213,7 @@ ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос
 
 ```
 <img src="http://wcimg.localhost/items/genshin/hu_tao">    (ItemIcon → IconImage, loading="lazy")
-  └► image_protocol::handle_request — проверка адреса (/items/<игра>/<предмет> или /games/<игра>/icon)
+  └► image_protocol::handle_request — проверка адреса (/items/<игра>/<предмет>, /games/<игра>/icon, /backgrounds/<фон>)
      └► spawn_blocking ─► ImageService::image
           ├─ есть в data/cache/images ─► отдать
           ├─ предмета нет в справочнике ─► 404 (произвольный путь скачать нельзя)
@@ -217,6 +221,19 @@ ReferenceUpdater: прошло ≥ 24 ч? ─► latest_revision (1 запрос
 ```
 Неудача (нет сети, нет файла) запоминается до конца сеанса — интерфейс показывает заглушку с буквой.
 Иконка игры (`/games/<игра>/icon`) не скачивается: её байты встроены в модуль игры (`GameModule::icon_png`).
+
+## Свой фон (этап 5c)
+
+```
+Настройки → «Добавить» → invoke('add_background')
+  └► spawn_blocking ─► диалог выбора файла (Rust, tauri-plugin-dialog) ─► размер ≤ 20 МБ (до чтения)
+     ─► BackgroundService::add: формат по сигнатуре (PNG/JPEG/WebP), id = FNV-1a от содержимого
+     ─► FileBackgroundStore: data/backgrounds/<id>.<ext> + запись в backgrounds.json
+Выбор: update_settings({ background: id }) → settingsState.apply → applyBackground:
+  --app-background-image: url("http://wcimg.localhost/backgrounds/<id>") + <html data-background="on">
+  (картинка показывается как есть; полупрозрачно только меню — --color-sidebar; текст на фоне — на плашках .plate)
+Удаление: remove_background → файл и запись удалены; если фон был выбран — AppSettings.background = null
+```
 
 ## Импорт истории (этап 6a)
 

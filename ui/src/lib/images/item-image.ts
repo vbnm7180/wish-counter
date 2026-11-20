@@ -1,7 +1,8 @@
 // Адреса картинок, которые отдаёт Rust через собственный протокол `wcimg`
 // (crates/app-desktop/src/image_protocol):
 // - /items/<игра>/<предмет> — картинка предмета;
-// - /games/<игра>/icon     — иконка игры.
+// - /games/<игра>/icon     — иконка игры;
+// - /backgrounds/<фон>     — картинка фона, добавленная пользователем.
 // Формат адреса зависит от ОС: в Windows (WebView2) — http://wcimg.localhost/<путь>,
 // в остальных — wcimg://localhost/<путь>.
 import { isTauri } from '@tauri-apps/api/core';
@@ -27,6 +28,11 @@ function imageUrl(parts: string[]): string | null {
 /** Адрес картинки предмета. */
 export function itemImageUrl(gameId: string, itemId: string): string | null {
   return imageUrl(['items', gameId, itemId]);
+}
+
+/** Адрес картинки фона. */
+export function backgroundImageUrl(backgroundId: string): string | null {
+  return imageUrl(['backgrounds', backgroundId]);
 }
 
 /** Адрес иконки игры. */

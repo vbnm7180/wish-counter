@@ -1,7 +1,9 @@
-//! Пользовательские настройки приложения: тема оформления и язык.
+//! Пользовательские настройки приложения: тема оформления, язык и фон.
 
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+
+use crate::background::BackgroundId;
 
 /// Максимальная длина идентификатора темы.
 const MAX_THEME_ID_LENGTH: usize = 32;
@@ -116,6 +118,9 @@ pub struct AppSettings {
     pub theme: ThemeId,
     /// Выбранный язык интерфейса.
     pub language: Language,
+    /// Выбранный фон; `None` — без фона (цвет темы).
+    /// В старых файлах настроек поля нет — тогда фона нет (`#[serde(default)]`).
+    pub background: Option<BackgroundId>,
 }
 
 // Тесты лежат рядом, в файле `settings.tests.rs`.

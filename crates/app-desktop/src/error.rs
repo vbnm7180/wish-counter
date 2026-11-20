@@ -2,8 +2,8 @@
 
 use application::ports::RepositoryError;
 use application::services::{
-    ExportServiceError, HistoryError, ImportServiceError, ProfileError, ReferenceError,
-    StatisticsError, UpdateError,
+    BackgroundError, ExportServiceError, HistoryError, ImportServiceError, ProfileError,
+    ReferenceError, StatisticsError, UpdateError,
 };
 use domain::import::ImportError;
 use domain::profile::PlayerUidError;
@@ -200,6 +200,43 @@ impl From<HistoryError> for CommandError {
                     message: error.to_string(),
                 }
             }
+        }
+    }
+}
+
+impl From<BackgroundError> for CommandError {
+    /// Преобразует ошибку фонов в ошибку команды.
+    fn from(error: BackgroundError) -> Self {
+        match error {
+            BackgroundError::Repository(repository_error) => repository_error.into(),
+            BackgroundError::TooLarge => Self::background_too_large(),
+            BackgroundError::UnsupportedFormat => {
+                tracing::warn!(%error, "фон не добавлен");
+                Self {
+                    code: "background_unsupported",
+                    message: error.to_string(),
+                }
+            }
+        }
+    }
+}
+
+impl CommandError {
+    /// Не удалось прочитать выбранный файл картинки (путь в лог не пишется).
+    pub fn background_read(error: impl std::fmt::Display) -> Self {
+        tracing::warn!(%error, "не удалось прочитать картинку фона");
+        Self {
+            code: "background_read_failed",
+            message: error.to_string(),
+        }
+    }
+
+    /// Картинка фона слишком большая.
+    pub fn background_too_large() -> Self {
+        tracing::warn!("картинка фона слишком большая");
+        Self {
+            code: "background_too_large",
+            message: BackgroundError::TooLarge.to_string(),
         }
     }
 }

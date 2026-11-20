@@ -9,7 +9,7 @@
   import type { FiftyFiftyOutcome, PoolHistory, WishRow } from '../lib/api/types';
   import ItemIcon from '../lib/components/ItemIcon.svelte';
   import Select from '../lib/components/Select.svelte';
-  import { defaultFilter, filterRows, pageCount, pageRows, type KindFilter } from '../lib/history/table';
+  import { defaultFilter, filterRows, HARD_PITY_5, pageCount, pageRows, pityHue, type KindFilter } from '../lib/history/table';
   import { i18n, type TranslationKey } from '../lib/i18n/index.svelte';
   import { navigation } from '../lib/state/navigation.svelte';
 
@@ -117,12 +117,13 @@
 <section class="page">
   <div class="header">
     <button class="back" onclick={() => navigation.goTo({ kind: 'game', gameId })}>{i18n.t('history.back')}</button>
-    <h1>{i18n.poolName(gameId, poolId)}</h1>
+    <h1 class="page-heading">{i18n.poolName(gameId, poolId)}</h1>
   </div>
 
   {#if failed}
     <p class="error">{i18n.t('error.load_failed')}</p>
   {:else if history}
+    <div class="table-card">
     <div class="filters">
       <div class="rarities">
         {#each RARITIES as rarity (rarity)}
@@ -171,6 +172,7 @@
         </thead>
         <tbody>
           {#each visible as row (row.id)}
+            {@const hue = pityHue(row.pity, row.rarity, row.rarity === 5 ? (HARD_PITY_5[poolId] ?? 90) : row.rarity === 4 ? 10 : undefined)}
             <tr class="row-{row.rarity}">
               <td class="time">{shortTime(row.time)}</td>
               <td>
@@ -180,7 +182,8 @@
                 </div>
               </td>
               <td class="muted">{i18n.t(row.item_kind === 'character' ? 'history.character' : 'history.weapon')}</td>
-              <td class="number">{row.pity ?? ''}</td>
+              <!-- style:--pity-hue — CSS-переменная только для этой ячейки; цвет собирается в стилях ниже. -->
+              <td class="number pity" class:colored={hue !== null} style:--pity-hue={hue}>{row.pity ?? ''}</td>
               <td>
                 {#if row.outcome}
                   <span class="outcome outcome-{row.outcome}">{i18n.t(OUTCOME_KEYS[row.outcome])}</span>
@@ -200,6 +203,7 @@
         </div>
       {/if}
     {/if}
+    </div><!-- /.table-card -->
   {/if}
 </section>
 
@@ -282,10 +286,16 @@
   table {
     width: 100%;
     border-collapse: collapse;
+  }
+
+  .table-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-large);
-    overflow: hidden;
   }
 
   th {
@@ -340,6 +350,15 @@
   .number {
     text-align: right;
     font-variant-numeric: tabular-nums;
+  }
+
+  .pity {
+    font-weight: 700;
+  }
+
+  /* Оттенок — из pityHue (0 — красный, 60 — жёлтый, 120 — зелёный), насыщенность и яркость — из темы. */
+  .pity.colored {
+    color: hsl(var(--pity-hue) var(--pity-saturation) var(--pity-lightness));
   }
 
   .outcome {

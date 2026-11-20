@@ -1,14 +1,16 @@
 // Состояние пользовательских настроек в интерфейсе.
 //
 // Отвечает за то, чтобы настройки из Rust-ядра применялись к странице
-// (тема, язык) и чтобы изменения сохранялись обратно в ядро.
+// (тема, язык, фон) и чтобы изменения сохранялись обратно в ядро.
 import { backend } from '../api/backend';
 import type { AppSettings } from '../api/types';
+import { applyBackground } from '../backgrounds/background';
 import { i18n, type TranslationKey } from '../i18n/index.svelte';
+import { backgroundImageUrl } from '../images/item-image';
 import { applyTheme, DEFAULT_THEME_ID } from '../themes/registry';
 
 /** Настройки до загрузки из ядра. */
-const INITIAL_SETTINGS: AppSettings = { theme: DEFAULT_THEME_ID, language: 'ru' };
+const INITIAL_SETTINGS: AppSettings = { theme: DEFAULT_THEME_ID, language: 'ru', background: null };
 
 class SettingsState {
   /** Текущие применённые настройки. */
@@ -45,11 +47,17 @@ class SettingsState {
     }
   }
 
-  /** Запоминает настройки и применяет тему и язык к странице. */
+  /** Применяет настройки, уже сохранённые ядром (например, после удаления фона). */
+  replace(settings: AppSettings): void {
+    this.apply(settings);
+  }
+
+  /** Запоминает настройки и применяет тему, язык и фон к странице. */
   private apply(settings: AppSettings): void {
     this.current = settings;
     applyTheme(settings.theme);
     i18n.setLanguage(settings.language);
+    applyBackground(settings.background ? backgroundImageUrl(settings.background) : null);
   }
 }
 

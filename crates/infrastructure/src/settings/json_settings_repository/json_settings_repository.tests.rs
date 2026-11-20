@@ -29,6 +29,7 @@ fn saved_settings_can_be_loaded() {
     let settings = AppSettings {
         theme: ThemeId::parse("light").unwrap(),
         language: Language::English,
+        background: None,
     };
 
     repository.save(&settings).unwrap();

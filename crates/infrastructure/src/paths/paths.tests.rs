@@ -22,6 +22,10 @@ fn paths_are_built_from_data_dir() {
     assert_eq!(paths.webview_dir, PathBuf::from("root").join("webview"));
     assert_eq!(paths.catalog_dir, PathBuf::from("root").join("catalog"));
     assert_eq!(
+        paths.backgrounds_dir,
+        PathBuf::from("root").join("backgrounds")
+    );
+    assert_eq!(
         paths.images_dir,
         PathBuf::from("root").join("cache").join("images")
     );
@@ -50,4 +54,5 @@ fn ensure_directories_creates_folders() {
     assert!(paths.logs_dir.is_dir());
     assert!(paths.catalog_dir.is_dir());
     assert!(paths.images_dir.is_dir());
+    assert!(paths.backgrounds_dir.is_dir());
 }

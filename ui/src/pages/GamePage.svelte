@@ -53,7 +53,7 @@
 </script>
 
 <section class="page">
-  <h1>{i18n.gameName(gameId)}</h1>
+  <h1 class="page-heading">{i18n.gameName(gameId)}</h1>
 
   {#if failed}
     <p class="error">{i18n.t('error.load_failed')}</p>
@@ -68,7 +68,7 @@
     {:else}
       <GameSummary totalWishes={statistics.total_wishes} primogemsSpent={statistics.primogems_spent} />
 
-      <h2>{i18n.t('game.banners')}</h2>
+      <h2 class="page-heading">{i18n.t('game.banners')}</h2>
       <div class="grid">
         {#each statistics.pools as pool (pool.pool_id)}
           <BannerCard
@@ -122,8 +122,12 @@
     color: var(--color-danger);
   }
 
+  h1 {
+    font-size: 26px;
+  }
+
   h2 {
-    font-size: 16px;
+    font-size: 18px;
     margin-top: var(--space-2);
   }
 

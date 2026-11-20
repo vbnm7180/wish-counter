@@ -28,6 +28,16 @@ fn parses_game_icon_request() {
 }
 
 #[test]
+fn parses_background_request() {
+    assert_eq!(
+        parse_image_path("/backgrounds/3f9a0c1d2e4b5a69"),
+        Some(ImageRequest::Background {
+            id: BackgroundId::parse("3f9a0c1d2e4b5a69").unwrap(),
+        })
+    );
+}
+
+#[test]
 fn accepts_dash_in_item_id() {
     assert!(parse_image_path("/items/genshin/primordial_jade_winged-spear").is_some());
 }
@@ -48,16 +58,22 @@ fn rejects_malformed_paths() {
         "/games/genshin",
         "/games/genshin/logo",
         "/games/../icon",
+        "/backgrounds",
+        "/backgrounds/",
+        "/backgrounds/..",
+        "/backgrounds/abc.png",
+        "/backgrounds/a/b",
+        "/backgrounds/ABC",
     ] {
         assert!(parse_image_path(path).is_none(), "{path}");
     }
 }
 
 #[test]
-fn png_response_has_content_type_and_cache_header() {
-    let response = png_response(vec![1, 2, 3]);
+fn image_response_has_content_type_and_cache_header() {
+    let response = image_ok_response(ImageFormat::Webp, vec![1, 2, 3]);
 
     assert_eq!(response.status(), StatusCode::OK);
-    assert_eq!(response.headers()[header::CONTENT_TYPE], PNG_CONTENT_TYPE);
+    assert_eq!(response.headers()[header::CONTENT_TYPE], "image/webp");
     assert_eq!(response.headers()[header::CACHE_CONTROL], "max-age=86400");
 }

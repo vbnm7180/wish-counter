@@ -4,6 +4,8 @@
   --color-bg: #15171f;
   --color-surface: #1e212c;
   --color-surface-hover: #272b38;
+  /* Полупрозрачный вариант --color-surface: плашки и BackgroundPicker поверх фоновой картинки. */
+  --color-surface-glass: rgb(30 33 44 / 85%);
   --color-border: #2f3442;
   --color-text: #e6e8ef;
   --color-text-muted: #9aa0b2;
@@ -13,5 +15,8 @@
   --color-rarity-4: #a67ce6;
   --color-rarity-3: #5b9be0;
   --color-danger: #e5616b;
+  /* Цвет номера по гаранту: как в Paimon.moe — hsl(hue, 100%, 60%). */
+  --pity-saturation: 100%;
+  --pity-lightness: 60%;
   --shadow-card: 0 2px 10px rgb(0 0 0 / 35%);
 }
