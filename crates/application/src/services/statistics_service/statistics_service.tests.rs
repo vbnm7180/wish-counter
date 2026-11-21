@@ -98,6 +98,10 @@ impl WishRepository for FixedWishes {
     fn add_wishes(&self, _game_id: &GameId, _wishes: &[Wish]) -> Result<usize, RepositoryError> {
         unimplemented!("сервис статистики не записывает молитвы")
     }
+
+    fn delete_wishes(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        Ok(())
+    }
 }
 
 /// Хранилище, которое всегда возвращает ошибку чтения.
@@ -110,6 +114,10 @@ impl WishRepository for BrokenRepository {
 
     fn add_wishes(&self, _game_id: &GameId, _wishes: &[Wish]) -> Result<usize, RepositoryError> {
         unimplemented!("сервис статистики не записывает молитвы")
+    }
+
+    fn delete_wishes(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        Ok(())
     }
 }
 
@@ -135,6 +143,10 @@ impl ProfileRepository for FixedRegion {
     }
 
     fn set_uid(&self, _game_id: &GameId, _uid: &PlayerUid) -> Result<(), RepositoryError> {
+        Ok(())
+    }
+
+    fn delete_profile(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
         Ok(())
     }
 }

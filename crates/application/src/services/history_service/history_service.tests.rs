@@ -97,6 +97,9 @@ impl WishRepository for FixedWishes {
     fn add_wishes(&self, _game_id: &GameId, _wishes: &[Wish]) -> Result<usize, RepositoryError> {
         unimplemented!("история не записывает молитвы")
     }
+    fn delete_wishes(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        unimplemented!("не используется в этом тесте")
+    }
 }
 
 /// Профиль с заданным сервером.
@@ -121,6 +124,9 @@ impl ProfileRepository for FixedRegion {
 
     fn set_uid(&self, _game_id: &GameId, _uid: &PlayerUid) -> Result<(), RepositoryError> {
         unimplemented!("история не меняет профиль")
+    }
+    fn delete_profile(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        unimplemented!("не используется в этом тесте")
     }
 }
 

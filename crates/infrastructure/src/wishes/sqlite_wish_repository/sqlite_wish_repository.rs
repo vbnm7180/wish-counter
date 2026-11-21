@@ -121,6 +121,15 @@ impl WishRepository for SqliteWishRepository {
         tracing::info!(game = %game_id, received = wishes.len(), inserted, "молитвы сохранены");
         Ok(inserted)
     }
+
+    fn delete_wishes(&self, game_id: &GameId) -> Result<(), RepositoryError> {
+        let connection = self.connection.lock()?;
+        connection
+            .execute("DELETE FROM wishes WHERE game_id = ?1", params![game_id.as_str()])
+            .map_err(sql_error)?;
+        tracing::info!(game = %game_id, "все молитвы удалены");
+        Ok(())
+    }
 }
 
 /// Превращает тип предмета в значение столбца `item_kind`.

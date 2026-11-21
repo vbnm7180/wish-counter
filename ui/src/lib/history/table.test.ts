@@ -1,7 +1,7 @@
 // Тесты логики таблицы молитв (запуск: npm test).
 import { describe, expect, it } from 'vitest';
 import type { WishRow } from '../api/types';
-import { defaultFilter, filterRows, pageCount, pageRows, pityHue } from './table';
+import { defaultFilter, filterRows, pageCount, pageRows, pityHue, formatWishTime } from './table';
 
 /** Строка таблицы с переопределёнными полями. */
 function row(overrides: Partial<WishRow>): WishRow {
@@ -99,5 +99,11 @@ describe('pityHue', () => {
   it('без номера и для 3★ — без цвета', () => {
     expect(pityHue(null, 5, 90)).toBeNull();
     expect(pityHue(1, 3)).toBeNull();
+  });
+});
+
+describe('formatWishTime', () => {
+  it('переставляет дату в день.месяц.год и отбрасывает секунды', () => {
+    expect(formatWishTime('2026-11-19 20:14:05')).toBe('19.11.2026 20:14');
   });
 });

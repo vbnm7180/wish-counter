@@ -10,7 +10,7 @@ use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
-use crate::import::{HistoryExporter, HistoryParser};
+use crate::import::{GameApiParser, HistoryExporter, HistoryParser};
 use crate::pity::rules::PoolDefinition;
 use crate::reference::{ReferenceSnapshot, RemoteReference};
 
@@ -107,6 +107,12 @@ pub trait GameModule: Send + Sync {
     /// (по умолчанию — никаких).
     fn history_exporters(&self) -> Vec<Arc<dyn HistoryExporter>> {
         Vec::new()
+    }
+
+    /// Разборщик ответов API игры для прямого импорта истории.
+    /// `None` — игра не поддерживает прямой импорт (по умолчанию).
+    fn game_api_parser(&self) -> Option<Arc<dyn GameApiParser>> {
+        None
     }
 }
 

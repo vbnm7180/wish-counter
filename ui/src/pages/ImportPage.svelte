@@ -11,7 +11,7 @@
   import InfoTooltip from '../lib/components/InfoTooltip.svelte';
   import Select from '../lib/components/Select.svelte';
   import { i18n } from '../lib/i18n/index.svelte';
-  import { exportErrorKey, importErrorKey, summaryLines, type MessageLine } from '../lib/import/import-messages';
+  import { exportErrorKey, gameImportErrorKey, importErrorKey, summaryLines, type MessageLine } from '../lib/import/import-messages';
   import { REGIONS, regionLabelKey } from '../lib/import/regions';
 
   /** Свойства компонента. */
@@ -39,6 +39,14 @@
   let exporting = $state(false);
   /** Сообщение блока экспорта. */
   let exportMessage = $state<BlockMessage | null>(null);
+  /** Идёт импорт из игры. */
+  let importingFromGame = $state(false);
+  /** Сообщение блока импорта из игры. */
+  let gameImportMessage = $state<BlockMessage | null>(null);
+  /** Идёт очистка данных. */
+  let clearing = $state(false);
+  /** Сообщение блока очистки. */
+  let clearMessage = $state<BlockMessage | null>(null);
 
   /** Варианты выпадающего списка серверов на текущем языке. */
   let regionOptions = $derived(REGIONS.map((item) => ({ value: item.id, label: i18n.t(item.labelKey) })));
@@ -121,6 +129,43 @@
     }
   }
 
+  /** Импортирует историю молитв напрямую из API игры. */
+  async function importFromGame(): Promise<void> {
+    importingFromGame = true;
+    gameImportMessage = null;
+    try {
+      const summary = await backend.importFromGame(gameId);
+      const lines: MessageLine[] = [
+        { key: 'import.game_result_added', params: { added: summary.added, total: summary.total_in_api } },
+      ];
+      if (summary.already_present > 0) {
+        lines.push({ key: 'import.game_already_present', params: { count: summary.already_present } });
+      }
+      gameImportMessage = { lines, isError: false };
+    } catch (cause) {
+      console.error('Не удалось импортировать из игры', cause);
+      gameImportMessage = single(gameImportErrorKey(cause), true);
+    } finally {
+      importingFromGame = false;
+    }
+  }
+
+  /** Очищает все данные игры после подтверждения. */
+  async function clearGameData(): Promise<void> {
+    if (!confirm(i18n.t('import.clear_confirm'))) return;
+    clearing = true;
+    clearMessage = null;
+    try {
+      await backend.clearGameData(gameId);
+      clearMessage = single('import.clear_done', false);
+    } catch (cause) {
+      console.error('Не удалось очистить данные игры', cause);
+      clearMessage = single('import.clear_failed', true);
+    } finally {
+      clearing = false;
+    }
+  }
+
   $effect(() => {
     void loadProfile(gameId);
   });
@@ -178,6 +223,15 @@
   </div>
 
   <div class="card">
+    <h2>{i18n.t('import.game_title')}</h2>
+    <p class="muted">{i18n.t('import.game_description')}</p>
+    <button class="primary" class:disabled={importingFromGame} disabled={importingFromGame} onclick={() => void importFromGame()}>
+      {i18n.t(importingFromGame ? 'import.game_importing' : 'import.game_button')}
+    </button>
+    {@render message(gameImportMessage)}
+  </div>
+
+  <div class="card">
     <h2>{i18n.t('export.title')}</h2>
     <p class="muted">{i18n.t('export.description')}</p>
     <button class="primary" class:disabled={exporting} disabled={exporting} onclick={() => void exportFile()}>
@@ -187,6 +241,15 @@
   </div>
 
   <p class="muted">{i18n.t('import.more_soon')}</p>
+
+  <div class="card danger-zone">
+    <h2>{i18n.t('import.clear_title')}</h2>
+    <p class="muted">{i18n.t('import.clear_description')}</p>
+    <button class="danger" class:disabled={clearing} disabled={clearing} onclick={() => void clearGameData()}>
+      {i18n.t('import.clear_button')}
+    </button>
+    {@render message(clearMessage)}
+  </div>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -269,6 +332,26 @@
   .primary.disabled {
     opacity: 0.6;
     cursor: progress;
+  }
+
+  .danger {
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-danger);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+  }
+
+  .danger.disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .danger-zone {
+    border-color: var(--color-danger);
   }
 
   /* Стандартное поле выбора файла скрыто: вместо него — кнопка-подпись. */

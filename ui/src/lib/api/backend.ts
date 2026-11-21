@@ -17,7 +17,9 @@ import {
 import type {
   AppSettings,
   BackgroundImage,
+  ClearSummary,
   ExportResult,
+  GameApiImportSummary,
   GameInfo,
   GameProfile,
   GameStatistics,
@@ -59,6 +61,10 @@ export interface Backend {
   setServerRegion(gameId: string, region: ServerRegion): Promise<void>;
   /** Импортирует историю молитв из текста файла. */
   importHistory(gameId: string, format: ImportFormat, content: string): Promise<ImportSummary>;
+  /** Импортирует историю молитв напрямую из API игры (authkey находится автоматически в Rust). */
+  importFromGame(gameId: string): Promise<GameApiImportSummary>;
+  /** Удаляет все молитвы и профиль игры (для смены аккаунта). */
+  clearGameData(gameId: string): Promise<ClearSummary>;
   /** Проверяет и скачивает обновление справочника прямо сейчас. */
   updateReference(gameId: string): Promise<UpdateOutcome>;
 }
@@ -119,6 +125,14 @@ class TauriBackend implements Backend {
 
   importHistory(gameId: string, format: ImportFormat, content: string): Promise<ImportSummary> {
     return invoke<ImportSummary>('import_history', { gameId, format, content });
+  }
+
+  importFromGame(gameId: string): Promise<GameApiImportSummary> {
+    return invoke<GameApiImportSummary>('import_from_game', { gameId });
+  }
+
+  clearGameData(gameId: string): Promise<ClearSummary> {
+    return invoke<ClearSummary>('clear_game_data', { gameId });
   }
 
   updateReference(gameId: string): Promise<UpdateOutcome> {
@@ -187,6 +201,15 @@ class BrowserBackend implements Backend {
 
   async importHistory(_gameId: string, _format: ImportFormat, content: string): Promise<ImportSummary> {
     return demoImportSummary(content);
+  }
+
+  async importFromGame(_gameId: string): Promise<GameApiImportSummary> {
+    // В браузере нет доступа к веб-кэшу игры — возвращаем заглушку.
+    return { total_in_api: 0, added: 0, already_present: 0 };
+  }
+
+  async clearGameData(_gameId: string): Promise<ClearSummary> {
+    return { game_id: _gameId };
   }
 
   async updateReference(_gameId: string): Promise<UpdateOutcome> {

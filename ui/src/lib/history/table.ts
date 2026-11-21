@@ -47,6 +47,16 @@ export interface RowFilter {
   search: string;
 }
 
+/**
+ * Дата и время молитвы для таблицы: «2026-11-19 20:14:05» → «19.11.2026 20:14».
+ * Время — по серверу игры, как его отдаёт игра; часовой пояс не пересчитывается.
+ */
+export function formatWishTime(time: string): string {
+  const [date = '', clock = ''] = time.split(' ');
+  const [year, month, day] = date.split('-');
+  return `${day}.${month}.${year} ${clock.slice(0, 5)}`;
+}
+
 /** Фильтр по умолчанию: все редкости, все типы, без поиска. */
 export function defaultFilter(): RowFilter {
   return { rarities: new Set([3, 4, 5]), kind: 'all', search: '' };

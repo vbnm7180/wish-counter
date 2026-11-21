@@ -62,3 +62,14 @@ const ERROR_MESSAGES: Record<string, TranslationKey> = {
 export function importErrorKey(error: unknown): TranslationKey {
   return ERROR_MESSAGES[errorCode(error)] ?? 'import.error_failed';
 }
+
+/** Коды ошибок импорта из API игры. */
+const GAME_IMPORT_ERROR_MESSAGES: Record<string, TranslationKey> = {
+  game_import_failed: 'import.error_game_import_failed',
+  authkey_expired: 'import.error_authkey_expired',
+};
+
+/** Сообщение об ошибке импорта из игры по коду ошибки ядра. */
+export function gameImportErrorKey(error: unknown): TranslationKey {
+  return GAME_IMPORT_ERROR_MESSAGES[errorCode(error)] ?? 'import.error_game_failed';
+}

@@ -23,4 +23,7 @@ pub trait WishRepository: Send + Sync {
     ///   повторный импорт той же истории безопасен.
     /// - Добавление атомарное: при ошибке не сохраняется ничего.
     fn add_wishes(&self, game_id: &GameId, wishes: &[Wish]) -> Result<usize, RepositoryError>;
+
+    /// Удаляет все молитвы игры. Используется при смене аккаунта.
+    fn delete_wishes(&self, game_id: &GameId) -> Result<(), RepositoryError>;
 }

@@ -196,3 +196,19 @@ export interface PoolHistory {
   server_region: ServerRegion | null;
   rows: WishRow[];
 }
+
+/** Итог импорта из API игры (application GameApiImportSummary). */
+export interface GameApiImportSummary {
+  /** Сколько молитв прочитано из API. */
+  total_in_api: number;
+  /** Сколько добавлено (новых). */
+  added: number;
+  /** Сколько уже было сохранено раньше. */
+  already_present: number;
+}
+
+/** Итог очистки данных игры (application ClearSummary). */
+export interface ClearSummary {
+  /** Имя игры, данные которой удалены. */
+  game_id: string;
+}

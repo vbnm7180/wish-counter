@@ -98,3 +98,57 @@ pub trait HistoryExporter: Send + Sync {
     /// Формирует содержимое файла.
     fn export(&self, input: &ExportInput<'_>) -> Result<String, ExportError>;
 }
+
+/// Коды баннеров, по которым нужно запрашивать историю молитв через API игры.
+/// Пара `(gacha_type, human_readable_name)` для каждого баннера.
+pub type GachaTypeCodes = Vec<(String, String)>;
+
+/// Ошибка разбора ответа API игры.
+#[derive(Debug, Clone, PartialEq, Eq, Error)]
+pub enum GameApiError {
+    /// Сетевая ошибка или ошибка HTTP.
+    #[error("сетевая ошибка: {0}")]
+    Network(String),
+    /// JSON не соответствует ожидаемой структуре ответа API.
+    #[error("не удалось разобрать ответ API: {0}")]
+    InvalidResponse(String),
+    /// API вернул код ошибки (например, истёкший authkey).
+    #[error("API вернул ошибку {retcode}: {message}")]
+    ApiError {
+        /// Код ошибки API (например, `-100` для истёкшего authkey).
+        retcode: i64,
+        /// Сообщение от API на языке игрока.
+        message: String,
+    },
+    /// Предметы в истории неизвестны справочнику (устаревший справочник).
+    #[error("неизвестные предметы в истории: {0:?}")]
+    UnknownItems(Vec<String>),
+}
+
+/// Одна страница разобранных молитв из API, готовая к сохранению.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ApiWishPage {
+    /// Молитвы в хронологическом порядке (от старых к новым).
+    pub wishes: Vec<Wish>,
+    /// Идентификатор последней записи страницы для запроса следующей.
+    pub last_id: Option<String>,
+}
+
+/// Разборщик одной страницы ответа API игры.
+///
+/// Каждая игра реализует этот трейт в своём крейте (`crates/games/<игра>`).
+/// Сетевые запросы делает `application::services::GameApiImportService`.
+pub trait GameApiParser: Send + Sync {
+    /// Коды баннеров, по которым нужно запрашивать историю.
+    fn gacha_type_codes(&self) -> GachaTypeCodes;
+
+    /// Разбирает JSON-ответ одной страницы API и возвращает молитвы.
+    ///
+    /// Молитвы возвращаются в обратном хронологическом порядке (как отдаёт API),
+    /// сервис переворачивает их перед сохранением.
+    fn parse_page(
+        &self,
+        json: &str,
+        reference: &ReferenceData,
+    ) -> Result<ApiWishPage, GameApiError>;
+}

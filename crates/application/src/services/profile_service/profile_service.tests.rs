@@ -70,6 +70,10 @@ impl ProfileRepository for InMemoryProfiles {
         self.1.lock().unwrap().insert(game_id.clone(), uid.clone());
         Ok(())
     }
+
+    fn delete_profile(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        Ok(())
+    }
 }
 
 /// Сервис с тестовой игрой; возвращает и хранилище, чтобы проверить запись.

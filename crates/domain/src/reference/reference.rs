@@ -103,10 +103,13 @@ pub struct ReferenceSnapshot {
 pub struct ReferenceData {
     snapshot: ReferenceSnapshot,
     item_positions: HashMap<ItemId, usize>,
+    /// Индекс: английское название (нижний регистр) → позиция предмета.
+    /// Нужен для импорта из API игры, который возвращает имена, а не id.
+    item_positions_by_en_name: HashMap<String, usize>,
 }
 
 impl ReferenceData {
-    /// Создаёт справочник из снимка и строит индекс предметов.
+    /// Создаёт справочник из снимка и строит индексы предметов.
     pub fn new(snapshot: ReferenceSnapshot) -> Self {
         let item_positions = snapshot
             .items
@@ -114,9 +117,16 @@ impl ReferenceData {
             .enumerate()
             .map(|(position, item)| (item.id.clone(), position))
             .collect();
+        let item_positions_by_en_name = snapshot
+            .items
+            .iter()
+            .enumerate()
+            .map(|(position, item)| (item.name.en.to_lowercase(), position))
+            .collect();
         Self {
             snapshot,
             item_positions,
+            item_positions_by_en_name,
         }
     }
 
@@ -124,6 +134,14 @@ impl ReferenceData {
     pub fn item(&self, id: &ItemId) -> Option<&ItemInfo> {
         self.item_positions
             .get(id)
+            .map(|&position| &self.snapshot.items[position])
+    }
+
+    /// Находит предмет по английскому названию (без учёта регистра).
+    /// Нужен для импорта из API игры, который возвращает имена.
+    pub fn item_by_en_name(&self, name: &str) -> Option<&ItemInfo> {
+        self.item_positions_by_en_name
+            .get(&name.to_lowercase())
             .map(|&position| &self.snapshot.items[position])
     }
 

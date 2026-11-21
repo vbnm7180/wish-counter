@@ -84,6 +84,15 @@ impl ProfileRepository for SqliteProfileRepository {
         tracing::info!(game = %game_id, "UID игрока сохранён");
         Ok(())
     }
+
+    fn delete_profile(&self, game_id: &GameId) -> Result<(), RepositoryError> {
+        self.connection
+            .lock()?
+            .execute("DELETE FROM game_profiles WHERE game_id = ?1", params![game_id.as_str()])
+            .map_err(sql_error)?;
+        tracing::info!(game = %game_id, "профиль игры удалён");
+        Ok(())
+    }
 }
 
 impl SqliteProfileRepository {

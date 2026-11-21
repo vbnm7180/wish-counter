@@ -6,9 +6,15 @@
 // Код модуля лежит в папке модуля вместе с тестами: background_service/background_service.rs
 #[path = "background_service/background_service.rs"]
 mod background_service;
+// Код модуля лежит в папке модуля вместе с тестами: clear_game_service/clear_game_service.rs
+#[path = "clear_game_service/clear_game_service.rs"]
+mod clear_game_service;
 // Код модуля лежит в папке модуля вместе с тестами: export_service/export_service.rs
 #[path = "export_service/export_service.rs"]
 mod export_service;
+// Код модуля лежит в папке модуля вместе с тестами: game_api_import_service/game_api_import_service.rs
+#[path = "game_api_import_service/game_api_import_service.rs"]
+mod game_api_import_service;
 // Код модуля лежит в папке модуля вместе с тестами: game_catalog/game_catalog.rs
 #[path = "game_catalog/game_catalog.rs"]
 mod game_catalog;
@@ -38,7 +44,11 @@ mod settings_service;
 mod statistics_service;
 
 pub use background_service::{BackgroundError, BackgroundService, MAX_BACKGROUND_BYTES};
+pub use clear_game_service::{ClearGameError, ClearGameService, ClearSummary};
 pub use export_service::{ExportService, ExportServiceError, ExportedFile};
+pub use game_api_import_service::{
+    AuthKeyParams, GameApiImportError, GameApiImportService, GameApiImportSummary,
+};
 pub use game_catalog::GameCatalog;
 pub use history_service::{HistoryError, HistoryService, PoolHistory, WishRow};
 pub use image_service::{ImageError, ImageService};

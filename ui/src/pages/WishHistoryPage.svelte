@@ -7,9 +7,10 @@
   import { backend } from '../lib/api/backend';
   import { onHistoryUpdated } from '../lib/api/events';
   import type { FiftyFiftyOutcome, PoolHistory, WishRow } from '../lib/api/types';
+  import InfoTooltip from '../lib/components/InfoTooltip.svelte';
   import ItemIcon from '../lib/components/ItemIcon.svelte';
   import Select from '../lib/components/Select.svelte';
-  import { defaultFilter, filterRows, HARD_PITY_5, pageCount, pageRows, pityHue, type KindFilter } from '../lib/history/table';
+  import { defaultFilter, filterRows, HARD_PITY_5, pageCount, pageRows, pityHue, formatWishTime, type KindFilter } from '../lib/history/table';
   import { i18n, type TranslationKey } from '../lib/i18n/index.svelte';
   import { navigation } from '../lib/state/navigation.svelte';
 
@@ -95,11 +96,6 @@
     page = 1;
   }
 
-  /** Дата и время без секунд: «2026-11-04 18:00». */
-  function shortTime(time: string): string {
-    return time.slice(0, 16);
-  }
-
   $effect(() => {
     void poolId;
     void load();
@@ -162,7 +158,12 @@
       <table>
         <thead>
           <tr>
-            <th>{i18n.t('history.col_time')}</th>
+            <th>
+              <span class="th-with-hint">
+                {i18n.t('history.col_time')}
+                <InfoTooltip text={i18n.t('history.time_hint')} />
+              </span>
+            </th>
             <th>{i18n.t('history.col_item')}</th>
             <th>{i18n.t('history.col_kind')}</th>
             <th class="number">{i18n.t('history.col_pity')}</th>
@@ -174,7 +175,7 @@
           {#each visible as row (row.id)}
             {@const hue = pityHue(row.pity, row.rarity, row.rarity === 5 ? (HARD_PITY_5[poolId] ?? 90) : row.rarity === 4 ? 10 : undefined)}
             <tr class="row-{row.rarity}">
-              <td class="time">{shortTime(row.time)}</td>
+              <td class="time">{formatWishTime(row.time)}</td>
               <td>
                 <div class="item">
                   <ItemIcon {gameId} itemId={row.item_id} name={nameOf(row)} rarity={row.rarity} size={ICON_SIZE} />
@@ -333,6 +334,12 @@
   .row-4 .name {
     font-weight: 600;
     color: var(--color-rarity-4);
+  }
+
+  .th-with-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
   }
 
   .time {

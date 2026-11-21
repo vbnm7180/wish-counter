@@ -115,6 +115,10 @@ impl WishRepository for InMemoryWishes {
         }
         Ok(added)
     }
+
+    fn delete_wishes(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
+        Ok(())
+    }
 }
 
 /// Профили в памяти.
@@ -145,6 +149,10 @@ impl ProfileRepository for InMemoryProfiles {
 
     fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), RepositoryError> {
         self.1.lock().unwrap().insert(game_id.clone(), uid.clone());
+        Ok(())
+    }
+
+    fn delete_profile(&self, _game_id: &GameId) -> Result<(), RepositoryError> {
         Ok(())
     }
 }

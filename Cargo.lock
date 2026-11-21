@@ -945,6 +945,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "game-import-proto"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "ureq",
+ "url",
+]
+
+[[package]]
 name = "gdk"
 version = "0.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4801,6 +4810,7 @@ dependencies = [
  "tempfile",
  "thiserror 2.0.21",
  "tracing",
+ "url",
 ]
 
 [[package]]

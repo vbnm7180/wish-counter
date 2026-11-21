@@ -3,8 +3,9 @@
 use std::sync::Arc;
 
 use application::services::{
-    BackgroundService, ExportService, GameCatalog, HistoryService, ImageService, ImportService,
-    ProfileService, ReferenceUpdater, SettingsService, StatisticsService,
+    BackgroundService, ClearGameService, ExportService, GameApiImportService, GameCatalog,
+    HistoryService, ImageService, ImportService, ProfileService, ReferenceUpdater,
+    SettingsService, StatisticsService,
 };
 
 /// Сервисы, которые нужны командам интерфейса.
@@ -29,6 +30,10 @@ pub struct AppState {
     pub history_service: Arc<HistoryService>,
     /// Импорт истории молитв из файлов. В `Arc`: работает в отдельном потоке.
     pub import_service: Arc<ImportService>,
+    /// Импорт истории молитв напрямую из API игры. В `Arc`: работает в отдельном потоке.
+    pub game_api_import_service: Arc<GameApiImportService>,
+    /// Очистка данных игры (смена аккаунта). В `Arc`: работает в отдельном потоке.
+    pub clear_game_service: Arc<ClearGameService>,
     /// Сервис профилей игр (сервер игрока).
     pub profile_service: ProfileService,
     /// Сервис статистики молитв.

@@ -9,8 +9,9 @@ use std::sync::Arc;
 use tauri::Manager;
 
 use application::services::{
-    BackgroundService, ExportService, GameCatalog, HistoryService, ImageService, ImportService,
-    ProfileService, ReferenceService, ReferenceUpdater, SettingsService, StatisticsService,
+    BackgroundService, ClearGameService, ExportService, GameApiImportService, GameCatalog,
+    HistoryService, ImageService, ImportService, ProfileService, ReferenceService,
+    ReferenceUpdater, SettingsService, StatisticsService,
 };
 use game_genshin::GenshinModule;
 use infrastructure::backgrounds::FileBackgroundStore;
@@ -20,7 +21,7 @@ use infrastructure::logging::init_logging;
 use infrastructure::paths::{AppPaths, StorageMode};
 use infrastructure::profiles::SqliteProfileRepository;
 use infrastructure::reference_cache::JsonReferenceCache;
-use infrastructure::remote::{GitHubReferenceDownloader, HttpClient};
+use infrastructure::remote::{GameApiHttpClient, GitHubReferenceDownloader, HttpClient};
 use infrastructure::settings::JsonSettingsRepository;
 use infrastructure::wishes::SqliteWishRepository;
 
@@ -71,6 +72,8 @@ pub fn run() -> Result<(), StartupError> {
             commands::backgrounds::list_backgrounds,
             commands::backgrounds::add_background,
             commands::backgrounds::remove_background,
+            commands::game_import::import_from_game,
+            commands::game_import::clear_game_data,
             commands::games::list_games,
             commands::games::get_game_statistics,
             commands::games::get_game_profile,
@@ -149,6 +152,17 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
         import_service: Arc::new(ImportService::new(
             Arc::clone(&game_catalog),
             Arc::clone(&reference_service),
+            wish_repository.clone(),
+            profile_repository.clone(),
+        )),
+        game_api_import_service: Arc::new(GameApiImportService::new(
+            Arc::clone(&game_catalog),
+            Arc::clone(&reference_service),
+            wish_repository.clone(),
+            Arc::new(GameApiHttpClient::new()),
+        )),
+        clear_game_service: Arc::new(ClearGameService::new(
+            Arc::clone(&game_catalog),
             wish_repository.clone(),
             profile_repository.clone(),
         )),

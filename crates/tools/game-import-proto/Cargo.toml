@@ -1,0 +1,18 @@
+# Прототип этапа 7: проверяет чтение URL из output_log.txt / data_2
+# и делает один запрос к API молитв. Только для разработки — в дистрибутив не входит.
+[package]
+name = "game-import-proto"
+description = "Прототип импорта из игры (этап 7)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde_json.workspace = true
+ureq.workspace = true
+# Разбор URL и извлечение параметров запроса (authkey и др.)
+url = "2"
+
+[lints]
+workspace = true

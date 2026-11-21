@@ -17,6 +17,7 @@ members = [
     "crates/games/genshin",
     "crates/app-desktop",
     "crates/tools/data-sync",
+    "crates/tools/game-import-proto",
 ]
 
 # Общие метаданные, которые крейты наследуют через `version.workspace = true`.

@@ -24,4 +24,7 @@ pub trait ProfileRepository: Send + Sync {
 
     /// Сохраняет UID игрока (заменяя прежний).
     fn set_uid(&self, game_id: &GameId, uid: &PlayerUid) -> Result<(), RepositoryError>;
+
+    /// Удаляет профиль игры (сервер и UID). Используется при смене аккаунта.
+    fn delete_profile(&self, game_id: &GameId) -> Result<(), RepositoryError>;
 }

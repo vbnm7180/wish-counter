@@ -2,8 +2,8 @@
 
 use application::ports::RepositoryError;
 use application::services::{
-    BackgroundError, ExportServiceError, HistoryError, ImportServiceError, ProfileError,
-    ReferenceError, StatisticsError, UpdateError,
+    BackgroundError, ClearGameError, ExportServiceError, GameApiImportError, HistoryError,
+    ImportServiceError, ProfileError, ReferenceError, StatisticsError, UpdateError,
 };
 use domain::import::ImportError;
 use domain::profile::PlayerUidError;
@@ -237,6 +237,49 @@ impl CommandError {
         Self {
             code: "background_too_large",
             message: BackgroundError::TooLarge.to_string(),
+        }
+    }
+
+    /// Не удалось найти authkey в веб-кэше игры (например, игра не запущена
+    /// или история молитв в игре не открывалась).
+    pub fn game_import(error: &str) -> Self {
+        tracing::warn!(error, "не удалось запустить импорт из игры");
+        Self {
+            code: "game_import_failed",
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<GameApiImportError> for CommandError {
+    fn from(error: GameApiImportError) -> Self {
+        let code = match &error {
+            GameApiImportError::UnknownGame(_) => "unknown_game",
+            GameApiImportError::NoApiParser(_) => "no_api_parser",
+            GameApiImportError::Network(_) => "game_import_network",
+            GameApiImportError::Api(domain::import::GameApiError::ApiError { retcode: -100, .. }) => "authkey_expired",
+            GameApiImportError::Api(_) => "game_import_api",
+            GameApiImportError::Repository(_) => "storage_io",
+            GameApiImportError::Reference(_) => "unknown_game",
+        };
+        tracing::warn!(%error, "ошибка импорта из API игры");
+        Self {
+            code,
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<ClearGameError> for CommandError {
+    fn from(error: ClearGameError) -> Self {
+        let code = match &error {
+            ClearGameError::UnknownGame(_) => "unknown_game",
+            ClearGameError::Repository(_) => "storage_io",
+        };
+        tracing::warn!(%error, "ошибка очистки данных игры");
+        Self {
+            code,
+            message: error.to_string(),
         }
     }
 }

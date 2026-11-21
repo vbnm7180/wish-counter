@@ -12,17 +12,21 @@ use domain::game::{GameId, GameInfo, GameModule};
 use domain::pity::rules::PoolDefinition;
 use std::sync::Arc;
 
-use domain::import::{HistoryExporter, HistoryParser};
+use domain::import::{GameApiParser, HistoryExporter, HistoryParser};
 use domain::reference::{ReferenceSnapshot, RemoteReference};
 use paimon::backup::PaimonBackupParser;
 use paimon::backup_export::PaimonBackupExporter;
 use paimon::remote::PaimonRemoteReference;
+use game_api::GenshinApiParser;
 
 // Код модуля лежит в папке модуля вместе с тестами: pools/pools.rs
 #[path = "pools/pools.rs"]
 pub mod pools;
 
 pub mod paimon;
+// Код модуля лежит в папке модуля: game_api/game_api.rs
+#[path = "game_api/game_api.rs"]
+pub mod game_api;
 // Код модуля лежит в папке модуля вместе с тестами: reference/reference.rs
 #[path = "reference/reference.rs"]
 pub mod reference;
@@ -83,6 +87,10 @@ impl GameModule for GenshinModule {
     /// Поддерживаемые форматы экспорта: резервная копия Paimon.moe.
     fn history_exporters(&self) -> Vec<Arc<dyn HistoryExporter>> {
         vec![Arc::new(PaimonBackupExporter)]
+    }
+
+    fn game_api_parser(&self) -> Option<Arc<dyn GameApiParser>> {
+        Some(Arc::new(GenshinApiParser))
     }
 }
 
