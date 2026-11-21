@@ -151,4 +151,9 @@ pub trait GameApiParser: Send + Sync {
         json: &str,
         reference: &ReferenceData,
     ) -> Result<ApiWishPage, GameApiError>;
+
+    /// Сервер игрока по параметру `region` из ссылки игры (например, `os_euro`).
+    /// Нужен, чтобы определить исход 50/50 по расписанию баннеров.
+    /// `None` — код неизвестен (тогда сервер в профиле не меняется).
+    fn server_region(&self, region_code: &str) -> Option<ServerRegion>;
 }

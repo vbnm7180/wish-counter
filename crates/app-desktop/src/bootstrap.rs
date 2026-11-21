@@ -159,6 +159,7 @@ fn build_state(paths: &AppPaths) -> Result<AppState, StartupError> {
             Arc::clone(&game_catalog),
             Arc::clone(&reference_service),
             wish_repository.clone(),
+            profile_repository.clone(),
             Arc::new(GameApiHttpClient::new()),
         )),
         clear_game_service: Arc::new(ClearGameService::new(

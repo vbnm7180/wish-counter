@@ -205,6 +205,8 @@ export interface GameApiImportSummary {
   added: number;
   /** Сколько уже было сохранено раньше. */
   already_present: number;
+  /** Сервер из ссылки игры; null — код региона неизвестен. */
+  server_region: ServerRegion | null;
 }
 
 /** Итог очистки данных игры (application ClearSummary). */

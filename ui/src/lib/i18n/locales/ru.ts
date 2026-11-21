@@ -85,6 +85,7 @@ export const ru = {
   'import.game_importing': 'Импорт…',
   'import.game_result_added': 'Добавлено молитв: {added} из {total}.',
   'import.game_already_present': 'Уже были сохранены раньше: {count}.',
+  'import.game_result_region': 'Сервер из игры: {region}.',
   'import.error_game_import_failed': 'Не удалось найти историю молитв. Убедитесь, что недавно открывали историю молитв в игре.',
   'import.error_authkey_expired': 'Ключ доступа устарел. Откройте историю молитв в игре и попробуйте снова.',
   'import.error_game_failed': 'Не удалось импортировать историю из игры.',

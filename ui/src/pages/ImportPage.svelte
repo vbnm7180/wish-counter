@@ -141,6 +141,11 @@
       if (summary.already_present > 0) {
         lines.push({ key: 'import.game_already_present', params: { count: summary.already_present } });
       }
+      // Сервер берётся из ссылки игры — без него не определить исход 50/50.
+      if (summary.server_region) {
+        region = summary.server_region;
+        lines.push({ key: 'import.game_result_region', params: { region: i18n.t(regionLabelKey(summary.server_region)) } });
+      }
       gameImportMessage = { lines, isError: false };
     } catch (cause) {
       console.error('Не удалось импортировать из игры', cause);
@@ -157,6 +162,9 @@
     clearMessage = null;
     try {
       await backend.clearGameData(gameId);
+      // Профиль удалён вместе с историей — сбросить сервер и UID на странице.
+      region = null;
+      uid = '';
       clearMessage = single('import.clear_done', false);
     } catch (cause) {
       console.error('Не удалось очистить данные игры', cause);

@@ -205,7 +205,7 @@ class BrowserBackend implements Backend {
 
   async importFromGame(_gameId: string): Promise<GameApiImportSummary> {
     // В браузере нет доступа к веб-кэшу игры — возвращаем заглушку.
-    return { total_in_api: 0, added: 0, already_present: 0 };
+    return { total_in_api: 0, added: 0, already_present: 0, server_region: null };
   }
 
   async clearGameData(_gameId: string): Promise<ClearSummary> {

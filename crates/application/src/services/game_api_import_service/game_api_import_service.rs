@@ -15,12 +15,13 @@ use std::time::Duration;
 use domain::game::GameId;
 use domain::import::GameApiError;
 use domain::reference::ReferenceData;
+use domain::region::ServerRegion;
 use domain::wish::ItemId;
 use serde::Serialize;
 use thiserror::Error;
 
 use super::{GameCatalog, ReferenceService};
-use crate::ports::{GameApiClient, GameApiClientError, RepositoryError, WishRepository};
+use crate::ports::{GameApiClient, GameApiClientError, ProfileRepository, RepositoryError, WishRepository};
 use crate::services::reference_service::ReferenceError;
 
 /// Сколько молитв запрашивать за одну страницу (API допускает до 20).
@@ -90,6 +91,8 @@ pub struct GameApiImportSummary {
     pub added: usize,
     /// Сколько молитв уже было сохранено раньше.
     pub already_present: usize,
+    /// Сервер игрока из ссылки игры (`None` — код региона неизвестен).
+    pub server_region: Option<ServerRegion>,
     /// Предметы из истории — для докачки их картинок.
     #[serde(skip)]
     pub item_ids: Vec<ItemId>,
@@ -100,21 +103,25 @@ pub struct GameApiImportService {
     catalog: Arc<GameCatalog>,
     references: Arc<ReferenceService>,
     wish_repository: Arc<dyn WishRepository>,
+    profile_repository: Arc<dyn ProfileRepository>,
     client: Arc<dyn GameApiClient>,
 }
 
 impl GameApiImportService {
-    /// Создаёт сервис. `client` — HTTP-клиент для запросов к серверу игры.
+    /// Создаёт сервис. `profile_repository` — для сохранения сервера игрока,
+    /// `client` — HTTP-клиент для запросов к серверу игры.
     pub fn new(
         catalog: Arc<GameCatalog>,
         references: Arc<ReferenceService>,
         wish_repository: Arc<dyn WishRepository>,
+        profile_repository: Arc<dyn ProfileRepository>,
         client: Arc<dyn GameApiClient>,
     ) -> Self {
         Self {
             catalog,
             references,
             wish_repository,
+            profile_repository,
             client,
         }
     }
@@ -147,10 +154,18 @@ impl GameApiImportService {
         let item_ids = collect_item_ids(&all_wishes);
         let added = self.wish_repository.add_wishes(game_id, &all_wishes)?;
 
+        // Без сервера нельзя определить исход 50/50: время баннеров зависит от часового пояса.
+        // Сервер берётся из ссылки игры — он точно соответствует аккаунту, с которого идёт импорт.
+        let server_region = parser.server_region(&params.region);
+        if let Some(region) = server_region {
+            self.profile_repository.set_server_region(game_id, region)?;
+        }
+
         Ok(GameApiImportSummary {
             total_in_api,
             added,
             already_present: total_in_api - added,
+            server_region,
             item_ids,
         })
     }

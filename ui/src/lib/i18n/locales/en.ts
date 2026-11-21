@@ -86,6 +86,7 @@ export const en: Record<TranslationKey, string> = {
   'import.game_importing': 'Importing…',
   'import.game_result_added': 'Wishes added: {added} of {total}.',
   'import.game_already_present': 'Already saved before: {count}.',
+  'import.game_result_region': 'Server from the game: {region}.',
   'import.error_game_import_failed': 'Could not find the wish history. Make sure you have opened the wish history in-game recently.',
   'import.error_authkey_expired': 'The access key has expired. Open the wish history in the game and try again.',
   'import.error_game_failed': 'Failed to import the history from the game.',

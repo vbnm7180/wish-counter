@@ -1,6 +1,7 @@
 // Тесты разбора ответа API истории молитв.
 use domain::import::{ApiWishPage, GameApiError, GameApiParser};
 use domain::reference::{ItemInfo, LocalizedText, ReferenceData, ReferenceSnapshot};
+use domain::region::ServerRegion;
 use domain::wish::{ItemId, ItemKind, Rarity};
 
 use super::GenshinApiParser;
@@ -129,4 +130,16 @@ fn gacha_type_codes_содержит_все_баннеры() {
     for expected in ["301", "400", "302", "500", "200", "100"] {
         assert!(values.contains(&expected), "нет кода {expected}");
     }
+}
+
+#[test]
+fn server_region_по_коду_из_ссылки() {
+    assert_eq!(GenshinApiParser.server_region("os_usa"), Some(ServerRegion::America));
+    assert_eq!(GenshinApiParser.server_region("os_euro"), Some(ServerRegion::Europe));
+    assert_eq!(GenshinApiParser.server_region("os_asia"), Some(ServerRegion::Asia));
+    assert_eq!(GenshinApiParser.server_region("os_cht"), Some(ServerRegion::Asia));
+    assert_eq!(GenshinApiParser.server_region("cn_gf01"), Some(ServerRegion::China));
+    assert_eq!(GenshinApiParser.server_region("cn_qd01"), Some(ServerRegion::China));
+    assert_eq!(GenshinApiParser.server_region(""), None);
+    assert_eq!(GenshinApiParser.server_region("unknown"), None);
 }

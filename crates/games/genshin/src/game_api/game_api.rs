@@ -6,6 +6,7 @@
 
 use domain::import::{ApiWishPage, GameApiError, GameApiParser, GachaTypeCodes};
 use domain::reference::ReferenceData;
+use domain::region::ServerRegion;
 use domain::wish::{BannerCode, ItemKind, Rarity, Wish, WishId, WishTime};
 use serde::Deserialize;
 
@@ -27,6 +28,18 @@ impl GameApiParser for GenshinApiParser {
             (banner_codes::STANDARD.value().to_string(),    "Стандартный баннер".into()),
             (banner_codes::BEGINNER.value().to_string(),    "Баннер новичка".into()),
         ]
+    }
+
+    /// Сервер по коду из ссылки игры: `os_usa`, `os_euro`, `os_asia`, `os_cht` (TW/HK/MO — тоже UTC+8),
+    /// китайские `cn_gf01` (официальный) и `cn_qd01` (Bilibili).
+    fn server_region(&self, region_code: &str) -> Option<ServerRegion> {
+        match region_code {
+            "os_usa" => Some(ServerRegion::America),
+            "os_euro" => Some(ServerRegion::Europe),
+            "os_asia" | "os_cht" => Some(ServerRegion::Asia),
+            "cn_gf01" | "cn_qd01" => Some(ServerRegion::China),
+            _ => None,
+        }
     }
 
     /// Разбирает одну страницу ответа API и возвращает молитвы + id последней записи.
