@@ -53,7 +53,7 @@
   });
 </script>
 
-<section class="page">
+<section class="page" class:fit-content={statistics?.total_wishes === 0}>
   <Card isTopLevelCard={true}>
     <h1>{i18n.gameName(gameId)}</h1>
 
@@ -94,6 +94,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+  }
+
+  .page.fit-content {
+    width: fit-content;
   }
 
   .empty {
