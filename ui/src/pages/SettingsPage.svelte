@@ -86,6 +86,7 @@
 </script>
 
 <section class="page">
+<div class="card">
   <h1 class="page-heading">{i18n.t('settings.heading')}</h1>
 
   <div class="card">
@@ -137,6 +138,7 @@
 
   <div class="card">
     <h2>{i18n.t('settings.reference')}</h2>
+    <hr class="separator" />
     {#each games as game (game.id)}
       <ReferenceInfo gameId={game.id} />
     {/each}
@@ -146,6 +148,7 @@
   {#if settingsState.error}
     <p class="error">{i18n.t(settingsState.error)}</p>
   {/if}
+  </div>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -165,6 +168,11 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-large);
+    box-shadow: var(--shadow-card);
+  }
+
+  .separator {
+    border: 1px solid var(--color-border);
   }
 
   h2 {

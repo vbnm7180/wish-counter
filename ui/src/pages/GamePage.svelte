@@ -53,36 +53,38 @@
 </script>
 
 <section class="page">
-  <h1 class="page-heading">{i18n.gameName(gameId)}</h1>
+  <div class="card">
+    <h1 class="page-heading">{i18n.gameName(gameId)}</h1>
 
-  {#if failed}
-    <p class="error">{i18n.t('error.load_failed')}</p>
-  {:else if statistics}
-    {#if statistics.total_wishes === 0}
-      <div class="empty">
-        <p>{i18n.t('game.empty')}</p>
-        <button class="go-import" onclick={() => navigation.goTo({ kind: 'import', gameId })}>
-          {i18n.t('game.go_to_import')}
-        </button>
-      </div>
-    {:else}
-      <GameSummary totalWishes={statistics.total_wishes} primogemsSpent={statistics.primogems_spent} />
+    {#if failed}
+      <p class="error">{i18n.t('error.load_failed')}</p>
+    {:else if statistics}
+      {#if statistics.total_wishes === 0}
+        <div class="empty">
+          <p>{i18n.t('game.empty')}</p>
+          <button class="go-import" onclick={() => navigation.goTo({ kind: 'import', gameId })}>
+            {i18n.t('game.go_to_import')}
+          </button>
+        </div>
+      {:else}
+        <GameSummary totalWishes={statistics.total_wishes} primogemsSpent={statistics.primogems_spent} />
 
-      <h2 class="page-heading">{i18n.t('game.banners')}</h2>
-      <div class="grid">
-        {#each statistics.pools as pool (pool.pool_id)}
-          <BannerCard
-            title={i18n.poolName(gameId, pool.pool_id)}
-            {pool}
-            serverChosen={statistics.server_region !== null}
-            onView={pool.total_wishes > 0
-              ? () => navigation.goTo({ kind: 'history', gameId, poolId: pool.pool_id })
-              : undefined}
-          />
-        {/each}
-      </div>
+        <h2 class="page-heading">{i18n.t('game.banners')}</h2>
+        <div class="grid">
+          {#each statistics.pools as pool (pool.pool_id)}
+            <BannerCard
+              title={i18n.poolName(gameId, pool.pool_id)}
+              {pool}
+              serverChosen={statistics.server_region !== null}
+              onView={pool.total_wishes > 0
+                ? () => navigation.goTo({ kind: 'history', gameId, poolId: pool.pool_id })
+                : undefined}
+            />
+          {/each}
+        </div>
+      {/if}
     {/if}
-  {/if}
+  </div>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -93,10 +95,21 @@
     gap: var(--space-4);
   }
 
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+  }
+
   .empty {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    max-width: 720px;
     gap: var(--space-3);
     padding: var(--space-6);
     background: var(--color-surface);

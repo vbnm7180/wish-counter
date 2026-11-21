@@ -68,7 +68,7 @@
   .content {
     flex: 1;
     overflow-y: auto;
-    padding: var(--space-8);
+    padding: var(--space-4);
   }
 
   .error {

@@ -81,7 +81,7 @@
   }
 
   .logo {
-    padding: var(--space-2) var(--space-3) var(--space-6);
+    padding: var(--space-4) var(--space-3) var(--space-6);
     font-size: 18px;
     font-weight: 700;
     color: var(--color-accent);
@@ -111,7 +111,7 @@
   /* Вложенный пункт под игрой: отступ на ширину иконки игры. */
   .sub-item {
     padding-left: calc(var(--space-3) + 24px + var(--space-2));
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .item:hover {

@@ -59,6 +59,12 @@ h3 {
   font-weight: 600;
 }
 
+hr {
+  width: 100%;
+  margin: 0;
+}
+
+/* todo: убрать эти стили */
 /*
  * Когда выбран фон (data-background="on" у <html>), полупрозрачным становится только боковое меню.
  * Карточки и таблицы остаются непрозрачными — иначе текст в них плохо виден.
@@ -70,12 +76,13 @@ h3 {
  * чтобы буквы читались на любой картинке.
  */
 .page-heading {
-  -webkit-text-stroke: 0px transparent;
+  /* -webkit-text-stroke: 0px transparent; */
   paint-order: stroke fill;
 }
 
 :root[data-background='on'] .page-heading {
-  -webkit-text-stroke: 6px var(--color-bg);
+  /* -webkit-text-stroke: 6px var(--color-bg); */
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); */
   paint-order: stroke fill;
 }
 
@@ -84,11 +91,16 @@ h3 {
  * Обводка тоньше, чем у заголовков.
  */
 .text-stroke {
-  -webkit-text-stroke: 0px transparent;
+  /* -webkit-text-stroke: 0px transparent; */
   paint-order: stroke fill;
 }
 
 :root[data-background='on'] .text-stroke {
-  -webkit-text-stroke: 4px var(--color-bg);
-  paint-order: stroke fill;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); */
+  /* -webkit-text-stroke: 4px var(--color-bg); */
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); */
+  /* text-shadow:
+    2px 2px 0 rgba(255, 255, 255, 0.6),
+    4px 4px 8px rgba(255, 255, 255, 0.3);
+  paint-order: stroke fill; */
 }

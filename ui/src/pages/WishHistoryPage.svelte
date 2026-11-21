@@ -111,101 +111,103 @@
 </script>
 
 <section class="page">
-  <div class="header">
-    <button class="back" onclick={() => navigation.goTo({ kind: 'game', gameId })}>{i18n.t('history.back')}</button>
-    <h1 class="page-heading">{i18n.poolName(gameId, poolId)}</h1>
-  </div>
-
-  {#if failed}
-    <p class="error">{i18n.t('error.load_failed')}</p>
-  {:else if history}
-    <div class="table-card">
-    <div class="filters">
-      <div class="rarities">
-        {#each RARITIES as rarity (rarity)}
-          <button
-            class="rarity rarity-{rarity}"
-            class:on={filter.rarities.has(rarity)}
-            aria-pressed={filter.rarities.has(rarity)}
-            onclick={() => toggleRarity(rarity)}
-          >
-            {rarity}★
-          </button>
-        {/each}
-      </div>
-      <Select
-        options={kindOptions}
-        value={filter.kind}
-        placeholder={i18n.t('history.kind')}
-        label={i18n.t('history.kind')}
-        onChange={selectKind}
-      />
-      <input
-        class="search"
-        type="search"
-        placeholder={i18n.t('history.search')}
-        aria-label={i18n.t('history.search')}
-        value={filter.search}
-        oninput={search}
-      />
+  <div class="card">
+    <div class="header">
+      <button class="back" onclick={() => navigation.goTo({ kind: 'game', gameId })}>{i18n.t('history.back')}</button>
+      <h1 class="page-heading">{i18n.poolName(gameId, poolId)}</h1>
     </div>
 
-    <p class="muted">{i18n.t('history.count', { shown: filtered.length, total: history.rows.length })}</p>
-
-    {#if filtered.length === 0}
-      <p class="muted">{i18n.t('history.empty')}</p>
-    {:else}
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <span class="th-with-hint">
-                {i18n.t('history.col_time')}
-                <InfoTooltip text={i18n.t('history.time_hint')} />
-              </span>
-            </th>
-            <th>{i18n.t('history.col_item')}</th>
-            <th>{i18n.t('history.col_kind')}</th>
-            <th class="number">{i18n.t('history.col_pity')}</th>
-            <th>{i18n.t('history.col_outcome')}</th>
-            <th>{i18n.t('history.col_banner')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each visible as row (row.id)}
-            {@const hue = pityHue(row.pity, row.rarity, row.rarity === 5 ? (HARD_PITY_5[poolId] ?? 90) : row.rarity === 4 ? 10 : undefined)}
-            <tr class="row-{row.rarity}">
-              <td class="time">{formatWishTime(row.time)}</td>
-              <td>
-                <div class="item">
-                  <ItemIcon {gameId} itemId={row.item_id} name={nameOf(row)} rarity={row.rarity} size={ICON_SIZE} />
-                  <span class="name">{nameOf(row)}</span>
-                </div>
-              </td>
-              <td class="muted">{i18n.t(row.item_kind === 'character' ? 'history.character' : 'history.weapon')}</td>
-              <!-- style:--pity-hue — CSS-переменная только для этой ячейки; цвет собирается в стилях ниже. -->
-              <td class="number pity" class:colored={hue !== null} style:--pity-hue={hue}>{row.pity ?? ''}</td>
-              <td>
-                {#if row.outcome}
-                  <span class="outcome outcome-{row.outcome}">{i18n.t(OUTCOME_KEYS[row.outcome])}</span>
-                {/if}
-              </td>
-              <td class="muted">{row.banner_name ?? ''}</td>
-            </tr>
+    {#if failed}
+      <p class="error">{i18n.t('error.load_failed')}</p>
+    {:else if history}
+      <div class="table-card">
+      <div class="filters">
+        <div class="rarities">
+          {#each RARITIES as rarity (rarity)}
+            <button
+              class="rarity rarity-{rarity}"
+              class:on={filter.rarities.has(rarity)}
+              aria-pressed={filter.rarities.has(rarity)}
+              onclick={() => toggleRarity(rarity)}
+            >
+              {rarity}★
+            </button>
           {/each}
-        </tbody>
-      </table>
-
-      {#if pages > 1}
-        <div class="pagination">
-          <button disabled={page <= 1} onclick={() => (page -= 1)}>{i18n.t('history.prev')}</button>
-          <span>{i18n.t('history.page', { page, pages })}</span>
-          <button disabled={page >= pages} onclick={() => (page += 1)}>{i18n.t('history.next')}</button>
         </div>
+        <Select
+          options={kindOptions}
+          value={filter.kind}
+          placeholder={i18n.t('history.kind')}
+          label={i18n.t('history.kind')}
+          onChange={selectKind}
+        />
+        <input
+          class="search"
+          type="search"
+          placeholder={i18n.t('history.search')}
+          aria-label={i18n.t('history.search')}
+          value={filter.search}
+          oninput={search}
+        />
+      </div>
+
+      <p class="muted">{i18n.t('history.count', { shown: filtered.length, total: history.rows.length })}</p>
+
+      {#if filtered.length === 0}
+        <p class="muted">{i18n.t('history.empty')}</p>
+      {:else}
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <span class="th-with-hint">
+                  {i18n.t('history.col_time')}
+                  <InfoTooltip text={i18n.t('history.time_hint')} />
+                </span>
+              </th>
+              <th>{i18n.t('history.col_item')}</th>
+              <th>{i18n.t('history.col_kind')}</th>
+              <th class="number">{i18n.t('history.col_pity')}</th>
+              <th>{i18n.t('history.col_outcome')}</th>
+              <th>{i18n.t('history.col_banner')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each visible as row (row.id)}
+              {@const hue = pityHue(row.pity, row.rarity, row.rarity === 5 ? (HARD_PITY_5[poolId] ?? 90) : row.rarity === 4 ? 10 : undefined)}
+              <tr class="row-{row.rarity}">
+                <td class="time">{formatWishTime(row.time)}</td>
+                <td>
+                  <div class="item">
+                    <ItemIcon {gameId} itemId={row.item_id} name={nameOf(row)} rarity={row.rarity} size={ICON_SIZE} />
+                    <span class="name">{nameOf(row)}</span>
+                  </div>
+                </td>
+                <td class="muted">{i18n.t(row.item_kind === 'character' ? 'history.character' : 'history.weapon')}</td>
+                <!-- style:--pity-hue — CSS-переменная только для этой ячейки; цвет собирается в стилях ниже. -->
+                <td class="number pity" class:colored={hue !== null} style:--pity-hue={hue}>{row.pity ?? ''}</td>
+                <td>
+                  {#if row.outcome}
+                    <span class="outcome outcome-{row.outcome}">{i18n.t(OUTCOME_KEYS[row.outcome])}</span>
+                  {/if}
+                </td>
+                <td class="muted">{row.banner_name ?? ''}</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+
+        {#if pages > 1}
+          <div class="pagination">
+            <button disabled={page <= 1} onclick={() => (page -= 1)}>{i18n.t('history.prev')}</button>
+            <span>{i18n.t('history.page', { page, pages })}</span>
+            <button disabled={page >= pages} onclick={() => (page += 1)}>{i18n.t('history.next')}</button>
+          </div>
+        {/if}
       {/if}
+      </div><!-- /.table-card -->
     {/if}
-    </div><!-- /.table-card -->
-  {/if}
+  </div>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -214,6 +216,17 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-card);
   }
 
   .header {
@@ -229,6 +242,11 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-small);
     cursor: pointer;
+  }
+
+  .back {
+    width: 43px;
+    font-size: 20px;
   }
 
   .pagination button:disabled {
@@ -297,6 +315,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-large);
+    box-shadow: var(--shadow-card);
   }
 
   th {

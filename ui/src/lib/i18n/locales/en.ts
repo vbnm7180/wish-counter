@@ -26,7 +26,7 @@ export const en: Record<TranslationKey, string> = {
   'game.current_4': 'Current 4★ pity',
   'game.view': 'View',
 
-  'history.back': '← Back',
+  'history.back': '←',
   'history.empty': 'No wishes match the filter.',
   'history.search': 'Search by name',
   'history.kind': 'Type',
@@ -79,7 +79,6 @@ export const en: Record<TranslationKey, string> = {
   'import.paimon_steps': 'On paimon.moe open Settings → Export and save paimon-moe-local-data.json, then choose it here. Importing the same or a newer file again does not create duplicates.',
   'import.choose_file': 'Choose file',
   'import.importing': 'Importing…',
-  'import.more_soon': 'The UIGF format will come later.',
   'import.game_title': 'Import from game',
   'import.game_description': 'Reads your wish history from Genshin Impact automatically. Launch the game, open the wish history in-game, then click "Import".',
   'import.game_button': 'Import from game',

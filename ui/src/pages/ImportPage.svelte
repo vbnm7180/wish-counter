@@ -190,73 +190,73 @@
 {/snippet}
 
 <section class="page">
-  <h1 class="page-heading">{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
-
   <div class="card">
-    <div class="row">
-      <span class="label">{i18n.t('region.label')}</span>
-      <Select
-        options={regionOptions}
-        value={region}
-        placeholder={i18n.t('region.placeholder')}
-        label={i18n.t('region.label')}
-        onChange={(selected) => void selectRegion(selected)}
-      />
-      <InfoTooltip text={i18n.t('region.hint')} />
+    <h1 class="page-heading">{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
+
+    <div class="card">
+      <div class="row">
+        <span class="label">{i18n.t('region.label')}</span>
+        <Select
+          options={regionOptions}
+          value={region}
+          placeholder={i18n.t('region.placeholder')}
+          label={i18n.t('region.label')}
+          onChange={(selected) => void selectRegion(selected)}
+        />
+        <InfoTooltip text={i18n.t('region.hint')} />
+      </div>
+      <div class="row">
+        <span class="label">{i18n.t('uid.label')}</span>
+        <input
+          class="uid"
+          type="text"
+          inputmode="numeric"
+          aria-label={i18n.t('uid.label')}
+          placeholder={i18n.t('uid.placeholder')}
+          bind:value={uid}
+        />
+        <button class="secondary" onclick={() => void saveUid()}>{i18n.t('uid.save')}</button>
+        <InfoTooltip text={i18n.t('uid.hint')} />
+      </div>
+      {@render message(profileMessage)}
     </div>
-    <div class="row">
-      <span class="label">{i18n.t('uid.label')}</span>
-      <input
-        class="uid"
-        type="text"
-        inputmode="numeric"
-        aria-label={i18n.t('uid.label')}
-        placeholder={i18n.t('uid.placeholder')}
-        bind:value={uid}
-      />
-      <button class="secondary" onclick={() => void saveUid()}>{i18n.t('uid.save')}</button>
-      <InfoTooltip text={i18n.t('uid.hint')} />
+
+    <div class="card">
+      <h2>{i18n.t('import.paimon_title')}</h2>
+      <p class="muted">{i18n.t('import.paimon_steps')}</p>
+      <label class="primary" class:disabled={importing}>
+        {i18n.t(importing ? 'import.importing' : 'import.choose_file')}
+        <input type="file" accept=".json,application/json" disabled={importing} onchange={importFile} />
+      </label>
+      {@render message(importMessage)}
     </div>
-    {@render message(profileMessage)}
-  </div>
 
-  <div class="card">
-    <h2>{i18n.t('import.paimon_title')}</h2>
-    <p class="muted">{i18n.t('import.paimon_steps')}</p>
-    <label class="primary" class:disabled={importing}>
-      {i18n.t(importing ? 'import.importing' : 'import.choose_file')}
-      <input type="file" accept=".json,application/json" disabled={importing} onchange={importFile} />
-    </label>
-    {@render message(importMessage)}
-  </div>
+    <div class="card">
+      <h2>{i18n.t('import.game_title')}</h2>
+      <p class="muted">{i18n.t('import.game_description')}</p>
+      <button class="primary" class:disabled={importingFromGame} disabled={importingFromGame} onclick={() => void importFromGame()}>
+        {i18n.t(importingFromGame ? 'import.game_importing' : 'import.game_button')}
+      </button>
+      {@render message(gameImportMessage)}
+    </div>
 
-  <div class="card">
-    <h2>{i18n.t('import.game_title')}</h2>
-    <p class="muted">{i18n.t('import.game_description')}</p>
-    <button class="primary" class:disabled={importingFromGame} disabled={importingFromGame} onclick={() => void importFromGame()}>
-      {i18n.t(importingFromGame ? 'import.game_importing' : 'import.game_button')}
-    </button>
-    {@render message(gameImportMessage)}
-  </div>
+    <div class="card">
+      <h2>{i18n.t('export.title')}</h2>
+      <p class="muted">{i18n.t('export.description')}</p>
+      <button class="primary" class:disabled={exporting} disabled={exporting} onclick={() => void exportFile()}>
+        {i18n.t(exporting ? 'export.saving' : 'export.button')}
+      </button>
+      {@render message(exportMessage)}
+    </div>
 
-  <div class="card">
-    <h2>{i18n.t('export.title')}</h2>
-    <p class="muted">{i18n.t('export.description')}</p>
-    <button class="primary" class:disabled={exporting} disabled={exporting} onclick={() => void exportFile()}>
-      {i18n.t(exporting ? 'export.saving' : 'export.button')}
-    </button>
-    {@render message(exportMessage)}
-  </div>
-
-  <p class="muted">{i18n.t('import.more_soon')}</p>
-
-  <div class="card danger-zone">
-    <h2>{i18n.t('import.clear_title')}</h2>
-    <p class="muted">{i18n.t('import.clear_description')}</p>
-    <button class="danger" class:disabled={clearing} disabled={clearing} onclick={() => void clearGameData()}>
-      {i18n.t('import.clear_button')}
-    </button>
-    {@render message(clearMessage)}
+    <div class="card danger-zone">
+      <h2>{i18n.t('import.clear_title')}</h2>
+      <p class="muted">{i18n.t('import.clear_description')}</p>
+      <button class="danger" class:disabled={clearing} disabled={clearing} onclick={() => void clearGameData()}>
+        {i18n.t('import.clear_button')}
+      </button>
+      {@render message(clearMessage)}
+    </div>
   </div>
 </section>
 
@@ -277,6 +277,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-large);
+    box-shadow: var(--shadow-card);
   }
 
   h2 {
