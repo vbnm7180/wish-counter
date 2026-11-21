@@ -4,6 +4,7 @@
   import type { BackgroundImage, GameInfo, LanguageCode } from '../lib/api/types';
   import { backgroundErrorKey } from '../lib/backgrounds/background';
   import BackgroundPicker from '../lib/components/BackgroundPicker.svelte';
+  import Card from '../lib/components/Card.svelte';
   import ReferenceInfo from '../lib/components/ReferenceInfo.svelte';
   import { i18n, LANGUAGES, type TranslationKey } from '../lib/i18n/index.svelte';
   import { backgroundImageUrl } from '../lib/images/item-image';
@@ -86,10 +87,10 @@
 </script>
 
 <section class="page">
-<div class="card">
-  <h1 class="page-heading">{i18n.t('settings.heading')}</h1>
+<Card isTopLevelCard={true}>
+  <h1>{i18n.t('settings.heading')}</h1>
 
-  <div class="card">
+  <Card>
     <h2>{i18n.t('settings.theme')}</h2>
     <div class="options">
       {#each THEMES as theme (theme.id)}
@@ -102,9 +103,9 @@
         </button>
       {/each}
     </div>
-  </div>
+  </Card>
 
-  <div class="card">
+  <Card>
     <h2>{i18n.t('settings.language')}</h2>
     <div class="options">
       {#each LANGUAGES as language (language.code)}
@@ -117,9 +118,9 @@
         </button>
       {/each}
     </div>
-  </div>
+  </Card>
 
-  <div class="card">
+  <Card>
     <h2>{i18n.t('settings.background')}</h2>
     <BackgroundPicker
       {backgrounds}
@@ -134,21 +135,21 @@
     {#if backgroundError}
       <p class="error">{i18n.t(backgroundError)}</p>
     {/if}
-  </div>
+  </Card>
 
-  <div class="card">
+  <Card>
     <h2>{i18n.t('settings.reference')}</h2>
     <hr class="separator" />
     {#each games as game (game.id)}
       <ReferenceInfo gameId={game.id} />
     {/each}
     <p class="license">{i18n.t('reference.license')}</p>
-  </div>
+  </Card>
 
   {#if settingsState.error}
     <p class="error">{i18n.t(settingsState.error)}</p>
   {/if}
-  </div>
+</Card>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -158,17 +159,6 @@
     flex-direction: column;
     gap: var(--space-6);
     max-width: 560px;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
-    box-shadow: var(--shadow-card);
   }
 
   .separator {

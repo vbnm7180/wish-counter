@@ -7,6 +7,7 @@
   import { backend } from '../lib/api/backend';
   import { onHistoryUpdated } from '../lib/api/events';
   import type { FiftyFiftyOutcome, PoolHistory, WishRow } from '../lib/api/types';
+  import Card from '../lib/components/Card.svelte';
   import InfoTooltip from '../lib/components/InfoTooltip.svelte';
   import ItemIcon from '../lib/components/ItemIcon.svelte';
   import Select from '../lib/components/Select.svelte';
@@ -111,10 +112,10 @@
 </script>
 
 <section class="page">
-  <div class="card">
+  <Card isTopLevelCard={true}>
     <div class="header">
       <button class="back" onclick={() => navigation.goTo({ kind: 'game', gameId })}>{i18n.t('history.back')}</button>
-      <h1 class="page-heading">{i18n.poolName(gameId, poolId)}</h1>
+      <h1>{i18n.poolName(gameId, poolId)}</h1>
     </div>
 
     {#if failed}
@@ -205,9 +206,9 @@
           </div>
         {/if}
       {/if}
-      </div><!-- /.table-card -->
+      </div>
     {/if}
-  </div>
+  </Card>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->

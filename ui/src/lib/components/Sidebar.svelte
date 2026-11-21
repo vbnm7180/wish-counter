@@ -53,11 +53,11 @@
       <span>{i18n.gameName(game.id)}</span>
     </button>
     <button
-      class="item sub-item"
+      class="item"
       class:active={navigation.isActive(importPage(game.id))}
       onclick={() => navigation.goTo(importPage(game.id))}
     >
-      {i18n.t('nav.import')}
+      ↗ {i18n.t('nav.import')}
     </button>
   {/each}
 
@@ -106,12 +106,6 @@
     border-radius: var(--radius-small);
     cursor: pointer;
     transition: background var(--transition-fast);
-  }
-
-  /* Вложенный пункт под игрой: отступ на ширину иконки игры. */
-  .sub-item {
-    padding-left: calc(var(--space-3) + 24px + var(--space-2));
-    font-size: 14px;
   }
 
   .item:hover {

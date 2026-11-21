@@ -8,6 +8,7 @@
 <script lang="ts">
   import { backend } from '../lib/api/backend';
   import type { ServerRegion } from '../lib/api/types';
+  import Card from '../lib/components/Card.svelte';
   import InfoTooltip from '../lib/components/InfoTooltip.svelte';
   import Select from '../lib/components/Select.svelte';
   import { i18n } from '../lib/i18n/index.svelte';
@@ -190,10 +191,10 @@
 {/snippet}
 
 <section class="page">
-  <div class="card">
-    <h1 class="page-heading">{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
+  <Card isTopLevelCard={true}>
+    <h1>{i18n.t('import.heading', { game: i18n.gameName(gameId) })}</h1>
 
-    <div class="card">
+    <Card>
       <div class="row">
         <span class="label">{i18n.t('region.label')}</span>
         <Select
@@ -219,9 +220,9 @@
         <InfoTooltip text={i18n.t('uid.hint')} />
       </div>
       {@render message(profileMessage)}
-    </div>
+    </Card>
 
-    <div class="card">
+    <Card>
       <h2>{i18n.t('import.paimon_title')}</h2>
       <p class="muted">{i18n.t('import.paimon_steps')}</p>
       <label class="primary" class:disabled={importing}>
@@ -229,35 +230,35 @@
         <input type="file" accept=".json,application/json" disabled={importing} onchange={importFile} />
       </label>
       {@render message(importMessage)}
-    </div>
+    </Card>
 
-    <div class="card">
+    <Card>
       <h2>{i18n.t('import.game_title')}</h2>
       <p class="muted">{i18n.t('import.game_description')}</p>
       <button class="primary" class:disabled={importingFromGame} disabled={importingFromGame} onclick={() => void importFromGame()}>
         {i18n.t(importingFromGame ? 'import.game_importing' : 'import.game_button')}
       </button>
       {@render message(gameImportMessage)}
-    </div>
+    </Card>
 
-    <div class="card">
+    <Card>
       <h2>{i18n.t('export.title')}</h2>
       <p class="muted">{i18n.t('export.description')}</p>
       <button class="primary" class:disabled={exporting} disabled={exporting} onclick={() => void exportFile()}>
         {i18n.t(exporting ? 'export.saving' : 'export.button')}
       </button>
       {@render message(exportMessage)}
-    </div>
+    </Card>
 
-    <div class="card danger-zone">
+    <Card isDanger={true}>
       <h2>{i18n.t('import.clear_title')}</h2>
       <p class="muted">{i18n.t('import.clear_description')}</p>
       <button class="danger" class:disabled={clearing} disabled={clearing} onclick={() => void clearGameData()}>
         {i18n.t('import.clear_button')}
       </button>
       {@render message(clearMessage)}
-    </div>
-  </div>
+    </Card>
+  </Card>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -267,17 +268,6 @@
     flex-direction: column;
     gap: var(--space-4);
     max-width: 720px;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
-    box-shadow: var(--shadow-card);
   }
 
   h2 {
@@ -357,10 +347,6 @@
   .danger.disabled {
     opacity: 0.6;
     cursor: progress;
-  }
-
-  .danger-zone {
-    border-color: var(--color-danger);
   }
 
   /* Стандартное поле выбора файла скрыто: вместо него — кнопка-подпись. */

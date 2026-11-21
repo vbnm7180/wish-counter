@@ -8,6 +8,7 @@
   import { onHistoryUpdated, onReferenceUpdated } from '../lib/api/events';
   import type { GameStatistics } from '../lib/api/types';
   import BannerCard from '../lib/components/BannerCard.svelte';
+  import Card from '../lib/components/Card.svelte';
   import GameSummary from '../lib/components/GameSummary.svelte';
   import { i18n } from '../lib/i18n/index.svelte';
   import { navigation } from '../lib/state/navigation.svelte';
@@ -53,8 +54,8 @@
 </script>
 
 <section class="page">
-  <div class="card">
-    <h1 class="page-heading">{i18n.gameName(gameId)}</h1>
+  <Card isTopLevelCard={true}>
+    <h1>{i18n.gameName(gameId)}</h1>
 
     {#if failed}
       <p class="error">{i18n.t('error.load_failed')}</p>
@@ -69,7 +70,7 @@
       {:else}
         <GameSummary totalWishes={statistics.total_wishes} primogemsSpent={statistics.primogems_spent} />
 
-        <h2 class="page-heading">{i18n.t('game.banners')}</h2>
+        <h2>{i18n.t('game.banners')}</h2>
         <div class="grid">
           {#each statistics.pools as pool (pool.pool_id)}
             <BannerCard
@@ -84,7 +85,7 @@
         </div>
       {/if}
     {/if}
-  </div>
+  </Card>
 </section>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
@@ -93,16 +94,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
   }
 
   .empty {

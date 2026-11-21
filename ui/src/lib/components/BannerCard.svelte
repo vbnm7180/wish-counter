@@ -6,6 +6,7 @@
   import type { PoolSummary } from '../api/types';
   import { formatNumber } from '../format/format';
   import { i18n } from '../i18n/index.svelte';
+  import Card from './Card.svelte';
   import FeaturedStatusView from './FeaturedStatusView.svelte';
   import FourStarFeaturedView from './FourStarFeaturedView.svelte';
 
@@ -24,7 +25,7 @@
   let { title, pool, serverChosen, onView }: Props = $props();
 </script>
 
-<article class="card">
+<Card>
   <h3>{title}</h3>
   <dl>
     <dt>{i18n.t('game.total_pulls')}</dt>
@@ -53,21 +54,10 @@
   {/if}
 
   <button class="view" disabled={!onView} onclick={onView}>{i18n.t('game.view')}</button>
-</article>
+</Card>
 
 <!-- Стили компонента: Svelte автоматически ограничивает их этим компонентом. -->
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
-    box-shadow: var(--shadow-card);
-  }
-
   h3 {
     font-size: 15px;
   }
